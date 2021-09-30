@@ -216,7 +216,7 @@ int				UD_slice_coordinate(cubiecube_t* cube)
 	}
 	for (int i = 0; i < EDGE_NUM; i++)
 	{
-		if (k[i] != -1)
+		if (k[i] != -1 && occupied[i] == 0)
 		{
 			out = out + binomial_coefficient(i, k[i]);
 		}
