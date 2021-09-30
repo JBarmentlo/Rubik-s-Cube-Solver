@@ -1,41 +1,41 @@
 #include "cubiecube.hpp"
 #include <cstring>
-
+#include <string>
 
 cubiecube_t* get_moves()
 {
 	static  cubiecube_t	moves[18];
 	static	bool		first = true;
 
-	static const corner_t     corner_positions_U[8]  = { UBR, URF, UFL, ULB, DFR, DLF, DBL, DRB };
-    static const signed char  corner_orientations_U[8]  = { 0, 0, 0, 0, 0, 0, 0, 0 };
-    static const edge_t       edge_positions_U[12] = { UB, UR, UF, UL, DR, DF, DL, DB, FR, FL, BL, BR };
-    static const signed char  edge_orientations_U[12] = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+	static const corner_t	corner_positions_U[8]  = { UBR, URF, UFL, ULB, DFR, DLF, DBL, DRB };
+    static const char		corner_orientations_U[8]  = { 0, 0, 0, 0, 0, 0, 0, 0 };
+    static const edge_t		edge_positions_U[12] = { UB, UR, UF, UL, DR, DF, DL, DB, FR, FL, BL, BR };
+    static const char		edge_orientations_U[12] = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
 
-    static const corner_t     corner_positions_R[8]  = { DFR, UFL, ULB, URF, DRB, DLF, DBL, UBR };
-    static const signed char  corner_orientations_R[8]  = { 2, 0, 0, 1, 1, 0, 0, 2 };
-    static const edge_t       edge_positions_R[12] = { FR, UF, UL, UB, BR, DF, DL, DB, DR, FL, BL, UR };
-    static const signed char  edge_orientations_R[12] = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+    static const corner_t	corner_positions_R[8]  = { DFR, UFL, ULB, URF, DRB, DLF, DBL, UBR };
+    static const char		corner_orientations_R[8]  = { 2, 0, 0, 1, 1, 0, 0, 2 };
+    static const edge_t		edge_positions_R[12] = { FR, UF, UL, UB, BR, DF, DL, DB, DR, FL, BL, UR };
+    static const char		edge_orientations_R[12] = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
 
-    static const corner_t     corner_positions_F[8]  = { UFL, DLF, ULB, UBR, URF, DFR, DBL, DRB };
-    static const signed char  corner_orientations_F[8]  = { 1, 2, 0, 0, 2, 1, 0, 0 };
-    static const edge_t       edge_positions_F[12] = { UR, FL, UL, UB, DR, FR, DL, DB, UF, DF, BL, BR };
-    static const signed char  edge_orientations_F[12] = { 0, 1, 0, 0, 0, 1, 0, 0, 1, 1, 0, 0 };
+    static const corner_t	corner_positions_F[8]  = { UFL, DLF, ULB, UBR, URF, DFR, DBL, DRB };
+    static const char		corner_orientations_F[8]  = { 1, 2, 0, 0, 2, 1, 0, 0 };
+    static const edge_t		edge_positions_F[12] = { UR, FL, UL, UB, DR, FR, DL, DB, UF, DF, BL, BR };
+    static const char		edge_orientations_F[12] = { 0, 1, 0, 0, 0, 1, 0, 0, 1, 1, 0, 0 };
 
-    static const corner_t     corner_positions_D[8]  = { URF, UFL, ULB, UBR, DLF, DBL, DRB, DFR };
-    static const signed char  corner_orientations_D[8]  = { 0, 0, 0, 0, 0, 0, 0, 0 };
-    static const edge_t       edge_positions_D[12] = { UR, UF, UL, UB, DF, DL, DB, DR, FR, FL, BL, BR };
-    static const signed char  edge_orientations_D[12] = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+    static const corner_t	corner_positions_D[8]  = { URF, UFL, ULB, UBR, DLF, DBL, DRB, DFR };
+    static const char		corner_orientations_D[8]  = { 0, 0, 0, 0, 0, 0, 0, 0 };
+    static const edge_t		edge_positions_D[12] = { UR, UF, UL, UB, DF, DL, DB, DR, FR, FL, BL, BR };
+    static const char		edge_orientations_D[12] = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
 
-    static const corner_t     corner_positions_L[8]  = { URF, ULB, DBL, UBR, DFR, UFL, DLF, DRB };
-    static const signed char  corner_orientations_L[8]  = { 0, 1, 2, 0, 0, 2, 1, 0 };
-    static const edge_t       edge_positions_L[12] = { UR, UF, BL, UB, DR, DF, FL, DB, FR, UL, DL, BR };
-    static const signed char  edge_orientations_L[12] = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+    static const corner_t	corner_positions_L[8]  = { URF, ULB, DBL, UBR, DFR, UFL, DLF, DRB };
+    static const char		corner_orientations_L[8]  = { 0, 1, 2, 0, 0, 2, 1, 0 };
+    static const edge_t		edge_positions_L[12] = { UR, UF, BL, UB, DR, DF, FL, DB, FR, UL, DL, BR };
+    static const char		edge_orientations_L[12] = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
 
-    static const corner_t     corner_positions_B[8]  = { URF, UFL, UBR, DRB, DFR, DLF, ULB, DBL };
-    static const signed char  corner_orientations_B[8]  = { 0, 0, 1, 2, 0, 0, 2, 1 };
-    static const edge_t       edge_positions_B[12] = { UR, UF, UL, BR, DR, DF, DL, BL, FR, FL, UB, DB };
-    static const signed char  edge_orientations_B[12] = { 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1, 1 };
+    static const corner_t	corner_positions_B[8]  = { URF, UFL, UBR, DRB, DFR, DLF, ULB, DBL };
+    static const char		corner_orientations_B[8]  = { 0, 0, 1, 2, 0, 0, 2, 1 };
+    static const edge_t		edge_positions_B[12] = { UR, UF, UL, BR, DR, DF, DL, BL, FR, FL, UB, DB };
+    static const char		edge_orientations_B[12] = { 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1, 1 };
 
 	if (first) {
         memcpy(moves[0].corner_positions, corner_positions_U, sizeof(corner_positions_U));
@@ -84,7 +84,7 @@ void apply_move(cubiecube_t* cube, int move)
 	for (int i = 0; i < CORNER_NUM; i++)
 	{
 		cube->corner_positions[i] = tmp.corner_positions[move_cube.corner_positions[i]];
-		cube->corner_orientations[i] = tmp.corner_orientations[move_cube.corner_positions[i]] + move_cube.corner_orientations[i];
+		cube->corner_orientations[i] = (tmp.corner_orientations[move_cube.corner_positions[i]] + move_cube.corner_orientations[i]) % 3;
 	}
 }
 
@@ -92,10 +92,11 @@ void apply_move(cubiecube_t* cube, int move)
 void apply_move(cubiecube_t* cube, cubiecube_t* move)
 {
 	cubiecube_t			tmp;
+	memcpy(&tmp, cube, sizeof(tmp));
 	for (int i = 0; i < CORNER_NUM; i++)
 	{
 		cube->corner_positions[i] = tmp.corner_positions[move->corner_positions[i]];
-		cube->corner_orientations[i] = tmp.corner_orientations[move->corner_positions[i]] + move->corner_orientations[i];
+		cube->corner_orientations[i] = (tmp.corner_orientations[move->corner_positions[i]] + move->corner_orientations[i]) % 3;
 	}
 }
 
@@ -171,4 +172,56 @@ int				edge_permutation_coordinate(cubiecube_t* cube)
 	}
 
 	return out;
+}
+
+std::string corner_position_to_string(corner_t c)
+{
+	if (c == 0)
+	{
+		return ("URF");
+	}
+	if (c == 1)
+	{
+		return ("UFL");
+	}
+	if (c == 2)
+	{
+		return ("ULB");
+	}
+	if (c == 3)
+	{
+		return ("UBR");
+	}
+	if (c == 4)
+	{
+		return ("DFR");
+	}
+	if (c == 5)
+	{
+		return ("DLF");
+	}
+	if (c == 6)
+	{
+		return ("DBL");
+	}
+	if (c == 7)
+	{
+		return ("DRB");
+	}
+	return ("");
+}
+
+void 			print_corners(cubiecube_t* cube)
+{
+	for (int i = 0; i < CORNER_NUM; i++)
+	{
+		std::cout << cube->corner_positions[i] << "\t";
+	}
+	std::cout << std::endl;
+	for (int i = 0; i < CORNER_NUM; i++)
+	{
+		std::cout << (int)cube->corner_orientations[i] << "  \t";
+	}
+	std::cout << std::endl;
+	std::cout << std::endl;
 }

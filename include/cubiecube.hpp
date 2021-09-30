@@ -8,6 +8,7 @@ typedef enum {
     URF, UFL, ULB, UBR, DFR, DLF, DBL, DRB
 } corner_t;
 
+
 typedef enum {
     UR, UF, UL, UB, DR, DF, DL, DB, FR, FL, BL, BR
 } edge_t;
@@ -45,6 +46,9 @@ int				corner_orientation_coordinate(cubiecube_t* cube);
 int				edge_orientation_coordinate(cubiecube_t* cube);
 int				corner_permutation_coordinate(cubiecube_t* cube);
 int				edge_permutation_coordinate(cubiecube_t* cube);
+std::string 	corner_position_to_string(corner_t c);
+void 			print_corners(cubiecube_t* cude);
+// void 			print_edges(cubiecube_t* cude);
 
 
 #endif
