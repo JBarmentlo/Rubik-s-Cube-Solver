@@ -86,6 +86,11 @@ void apply_move(cubiecube_t* cube, int move)
 		cube->corner_positions[i] = tmp.corner_positions[move_cube.corner_positions[i]];
 		cube->corner_orientations[i] = (tmp.corner_orientations[move_cube.corner_positions[i]] + move_cube.corner_orientations[i]) % 3;
 	}
+	for (int i = 0; i < EDGE_NUM; i++)
+	{
+		cube->edge_positions[i] = tmp.edge_positions[move_cube.edge_positions[i]];
+		cube->edge_orientations[i] = (tmp.edge_orientations[move_cube.edge_positions[i]] + move_cube.edge_orientations[i]) % 3;
+	}
 }
 
 
@@ -97,6 +102,11 @@ void apply_move(cubiecube_t* cube, cubiecube_t* move)
 	{
 		cube->corner_positions[i] = tmp.corner_positions[move->corner_positions[i]];
 		cube->corner_orientations[i] = (tmp.corner_orientations[move->corner_positions[i]] + move->corner_orientations[i]) % 3;
+	}
+	for (int i = 0; i < EDGE_NUM; i++)
+	{
+		cube->edge_positions[i] = tmp.edge_positions[move->edge_positions[i]];
+		cube->edge_orientations[i] = (tmp.edge_orientations[move->edge_positions[i]] + move->edge_orientations[i]) % 3;
 	}
 }
 
@@ -176,46 +186,23 @@ int				edge_permutation_coordinate(cubiecube_t* cube)
 
 std::string corner_position_to_string(corner_t c)
 {
-	if (c == 0)
-	{
-		return ("URF");
-	}
-	if (c == 1)
-	{
-		return ("UFL");
-	}
-	if (c == 2)
-	{
-		return ("ULB");
-	}
-	if (c == 3)
-	{
-		return ("UBR");
-	}
-	if (c == 4)
-	{
-		return ("DFR");
-	}
-	if (c == 5)
-	{
-		return ("DLF");
-	}
-	if (c == 6)
-	{
-		return ("DBL");
-	}
-	if (c == 7)
-	{
-		return ("DRB");
-	}
-	return ("");
+
+	std::string names[12] = {"URF", "UFL", "ULB", "UBR", "DFR", "DLF", "DBL", "DRB"};
+	return names[c];
 }
+
+std::string edge_position_to_string(edge_t e)
+{
+	std::string names[12] = {"UR", "UF", "UL", "UB", "DR", "DF", "DL", "DB", "FR", "FL", "BL", "BR"};
+	return names[e];
+}
+
 
 void 			print_corners(cubiecube_t* cube)
 {
 	for (int i = 0; i < CORNER_NUM; i++)
 	{
-		std::cout << cube->corner_positions[i] << "\t";
+		std::cout << corner_position_to_string(cube->corner_positions[i]) << "\t";
 	}
 	std::cout << std::endl;
 	for (int i = 0; i < CORNER_NUM; i++)
@@ -223,5 +210,18 @@ void 			print_corners(cubiecube_t* cube)
 		std::cout << (int)cube->corner_orientations[i] << "  \t";
 	}
 	std::cout << std::endl;
+}
+
+void 			print_edges(cubiecube_t* cube)
+{
+	for (int i = 0; i < EDGE_NUM; i++)
+	{
+		std::cout << edge_position_to_string(cube->edge_positions[i]) << "\t";
+	}
+	std::cout << std::endl;
+	for (int i = 0; i < EDGE_NUM; i++)
+	{
+		std::cout << (int)cube->edge_orientations[i] << "  \t";
+	}
 	std::cout << std::endl;
 }
