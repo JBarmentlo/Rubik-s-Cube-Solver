@@ -111,6 +111,19 @@ void apply_move(cubiecube_t* cube, cubiecube_t* move)
 }
 
 
+int factorial(int n)
+{
+	static int factorials[12] = {1, 1, 2, 6, 24, 120, 720, 5040, 40320, 362880, 3628800, 39916800}; // FOR SPEED
+  	return factorials[n];
+}
+
+int binomial_coefficient(int n, int k)
+{
+	return (factorial(n) / (factorial(k) * factorial(n - k)));
+}
+
+
+
 int				corner_orientation_coordinate(cubiecube_t* cube)
 {
 	int out(0);
@@ -136,10 +149,6 @@ int				edge_orientation_coordinate(cubiecube_t* cube)
 	return out;
 }
 
-int factorial(int n)
-{
-  return (n == 1 || n == 0) ? 1 : factorial(n - 1) * n;
-}
 
 int				corner_permutation_coordinate(cubiecube_t* cube)
 {
@@ -156,11 +165,12 @@ int				corner_permutation_coordinate(cubiecube_t* cube)
 				left = left + 1;
 			}
 		}
-		out = out + (left * factorial(i)); // TODO put factorials up to 7 in a array for faster computation
+		out = out + (left * factorial(i));
 	}
 
 	return out;
 };
+
 
 
 int				edge_permutation_coordinate(cubiecube_t* cube)
@@ -173,16 +183,55 @@ int				edge_permutation_coordinate(cubiecube_t* cube)
 		left = 0;
 		for (int j = 0; j < i; j++)
 		{
-			if (cube->corner_positions[j] > cube->corner_positions[i])
+			if (cube->edge_positions[j] > cube->edge_positions[i])
 			{
 				left = left + 1;
 			}
 		}
-		out = out + (left * factorial(i)); // TODO put factorials up to 7 in a array for faster computation
+		out = out + (left * factorial(i));
 	}
 
 	return out;
 }
+
+
+
+int				UD_slice_coordinate(cubiecube_t* cube)
+{
+	int		occupied[12] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+	int		k[12];
+	int		out(0);
+
+	for (int i = 8; i < EDGE_NUM; i++) // we iterate over the UD slice edges
+	{
+		occupied[cube->edge_positions[i]] = 1;
+	}
+	for (int i = 0; i < EDGE_NUM; i++)
+	{
+		k[i] = 3;
+		for (int j = i; j < EDGE_NUM; j++)
+		{
+			k[i] = k[i] - occupied[j];
+		}
+	}
+	for (int i = 0; i < EDGE_NUM; i++)
+	{
+		if (k[i] != -1)
+		{
+			out = out + binomial_coefficient(i, k[i]);
+		}
+	}
+	return (out);
+};
+
+
+
+
+
+
+
+
+
 
 std::string corner_position_to_string(corner_t c)
 {
