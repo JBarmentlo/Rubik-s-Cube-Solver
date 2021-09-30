@@ -1,3 +1,11 @@
+kociemba/**
+kociemba
+venv/**
+.vscode/**
+build
+.envrc
+
+
 # Prerequisites
 *.d
 
