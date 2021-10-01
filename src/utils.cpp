@@ -9,6 +9,14 @@ int				factorial(int n)
 
 int				binomial_coefficient(int n, int k)
 {
+	if (n < k)
+	{
+		return (0);
+	}
+	if (k < 0)
+	{
+		return (0);
+	}
 	return (factorial(n) / (factorial(k) * factorial(n - k)));
 };
 
@@ -45,4 +53,9 @@ int				get_corner_orientation_parity(cubiecube_t *cube) // THIS SHOULD RETURN 0 
 		out = out + cube->corner_orientations[i];
 	}
 	return (out);
+}
+
+bool is_ud_slice_edge(edge_t e)
+{
+	return (e >=  FR);
 }

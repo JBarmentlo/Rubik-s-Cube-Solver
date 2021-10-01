@@ -74,6 +74,8 @@ void 			apply_move(cubiecube_t* cube, int move);
 void 			apply_move(cubiecube_t* cube, cubiecube_t* move);
 cubiecube_t		create_cubie_with_corner_orientation_coord(int coord);
 cubiecube_t		create_cubie_with_edge_orientation_coord(int coord);
+cubiecube_t		create_cubie_with_UD_slice_coord(int coord);
+
 // void			display(cubiecube_t* cube);
 
 int				corner_orientation_coordinate(cubiecube_t* cube);

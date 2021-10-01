@@ -118,8 +118,6 @@ void apply_move(cubiecube_t* cube, int move)
 	}
 }
 
-
-
 int				corner_orientation_coordinate(cubiecube_t* cube)
 {
 	// The loop iterates over all corners except the last (which is not used to compute the coordinate)
@@ -198,9 +196,12 @@ int				UD_slice_coordinate(cubiecube_t* cube)
 	int		k[12];
 	int		out(0);
 
-	for (int i = 8; i < EDGE_NUM; i++) // we iterate over the UD slice edges
+	for (int i = 0; i < EDGE_NUM; i++) // we iterate over the UD slice edges
 	{
-		occupied[cube->edge_positions[i]] = 1;
+		if (is_ud_slice_edge(cube->edge_positions[i]))
+		{
+			occupied[i] = 1;
+		}
 	}
 	for (int i = 0; i < EDGE_NUM; i++)
 	{
@@ -212,11 +213,23 @@ int				UD_slice_coordinate(cubiecube_t* cube)
 	}
 	for (int i = 0; i < EDGE_NUM; i++)
 	{
-		if (k[i] != -1 && occupied[i] == 0)
+		if (occupied[i] == 0)
+		{
+			std::cout << "        |";
+		}
+		else
+		{
+			std::cout << "   X    |";
+		}
+	}
+	for (int i = 0; i < EDGE_NUM; i++)
+	{
+		if (occupied[i] == 0)
 		{
 			out = out + binomial_coefficient(i, k[i]);
 		}
 	}
+	std::cout << "  " << out << std::endl;
 	return (out);
 };
 
@@ -262,6 +275,48 @@ cubiecube_t		create_cubie_with_edge_orientation_coord(int coord)
 	cube.corner_orientations[LAST_EDGE] = 2 - parity;
 	return (cube);
 };
+
+
+cubiecube_t		create_cubie_with_UD_slice_coord(int coord)
+{
+	cubiecube_t cube;
+	memcpy(&cube, &homecube, sizeof(cube));
+
+
+	int x = 4;
+	int a = coord;
+
+	bool filled[EDGE_NUM];
+	edge_t slice_edge[4] = {FR, FL, BL, BR};
+	edge_t other_edge[8] = {UR, UF, UL, UB, DR, DF, DL, DB};
+
+	for (int j = FIRST_EDGE; j <= LAST_EDGE; j++)
+	{
+		filled[j] = false;
+	}
+
+	for (int j = FIRST_EDGE; j <= LAST_EDGE; j++)
+	{
+		if (a - binomial_coefficient(11 - j, x) >= 0)
+		{
+			cube.edge_positions[j] = slice_edge[4 - x];
+			a = a - binomial_coefficient(11 - j, x);
+			x = x - 1;
+			filled[j] = true;
+		}
+	}
+	x = 0;
+	for (int j = FIRST_EDGE; j <= LAST_EDGE; j++)
+	{
+		if (!filled[j])
+		{
+			cube.edge_positions[j] = other_edge[x];
+			x = x + 1;
+		}
+	}
+	return (cube);
+}
+
 
 
 void 			print_corners(cubiecube_t* cube)
