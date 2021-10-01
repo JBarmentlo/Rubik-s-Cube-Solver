@@ -2,6 +2,23 @@
 #include <cstring>
 #include <string>
 
+
+void apply_move(cubiecube_t* cube, cubiecube_t* move)
+{
+	cubiecube_t			tmp;
+	memcpy(&tmp, cube, sizeof(tmp));
+	for (int i = 0; i < CORNER_NUM; i++)
+	{
+		cube->corner_positions[i] = tmp.corner_positions[move->corner_positions[i]];
+		cube->corner_orientations[i] = (tmp.corner_orientations[move->corner_positions[i]] + move->corner_orientations[i]) % 3;
+	}
+	for (int i = 0; i < EDGE_NUM; i++)
+	{
+		cube->edge_positions[i] = tmp.edge_positions[move->edge_positions[i]];
+		cube->edge_orientations[i] = (tmp.edge_orientations[move->edge_positions[i]] + move->edge_orientations[i]) % 3;
+	}
+}
+
 cubiecube_t* get_moves()
 {
 	static  cubiecube_t	moves[18];
@@ -67,6 +84,14 @@ cubiecube_t* get_moves()
         memcpy(moves[5].corner_orientations, corner_orientations_B, sizeof(corner_orientations_B));
         memcpy(moves[5].edge_positions, edge_positions_B, sizeof(edge_positions_B));
         memcpy(moves[5].edge_orientations, edge_orientations_B, sizeof(edge_orientations_B));
+
+		for (int i = 0; i < 6; i++)
+		{
+			memcpy(&moves[i + 6], &moves[i], sizeof(moves[i]));
+			apply_move(&moves[i + 6], &moves[i]);
+			memcpy(&moves[i + 12], &moves[i + 6], sizeof(moves[i]));
+			apply_move(&moves[i + 12], &moves[i]);
+		}
     }
 
 	first = false;
@@ -94,21 +119,6 @@ void apply_move(cubiecube_t* cube, int move)
 }
 
 
-void apply_move(cubiecube_t* cube, cubiecube_t* move)
-{
-	cubiecube_t			tmp;
-	memcpy(&tmp, cube, sizeof(tmp));
-	for (int i = 0; i < CORNER_NUM; i++)
-	{
-		cube->corner_positions[i] = tmp.corner_positions[move->corner_positions[i]];
-		cube->corner_orientations[i] = (tmp.corner_orientations[move->corner_positions[i]] + move->corner_orientations[i]) % 3;
-	}
-	for (int i = 0; i < EDGE_NUM; i++)
-	{
-		cube->edge_positions[i] = tmp.edge_positions[move->edge_positions[i]];
-		cube->edge_orientations[i] = (tmp.edge_orientations[move->edge_positions[i]] + move->edge_orientations[i]) % 3;
-	}
-}
 
 
 int factorial(int n)
@@ -116,6 +126,7 @@ int factorial(int n)
 	static int factorials[12] = {1, 1, 2, 6, 24, 120, 720, 5040, 40320, 362880, 3628800, 39916800}; // FOR SPEED
   	return factorials[n];
 }
+
 
 int binomial_coefficient(int n, int k)
 {
@@ -224,7 +235,38 @@ int				UD_slice_coordinate(cubiecube_t* cube)
 	return (out);
 };
 
+cubiecube_t		create_cubie_with_corner_coord(int coord)	
+{
+	int parity = 0;
+	cubiecube_t cube;
+	int corner;
 
+	corner = DRB;
+	memcpy(&cube, &homecube, sizeof(cube));
+	while (corner >= URF)
+	{
+		parity = parity + (coord % 3);
+		cube.corner_orientations[corner] = coord % 3;
+		coord = coord / 3;
+		std::cout << corner << std::endl;
+
+		corner = (corner - 1);
+	}
+	parity = parity % 3;
+	if (parity % 3 == 0)
+	{
+		cube.corner_orientations[DRB] = 0;
+	}
+	if (parity % 3 == 1)
+	{
+		cube.corner_orientations[DRB] = 2;
+	}
+	if (parity % 3 == 2)
+	{
+		cube.corner_orientations[DRB] = 1;
+	}
+	return (cube);
+};
 
 
 

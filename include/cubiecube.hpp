@@ -43,6 +43,7 @@ static cubiecube_t homecube = {{URF, UFL, ULB, UBR, DFR, DLF, DBL, DRB}, {0, 0, 
 cubiecube_t* 	get_moves();
 void 			apply_move(cubiecube_t* cube, int move);
 void 			apply_move(cubiecube_t* cube, cubiecube_t* move);
+cubiecube_t		create_cubie_with_corner_coord(int coord)			;
 // void			display(cubiecube_t* cube);
 
 int				corner_orientation_coordinate(cubiecube_t* cube);
@@ -51,6 +52,9 @@ int				corner_permutation_coordinate(cubiecube_t* cube);
 int				edge_permutation_coordinate(cubiecube_t* cube);
 int				UD_slice_coordinate(cubiecube_t* cube);
 std::string 	corner_position_to_string(corner_t c);
+
+
+
 void 			print_corners(cubiecube_t* cude);
 void 			print_edges(cubiecube_t* cude);
 int				factorial(int n);

@@ -11,7 +11,6 @@ set(CMAKE_CXX_STANDARD 17)
 set(SOURCES
     src/main.cpp
     src/cubiecube.cpp
-
 )
 
 add_executable(Roobik ${SOURCES})
