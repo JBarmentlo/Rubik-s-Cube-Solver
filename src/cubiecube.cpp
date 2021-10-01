@@ -122,11 +122,12 @@ void apply_move(cubiecube_t* cube, int move)
 
 int				corner_orientation_coordinate(cubiecube_t* cube)
 {
+	// The loop iterates over all corners except the last (which is not used to compute the coordinate)
+	// cf  http://kociemba.org/cube.htm Coordinate level
 	int out(0);
 
-	for (int i = URF; i <= DBL; i++) // This loop intentionnaly does not include the first corner orientation http://kociemba.org/cube.htm Coordinate level
+	for (int i = FIRST_CORNER; i <= LAST_CORNER - 1; i++)
 	{
-		std::cout << corner_position_to_string((corner_t)i) << std::endl;
 		out = out * 3 + cube->corner_orientations[i]; // TODO put powers up to 7 in a array for faster computation
 		std::cout << out << std::endl;
 		std::cout << std::endl;
@@ -137,9 +138,11 @@ int				corner_orientation_coordinate(cubiecube_t* cube)
 
 int				edge_orientation_coordinate(cubiecube_t* cube)
 {
+	// The loop iterates over all edges except the last (which is not used to compute the coordinate)
+	// cf  http://kociemba.org/cube.htm Coordinate level
 	int out(0);
 
-	for (int i = EDGE_NUM - 1; i > 0; i--) // This loop intentionnaly does not include the first edge orientation http://kociemba.org/cube.htm Coordinate level
+	for (int i = FIRST_EDGE; i <= LAST_EDGE - 1; i++)
 	{
 		out = out * 2 + cube->edge_orientations[i];
 	}
@@ -152,7 +155,7 @@ int				corner_permutation_coordinate(cubiecube_t* cube)
 	int out(0);
 	int left;
 
-	for (int i = 0; i < CORNER_NUM; i++)
+	for (int i = FIRST_CORNER; i <= LAST_CORNER; i++)
 	{
 		left = 0;
 		for (int j = 0; j < i; j++)
@@ -173,7 +176,7 @@ int				edge_permutation_coordinate(cubiecube_t* cube)
 	int out(0);
 	int left;
 
-	for (int i = 0; i < EDGE_NUM; i++)
+	for (int i = FIRST_EDGE; i <= LAST_EDGE; i++)
 	{
 		left = 0;
 		for (int j = 0; j < i; j++)
@@ -219,7 +222,7 @@ int				UD_slice_coordinate(cubiecube_t* cube)
 
 
 
-cubiecube_t		create_cubie_with_corner_coord(int coord)	
+cubiecube_t		create_cubie_with_corner_orientation_coord(int coord)	
 {
 	int parity = 0;
 	cubiecube_t cube;
@@ -241,6 +244,24 @@ cubiecube_t		create_cubie_with_corner_coord(int coord)
 };
 
 
+
+cubiecube_t		create_cubie_with_edge_orientation_coord(int coord)
+{
+	int parity = 0;
+	cubiecube_t cube;
+
+	memcpy(&cube, &homecube, sizeof(cube));
+	for (int e = LAST_EDGE - 1; e >= FIRST_EDGE; e--)
+	{
+		parity = parity + (coord % 2);
+		cube.edge_orientations[e] = coord % 2;
+		coord = coord / 2;
+	}
+
+	parity = parity % 2;
+	cube.corner_orientations[LAST_EDGE] = 2 - parity;
+	return (cube);
+};
 
 
 void 			print_corners(cubiecube_t* cube)
