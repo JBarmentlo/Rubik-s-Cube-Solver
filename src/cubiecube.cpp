@@ -1,7 +1,7 @@
 #include "cubiecube.hpp"
-#include <cstring>
-#include <string>
+#include "utils.hpp"
 
+#include <cstring>
 
 void apply_move(cubiecube_t* cube, cubiecube_t* move)
 {
@@ -120,33 +120,20 @@ void apply_move(cubiecube_t* cube, int move)
 
 
 
-
-int factorial(int n)
-{
-	static int factorials[12] = {1, 1, 2, 6, 24, 120, 720, 5040, 40320, 362880, 3628800, 39916800}; // FOR SPEED
-  	return factorials[n];
-}
-
-
-int binomial_coefficient(int n, int k)
-{
-	return (factorial(n) / (factorial(k) * factorial(n - k)));
-}
-
-
-
 int				corner_orientation_coordinate(cubiecube_t* cube)
 {
 	int out(0);
 
-	for (int i = CORNER_NUM - 1; i > 0; i--) // This loop intentionnaly does not include the first corner orientation http://kociemba.org/cube.htm Coordinate level
+	for (int i = URF; i <= DBL; i++) // This loop intentionnaly does not include the first corner orientation http://kociemba.org/cube.htm Coordinate level
 	{
+		std::cout << corner_position_to_string((corner_t)i) << std::endl;
 		out = out * 3 + cube->corner_orientations[i]; // TODO put powers up to 7 in a array for faster computation
+		std::cout << out << std::endl;
+		std::cout << std::endl;
 	}
 
 	return out;
 };
-
 
 int				edge_orientation_coordinate(cubiecube_t* cube)
 {
@@ -159,7 +146,6 @@ int				edge_orientation_coordinate(cubiecube_t* cube)
 
 	return out;
 }
-
 
 int				corner_permutation_coordinate(cubiecube_t* cube)
 {
@@ -182,8 +168,6 @@ int				corner_permutation_coordinate(cubiecube_t* cube)
 	return out;
 };
 
-
-
 int				edge_permutation_coordinate(cubiecube_t* cube)
 {
 	int out(0);
@@ -204,8 +188,6 @@ int				edge_permutation_coordinate(cubiecube_t* cube)
 
 	return out;
 }
-
-
 
 int				UD_slice_coordinate(cubiecube_t* cube)
 {
@@ -235,58 +217,30 @@ int				UD_slice_coordinate(cubiecube_t* cube)
 	return (out);
 };
 
+
+
 cubiecube_t		create_cubie_with_corner_coord(int coord)	
 {
 	int parity = 0;
 	cubiecube_t cube;
 	int corner;
 
-	corner = DRB;
+	corner = DBL;
 	memcpy(&cube, &homecube, sizeof(cube));
 	while (corner >= URF)
 	{
 		parity = parity + (coord % 3);
 		cube.corner_orientations[corner] = coord % 3;
 		coord = coord / 3;
-		std::cout << corner << std::endl;
-
 		corner = (corner - 1);
 	}
+
 	parity = parity % 3;
-	if (parity % 3 == 0)
-	{
-		cube.corner_orientations[DRB] = 0;
-	}
-	if (parity % 3 == 1)
-	{
-		cube.corner_orientations[DRB] = 2;
-	}
-	if (parity % 3 == 2)
-	{
-		cube.corner_orientations[DRB] = 1;
-	}
+	cube.corner_orientations[DRB] = 3 - parity;
 	return (cube);
 };
 
 
-
-
-
-
-
-
-std::string corner_position_to_string(corner_t c)
-{
-
-	std::string names[12] = {"URF", "UFL", "ULB", "UBR", "DFR", "DLF", "DBL", "DRB"};
-	return names[c];
-}
-
-std::string edge_position_to_string(edge_t e)
-{
-	std::string names[12] = {"UR", "UF", "UL", "UB", "DR", "DF", "DL", "DB", "FR", "FL", "BL", "BR"};
-	return names[e];
-}
 
 
 void 			print_corners(cubiecube_t* cube)

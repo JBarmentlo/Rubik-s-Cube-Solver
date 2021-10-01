@@ -8,10 +8,21 @@ typedef enum {
     URF, UFL, ULB, UBR, DFR, DLF, DBL, DRB
 } corner_t;
 
+inline corner_t operator++ (corner_t &d, int) {
+	corner_t tmp = d;
+    d = static_cast<corner_t>((static_cast<int>(d) + 1));
+	return tmp;
+}
 
 typedef enum {
     UR, UF, UL, UB, DR, DF, DL, DB, FR, FL, BL, BR
 } edge_t;
+
+inline edge_t operator++ (edge_t &d, int) {
+	edge_t tmp = d;
+    d = static_cast<edge_t>((static_cast<int>(d) + 1));
+	return tmp;
+}
 
 #define EDGE_NUM 12
 #define CORNER_NUM 8
