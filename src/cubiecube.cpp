@@ -284,27 +284,45 @@ cubiecube_t		create_cubie_with_UD_slice_coord(int coord)
 
 
 	int x = 4;
-	int a = coord;
+	// int a = coord;
 
 	bool filled[EDGE_NUM];
+	int leftest_ud_edge = 12;
+	int cnk;
 	edge_t slice_edge[4] = {FR, FL, BL, BR};
 	edge_t other_edge[8] = {UR, UF, UL, UB, DR, DF, DL, DB};
 
 	for (int j = FIRST_EDGE; j <= LAST_EDGE; j++)
 	{
 		filled[j] = false;
+		cube.edge_positions[j] = UR;
+
+	}
+	for (int a = 0; a < 4; a++)
+	{
+		for (int j = FIRST_EDGE; j < leftest_ud_edge; j++)
+		{
+			cnk = sum_cnk(j + 1, leftest_ud_edge - 1, x - 1);
+			std::cout << j << " coord: " << coord << " sum_C("<< j + 1 << ", " << leftest_ud_edge - 1 << ", "<< x - 1 << ") " << cnk << std::endl;
+
+			if (coord - cnk >= 0)
+			{
+				cube.edge_positions[j] = slice_edge[4 - x];
+				coord = coord - cnk;
+				x = x - 1;
+				filled[j] = true;
+				leftest_ud_edge = j;
+				std::cout << "Placed " << j << std::endl;
+
+			}
+			UD_slice_coordinate(&cube);
+			std::cout << std::endl;
+		}
+		std::cout << std::endl;
+		std::cout << std::endl;
+
 	}
 
-	for (int j = FIRST_EDGE; j <= LAST_EDGE; j++)
-	{
-		if (a - binomial_coefficient(11 - j, x) >= 0)
-		{
-			cube.edge_positions[j] = slice_edge[4 - x];
-			a = a - binomial_coefficient(11 - j, x);
-			x = x - 1;
-			filled[j] = true;
-		}
-	}
 	x = 0;
 	for (int j = FIRST_EDGE; j <= LAST_EDGE; j++)
 	{
