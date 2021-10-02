@@ -13,6 +13,8 @@
 #define N_UD 			494 // Max values for coordinates
 #define N_CORNER_ORI 	2186
 #define N_EDGE_ORI 		2047
+#define N_MOVES			18
+#define N_BASIC_MOVES	6
 
 
 typedef enum {

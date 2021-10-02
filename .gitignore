@@ -5,6 +5,7 @@ venv/**
 .vscode/**
 build
 .envrc
+tables/*
 
 
 # Prerequisites
