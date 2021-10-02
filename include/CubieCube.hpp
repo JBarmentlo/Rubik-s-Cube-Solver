@@ -23,6 +23,13 @@ public:
 	int 	edge_perm_coord();
 	int 	UD_coord();
 
+
+	void 	set_corner_ori_coord(int coord);
+	// void 	set_corner_perm_coord(int coord);
+	void 	set_edge_ori_coord(int coord);
+	// void 	set_edge_perm_coord(int coord);
+	void 	set_UD_coord(int coord);
+
 	void  	print_corners();
 	void  	print_edges();
 	void	set_solved();

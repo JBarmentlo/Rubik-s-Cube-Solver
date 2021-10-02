@@ -13,6 +13,7 @@ set(SOURCES
     src/cubiecube_utils.cpp
     src/utils.cpp
     src/CubieCube.cpp
+    src/move_tables.cpp
 )
 
 add_executable(Roobik ${SOURCES})

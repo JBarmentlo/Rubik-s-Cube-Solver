@@ -97,3 +97,21 @@ void	CubieCube::set_solved()
 {
 	memcpy(&this->data, &homecube, sizeof(this->data));
 }
+
+
+void 	CubieCube::set_corner_ori_coord(int coord)
+{
+	set_corner_orientation_coord(coord, &this->data);
+}
+
+
+void 	CubieCube::set_edge_ori_coord(int coord)
+{
+	set_edge_orientation_coord(coord, &this->data);
+};
+
+
+void 	CubieCube::set_UD_coord(int coord)
+{
+	set_UD_slice_coord(coord, &this->data);
+}

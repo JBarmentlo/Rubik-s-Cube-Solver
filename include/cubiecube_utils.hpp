@@ -10,6 +10,11 @@
 #define FIRST_EDGE 		UR
 #define LAST_EDGE 		BR
 
+#define N_UD 			494 // Max values for coordinates
+#define N_CORNER_ORI 	2186
+#define N_EDGE_ORI 		2047
+
+
 typedef enum {
     URF, UFL, ULB, UBR, DFR, DLF, DBL, DRB
 } corner_t;
@@ -78,6 +83,13 @@ int				edge_orientation_coordinate(cubiecube_t* cube);
 int				corner_permutation_coordinate(cubiecube_t* cube);
 int				edge_permutation_coordinate(cubiecube_t* cube);
 int				UD_slice_coordinate(cubiecube_t* cube);
+
+void			set_corner_orientation_coord(int coord, cubiecube_t* cube);
+void			set_edge_orientation_coord(int coord, cubiecube_t* cube);
+void			set_UD_slice_coord(int coord, cubiecube_t* cube);
+
+
+
 
 std::string 	corner_position_to_string(corner_t c);
 
