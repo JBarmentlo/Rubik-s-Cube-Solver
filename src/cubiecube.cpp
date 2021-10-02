@@ -211,17 +211,17 @@ int				UD_slice_coordinate(cubiecube_t* cube)
 			k[i] = k[i] - occupied[j];
 		}
 	}
-	for (int i = 0; i < EDGE_NUM; i++)
-	{
-		if (occupied[i] == 0)
-		{
-			std::cout << "        |";
-		}
-		else
-		{
-			std::cout << "   X    |";
-		}
-	}
+	// for (int i = 0; i < EDGE_NUM; i++)
+	// {
+	// 	if (occupied[i] == 0)
+	// 	{
+	// 		std::cout << "        |";
+	// 	}
+	// 	else
+	// 	{
+	// 		std::cout << "   X    |";
+	// 	}
+	// }
 	for (int i = 0; i < EDGE_NUM; i++)
 	{
 		if (occupied[i] == 0)
@@ -229,7 +229,7 @@ int				UD_slice_coordinate(cubiecube_t* cube)
 			out = out + binomial_coefficient(i, k[i]);
 		}
 	}
-	std::cout << "  " << out << std::endl;
+	// std::cout << "  " << out << std::endl;
 	return (out);
 };
 
@@ -303,7 +303,7 @@ cubiecube_t		create_cubie_with_UD_slice_coord(int coord)
 		for (int j = FIRST_EDGE; j < leftest_ud_edge; j++)
 		{
 			cnk = sum_cnk(j + 1, leftest_ud_edge - 1, x - 1);
-			std::cout << j << " coord: " << coord << " sum_C("<< j + 1 << ", " << leftest_ud_edge - 1 << ", "<< x - 1 << ") " << cnk << std::endl;
+			// std::cout << j << " coord: " << coord << " sum_C("<< j + 1 << ", " << leftest_ud_edge - 1 << ", "<< x - 1 << ") " << cnk << std::endl;
 
 			if (coord - cnk >= 0)
 			{
@@ -312,15 +312,11 @@ cubiecube_t		create_cubie_with_UD_slice_coord(int coord)
 				x = x - 1;
 				filled[j] = true;
 				leftest_ud_edge = j;
-				std::cout << "Placed " << j << std::endl;
+				// std::cout << "Placed " << j << std::endl;
 
 			}
-			UD_slice_coordinate(&cube);
-			std::cout << std::endl;
+			// UD_slice_coordinate(&cube);
 		}
-		std::cout << std::endl;
-		std::cout << std::endl;
-
 	}
 
 	x = 0;

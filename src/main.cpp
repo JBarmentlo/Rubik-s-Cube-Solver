@@ -41,7 +41,7 @@ int main()
 	cubiecube_t* moves = get_moves();
 	cubiecube_t eo = create_cubie_with_edge_orientation_coord(1245);
 	cubiecube_t co = create_cubie_with_corner_orientation_coord(1111);
-	cubiecube_t test = create_cubie_with_UD_slice_coord(494);
+	cubiecube_t test;
 
 	// cubiecube_t test = {{URF, UFL, ULB, UBR, DFR, DLF, DBL, DRB}, {0, 0, 0, 0, 0, 0, 0, 0}, {UR, UR, UR, UR, UR, UR, UR, FL, FR, BL, UR, BR}, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}};
 	// cubiecube_t test = {{URF, UFL, ULB, UBR, DFR, DLF, DBL, DRB}, {0, 0, 0, 0, 0, 0, 0,  {UR, UF, UL, UB, DR, DF, DL, DB, FR, FL, BL, BR}, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}};
@@ -52,21 +52,13 @@ int main()
 
 	std::cout << std::endl;
 
-	UD_slice_coordinate(&test);
 	
 	
 	
-	// for (int i = 0; i < 10; i ++)
-	// {
-	// 	test = create_cubie_with_UD_slice_coord(i);
-	// 	UD_slice_coordinate(&test);
-	// 	std::cout << std::endl;
+	for (int i = 0; i < 494; i ++)
+	{
+		test = create_cubie_with_UD_slice_coord(i);
+		std::cout << UD_slice_coordinate(&test) << std::endl;
 
-	// }
-	// int a = UD_slice_coordinate(&test);
-	// std::cout << "ud coord: " << a << std::endl;
-
-
-
-
+	}
 }
