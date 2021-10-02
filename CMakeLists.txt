@@ -10,8 +10,9 @@ set(CMAKE_CXX_STANDARD 17)
 
 set(SOURCES
     src/main.cpp
-    src/cubiecube.cpp
+    src/cubiecube_utils.cpp
     src/utils.cpp
+    src/CubieCube.cpp
 )
 
 add_executable(Roobik ${SOURCES})

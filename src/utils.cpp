@@ -1,5 +1,5 @@
 #include <string>
-#include "cubiecube.hpp"
+#include "cubiecube_utils.hpp"
 
 int				factorial(int n)
 {

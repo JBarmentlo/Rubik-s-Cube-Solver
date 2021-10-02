@@ -15,7 +15,29 @@ void apply_move(cubiecube_t* cube, cubiecube_t* move)
 	for (int i = 0; i < EDGE_NUM; i++)
 	{
 		cube->edge_positions[i] = tmp.edge_positions[move->edge_positions[i]];
-		cube->edge_orientations[i] = (tmp.edge_orientations[move->edge_positions[i]] + move->edge_orientations[i]) % 3;
+		cube->edge_orientations[i] = (tmp.edge_orientations[move->edge_positions[i]] + move->edge_orientations[i]) % 2;
+	}
+}
+
+void apply_move_corners(cubiecube_t* cube, cubiecube_t* move)
+{
+	cubiecube_t			tmp;
+	memcpy(&tmp, cube, sizeof(tmp));
+	for (int i = 0; i < CORNER_NUM; i++)
+	{
+		cube->corner_positions[i] = tmp.corner_positions[move->corner_positions[i]];
+		cube->corner_orientations[i] = (tmp.corner_orientations[move->corner_positions[i]] + move->corner_orientations[i]) % 3;
+	}
+}
+
+void apply_move_edges(cubiecube_t* cube, cubiecube_t* move)
+{
+	cubiecube_t			tmp;
+	memcpy(&tmp, cube, sizeof(tmp));
+	for (int i = 0; i < EDGE_NUM; i++)
+	{
+		cube->edge_positions[i] = tmp.edge_positions[move->edge_positions[i]];
+		cube->edge_orientations[i] = (tmp.edge_orientations[move->edge_positions[i]] + move->edge_orientations[i]) % 2;
 	}
 }
 
@@ -114,7 +136,7 @@ void 			apply_move(cubiecube_t* cube, int move)
 	for (int i = 0; i < EDGE_NUM; i++)
 	{
 		cube->edge_positions[i] = tmp.edge_positions[move_cube.edge_positions[i]];
-		cube->edge_orientations[i] = (tmp.edge_orientations[move_cube.edge_positions[i]] + move_cube.edge_orientations[i]) % 3;
+		cube->edge_orientations[i] = (tmp.edge_orientations[move_cube.edge_positions[i]] + move_cube.edge_orientations[i]) % 2;
 	}
 }
 
