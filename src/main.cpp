@@ -1,4 +1,4 @@
-#include "cubiecube.hpp"
+#include "cubiecube_utils.hpp"
 #include "utils.hpp"
 
 
@@ -51,14 +51,9 @@ int main()
 	// std::cout << std::endl;
 
 	std::cout << std::endl;
-
-	
-	
-	
 	for (int i = 0; i < 494; i ++)
 	{
 		test = create_cubie_with_UD_slice_coord(i);
 		std::cout << UD_slice_coordinate(&test) << std::endl;
-
 	}
 }

@@ -1,4 +1,4 @@
-#include "cubiecube.hpp"
+#include "cubiecube_utils.hpp"
 #include "utils.hpp"
 
 #include <cstring>
@@ -99,7 +99,7 @@ cubiecube_t* get_moves()
 }
 
 
-void apply_move(cubiecube_t* cube, int move)
+void 			apply_move(cubiecube_t* cube, int move)
 {
 	static cubiecube_t* moves = get_moves();
 	cubiecube_t			tmp;
@@ -211,17 +211,6 @@ int				UD_slice_coordinate(cubiecube_t* cube)
 			k[i] = k[i] - occupied[j];
 		}
 	}
-	// for (int i = 0; i < EDGE_NUM; i++)
-	// {
-	// 	if (occupied[i] == 0)
-	// 	{
-	// 		std::cout << "        |";
-	// 	}
-	// 	else
-	// 	{
-	// 		std::cout << "   X    |";
-	// 	}
-	// }
 	for (int i = 0; i < EDGE_NUM; i++)
 	{
 		if (occupied[i] == 0)
@@ -229,7 +218,6 @@ int				UD_slice_coordinate(cubiecube_t* cube)
 			out = out + binomial_coefficient(i, k[i]);
 		}
 	}
-	// std::cout << "  " << out << std::endl;
 	return (out);
 };
 
@@ -256,8 +244,6 @@ cubiecube_t		create_cubie_with_corner_orientation_coord(int coord)
 	return (cube);
 };
 
-
-
 cubiecube_t		create_cubie_with_edge_orientation_coord(int coord)
 {
 	int parity = 0;
@@ -275,7 +261,6 @@ cubiecube_t		create_cubie_with_edge_orientation_coord(int coord)
 	cube.corner_orientations[LAST_EDGE] = 2 - parity;
 	return (cube);
 };
-
 
 cubiecube_t		create_cubie_with_UD_slice_coord(int coord)
 {
