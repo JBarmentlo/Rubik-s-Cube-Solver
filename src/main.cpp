@@ -5,6 +5,22 @@
 #include "tests.hpp"
 #include "move_tables.hpp"
 
+int** read_raw_move_table(int coord_max, std::string filename)
+{
+	int*			table;
+	table = (int*)malloc(N_MOVES * (coord_max + 1) * sizeof(int));
+	int**			pretty_table;
+	pretty_table = (int**)malloc((coord_max + 1) * sizeof(int*));
+
+	std::ifstream in(filename, std::ios_base::binary);
+	in.read((char*)table, N_MOVES * (coord_max + 1) * sizeof(int));
+
+	for (int i = 0; i < coord_max + 1; i++)
+	{
+		pretty_table[i] = &table[i * N_MOVES];
+	}
+	return pretty_table;
+}
 
 
 
@@ -23,20 +39,21 @@ int main()
 
 	// std::cout << std::endl;
 	// std::cout << std::endl;
-	check_set_coords_1();
-	make_raw_move_table(corner_orientation_coordinate, set_corner_orientation_coord, N_CORNER_ORI, "../tables/corner_ori_move");
-	make_raw_move_table(UD_slice_coordinate, set_UD_slice_coord, N_UD, "../tables/UD_move");
-	make_raw_move_table(edge_orientation_coordinate, set_edge_orientation_coord, N_EDGE_ORI, "../tables/edge_ori_move");
+	// check_set_coords_1();
+	// make_raw_move_table(corner_orientation_coordinate, set_corner_orientation_coord, N_CORNER_ORI, "../tables/corner_ori_move");
+	// make_raw_move_table(UD_slice_coordinate, set_UD_slice_coord, N_UD, "../tables/UD_move");
+	// make_raw_move_table(edge_orientation_coordinate, set_edge_orientation_coord, N_EDGE_ORI, "../tables/edge_ori_move");
 
 	CubieCube cube;
 	std::cout << std::endl;
 	std::cout << std::endl;
 
+
+	auto table = read_raw_move_table(N_CORNER_ORI, "../tables/corner_ori_move");
 	for (int i = 0; i < 18; i++) 
 	{
-		cube.set_solved();
-		cube.multiply(&moves[i]);
-		std::cout << cube.corner_ori_coord() << std::endl;
+		std::cout << table[1][i] << std::endl;
 	}
+
 
 }

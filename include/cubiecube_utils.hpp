@@ -102,4 +102,40 @@ void 			print_edges(cubiecube_t* cude);
 int				factorial(int n);
 
 
+// int verify(cubiecube_t* cubiecube)
+// {
+//     int sum = 0, e, i, c;
+//     int edgeCount[12] = {0};
+//     int cornerCount[8] = {0};
+
+//     for(e = 0; e < EDGE_COUNT; e++)
+//         edgeCount[cubiecube->ep[e]]++;
+//     for (i = 0; i < 12; i++)
+//         if (edgeCount[i] != 1)
+//             return -2;
+
+//     for (i = 0; i < 12; i++)
+//         sum += cubiecube->eo[i];
+//     if (sum % 2 != 0)
+//         return -3;
+
+//     for(c = 0; c < CORNER_COUNT; c++)
+//         cornerCount[cubiecube->cp[c]]++;
+//     for (i = 0; i < 8; i++)
+//         if (cornerCount[i] != 1)
+//             return -4;// missing corners
+
+//     sum = 0;
+//     for (i = 0; i < 8; i++)
+//         sum += cubiecube->co[i];
+//     if (sum % 3 != 0)
+//         return -5;// twisted corner
+
+//     if ((edgeParity(cubiecube) ^ cornerParity(cubiecube)) != 0)
+//         return -6;// parity error
+
+//     return 0;// cube ok
+// }
+
+
 #endif

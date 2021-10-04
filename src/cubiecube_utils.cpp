@@ -41,6 +41,7 @@ void apply_move_edges(cubiecube_t* cube, cubiecube_t* move)
 	}
 }
 
+
 cubiecube_t* get_moves()
 {
 	static  cubiecube_t	moves[18];
@@ -420,10 +421,6 @@ void			set_UD_slice_coord(int coord, cubiecube_t* cube)
 		}
 	}
 }
-
-
-
-
 
 
 

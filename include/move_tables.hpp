@@ -34,4 +34,6 @@ void make_raw_move_table(get_coord_function get_coord, set_coord_function set_co
 	std::ofstream out(filename, std::ios_base::binary);
 	out.write((char*)table, sizeof(int) * (N_MOVES * (coord_max + 1)));
 }
+
+
 #endif
