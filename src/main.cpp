@@ -50,12 +50,15 @@ int main()
 
 	int move;
 	CoordCube *mommy_cube = new CoordCube();
-	CoordCube *bb_cube = new CoordCube();
+	CoordCube *bb_cube;
 
 	move = 1;
 
 	set_solved(mommy_cube);
 	bb_cube = create_baby_from_move(mommy_cube, move);
+	bb_cube = create_baby_from_move(bb_cube, 2);
+	bb_cube = create_baby_from_move(bb_cube, 3);
+	bb_cube = create_baby_from_move(bb_cube, 8);
 
 	Node	*start = new Node(0, 0, bb_cube);
 

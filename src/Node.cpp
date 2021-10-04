@@ -24,7 +24,7 @@ vector<Node*> Node::get_bebes()
     vector<Node*> bebes(N_MOVES);
     for (int move = 0; move < N_MOVES; move++)
     {
-        bebes[move] = new Node(this->g + 1, 0, this->coordcube);
+        bebes[move] = new Node(this->g + 1, 0, create_baby_from_move(this->coordcube, move));
     }
     return (bebes);
 }
