@@ -1,14 +1,22 @@
 #include <string>
-#include "cubiecube.hpp"
+#include "cubiecube_utils.hpp"
 
 int				factorial(int n)
 {
-	static int factorials[12] = {1, 1, 2, 6, 24, 120, 720, 5040, 40320, 362880, 3628800, 39916800}; // FOR SPEED
+	static int factorials[13] = {1, 1, 2, 6, 24, 120, 720, 5040, 40320, 362880, 3628800, 39916800, 479001600}; // FOR SPEED
   	return factorials[n];
 };
 
 int				binomial_coefficient(int n, int k)
 {
+	if (n < k)
+	{
+		return (0);
+	}
+	if (k < 0)
+	{
+		return (0);
+	}
 	return (factorial(n) / (factorial(k) * factorial(n - k)));
 };
 
@@ -45,4 +53,15 @@ int				get_corner_orientation_parity(cubiecube_t *cube) // THIS SHOULD RETURN 0 
 		out = out + cube->corner_orientations[i];
 	}
 	return (out);
+}
+
+bool is_ud_slice_edge(edge_t e)
+{
+	return (e >=  FR);
+}
+
+int				sum_cnk(int n0, int n1, int k)
+{
+	// Sun of binomial coefs for C(n0, k) to C(n1, k) included
+	return (binomial_coefficient(n1 + 1, k + 1) - binomial_coefficient(n0, k + 1));
 }

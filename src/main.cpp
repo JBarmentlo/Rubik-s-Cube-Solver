@@ -2,72 +2,55 @@
 #include "Node.hpp"
 #include "ida.hpp"
 
+#include "cubiecube_utils.hpp"
+#include "CubieCube.hpp"
+
+#include "utils.hpp"
+#include "tests.hpp"
+#include "move_tables.hpp"
 
 using namespace std;
 
-
-void check_identity()
+int** read_raw_move_table(int coord_max, std::string filename)
 {
-	cubiecube_t* moves = get_moves();
-	cubiecube_t one;
-	cubiecube_t two;
-	cubiecube_t three;
+	int*			table;
+	table = (int*)malloc(N_MOVES * (coord_max + 1) * sizeof(int));
+	int**			pretty_table;
+	pretty_table = (int**)malloc((coord_max + 1) * sizeof(int*));
 
-	for (int i = 0; i < 6; i++)
+	std::ifstream in(filename, std::ios_base::binary);
+	in.read((char*)table, N_MOVES * (coord_max + 1) * sizeof(int));
+
+	for (int i = 0; i < coord_max + 1; i++)
 	{
-		one = moves[i];
-		two = moves[i + 6];
-		three = moves[i + 12];
-		std::cout << std::endl;
-
-		apply_move(&one, &three);
-		print_corners(&one);
-		one = moves[i];
-		std::cout << std::endl;
-
-
-		apply_move(&three, &one);
-		print_corners(&three);
-		three = moves[i + 12];
-		std::cout << std::endl;
-
-
-		apply_move(&two, &two);
-		print_corners(&two);
-		two = moves[i + 6];
-		std::cout << std::endl;
-		std::cout << std::endl;
+		pretty_table[i] = &table[i * N_MOVES];
 	}
+	return pretty_table;
 }
+
+
+
 
 int main()
 {
 	// cubiecube_t* moves = get_moves();
-	// cubiecube_t R = create_cubie_with_corner_coord(1245);
-	// // cubiecube_t R = moves[1];
-
-
-
-	// // print_corners(&homecube);
-	// print_corners(&R);
-	// // apply_move(&R, &R);
-	// // print_corners(&R);
-	// // print_corners(&moves[1]);
+	// cubiecube_t eo = create_cubie_with_edge_orientation_coord(1245);
+	// cubiecube_t co = create_cubie_with_corner_orientation_coord(1111);
+	// cubiecube_t test;
+	// CubieCube cube;
 	// std::cout << std::endl;
-	// // print_edges(&homecube);
 	// std::cout << std::endl;
-	// // // c = create_cubie_with_corner_coord(49);
-	
-	// std::cout << corner_orientation_coordinate(&R) << std::endl;
-	// std::cout << edge_orientation_coordinate(&R) << std::endl;
-	// std::cout << corner_permutation_coordinate(&R) << std::endl;
-	// std::cout << edge_permutation_coordinate(&R) << std::endl;
-	// std::cout << UD_slice_coordinate(&R) << std::endl;
+	// auto table = read_raw_move_table(N_CORNER_ORI, "../tables/corner_ori_move");
+	// for (int i = 0; i < 18; i++) 
+	// {
+	// 	std::cout << table[1][i] << std::endl;
+	// }
+
 
 	int		goal;
 
 	goal = 42;
-
+	
 	Node*	start = new Node(0, 1, 0, 'a');
 	Node*	b = new Node(0, 3, 0, 'b');
 	Node*	c = new Node(0, 4, 0, 'c');
@@ -109,5 +92,7 @@ int main()
 	s->bebes = {};
 
 	ida(start, goal);
+
+
 
 }
