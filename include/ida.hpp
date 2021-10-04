@@ -1,6 +1,6 @@
 #ifndef IDA_HPP
 #define IDA_HPP
 
-bool		ida(Node *start, int goal);
+bool		ida(Node *start, CoordCube *goal);
 
 #endif

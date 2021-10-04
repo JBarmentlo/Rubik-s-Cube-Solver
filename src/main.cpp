@@ -49,33 +49,17 @@ int main()
 	// }	
 
 	int move;
-	CoordCube *goal = new CoordCube();
 	CoordCube *mommy_cube = new CoordCube();
 	CoordCube *bb_cube = new CoordCube();
-	Node	*test = new Node(0, 0, mommy_cube);
-
 
 	move = 1;
 
-
-	set_solved(goal);
 	set_solved(mommy_cube);
 	bb_cube = create_baby_from_move(mommy_cube, move);
 
-	bb_cube->print();
-	std::cout << endl;
-	mommy_cube->print();
+	Node	*start = new Node(0, 0, bb_cube);
 
 
-	if (*bb_cube == *mommy_cube)
-	{
-		std::cout << "mommy and baby the same\n";
-	}
-	else
-	{
-		std::cout << "not the same\n";
-	}
-
-	// ida(start, goal);
+	ida(start, mommy_cube);
 
 }

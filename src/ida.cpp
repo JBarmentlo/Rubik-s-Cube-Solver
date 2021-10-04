@@ -5,10 +5,10 @@
 
 using namespace std;
 
-#define MAX_ITER	100
+#define MAX_ITER	10000
 #define SUCCESS		-1
 
-pair <int, stack<Node*>>		search(Node *current, int threshold, int goal, stack<Node*> path)
+pair <int, stack<Node*>>		search(Node *current, int threshold, CoordCube *goal, stack<Node*> path)
 {
 	int		min;
 	int		f;
@@ -17,10 +17,8 @@ pair <int, stack<Node*>>		search(Node *current, int threshold, int goal, stack<N
 
 	f = current->f;
 	path.push(current);
-	cout << "\n\nEXPLORING: \n";
-	current->print();
-	// if(current->CoordCube == goal)
-			// return {SUCCESS, path};
+	if(*current->coordcube == *goal)
+		return {SUCCESS, path};
 	if(f > threshold)
 	{
 		path.pop();
@@ -46,7 +44,7 @@ pair <int, stack<Node*>>		search(Node *current, int threshold, int goal, stack<N
 }
 
 
-bool		ida(Node *start, int goal)
+bool		ida(Node *start, CoordCube *goal)
 {
 	stack<Node*>		path;
 	int				i;
@@ -58,12 +56,15 @@ bool		ida(Node *start, int goal)
 	threshold = start->f;
 	while(i < MAX_ITER)
 	{
+		std::cout << "\n\n****\niter = " << i << "\n";
+		std::cout << "threshold = " << threshold << "\n";
 		pair <int, stack<Node*>> test = search(start, threshold, goal, path);
 		tmp = test.first;
 		path = test.second;
 		if(tmp == SUCCESS)
 		{
 			std::cout << "SUCCESS: \n";
+			std::cout << "path size = " << path.size() << endl;
 			return true;
 		}
 		threshold = tmp;
