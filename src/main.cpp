@@ -55,7 +55,7 @@ int main()
 	Node	*test = new Node(0, 0, mommy_cube);
 
 
-	move = 0;
+	move = 1;
 
 
 	set_solved(goal);

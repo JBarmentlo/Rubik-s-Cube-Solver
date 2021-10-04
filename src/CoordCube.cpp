@@ -34,7 +34,9 @@ void    CoordCube::print(void)
 bool	CoordCube::operator==(CoordCube &cube)
 {
     std::cout << "weeeeesh\n";
-    return (true);
+    if (cube.corner_orientation_coord == this->corner_orientation_coord)
+		return true;
+    return false;
 }
 
 
