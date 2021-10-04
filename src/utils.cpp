@@ -1,4 +1,6 @@
 #include <string>
+#include <cstring>
+
 #include "cubiecube_utils.hpp"
 
 int				factorial(int n)
@@ -64,4 +66,48 @@ int				sum_cnk(int n0, int n1, int k)
 {
 	// Sun of binomial coefs for C(n0, k) to C(n1, k) included
 	return (binomial_coefficient(n1 + 1, k + 1) - binomial_coefficient(n0, k + 1));
+}
+
+
+const bool*			allowed_moves(int previous_move)
+{
+	static const bool*			allowed_moves[6];
+	static bool 			first = true;
+
+	static const bool		allowed_moves_1[18] =  {false, true, true, true, true, true, false, true, true, true, true, true, false, true, true, true, true, true};
+
+	static const bool		allowed_moves_2[18] =  {true, false, true, true, true, true,
+													true, false, true, true, true, true, 
+													true, false, true, true, true, true};
+
+	static const bool		allowed_moves_3[18] =  {true, true, false, true, true, true,
+													true, true, false, true, true, true, 
+													true, true, false, true, true, true};
+
+	static const bool		allowed_moves_4[18] =  {true, true, true, false, true, true,
+													true, true, true, false, true, true, 
+													true, true, true, false, true, true};
+
+	static const bool		allowed_moves_5[18] =  {true, true, true, true, false, true,
+													true, true, true, true, false, true, 
+													true, true, true, true, false, true};
+
+	static const bool		allowed_moves_6[18] =  {true, true, true, true, true, false,
+													true, true, true, true, true, false, 
+													true, true, true, true, true, false};
+
+
+	if (first)
+	{
+		allowed_moves[0] = allowed_moves_1;
+		allowed_moves[1] = allowed_moves_2;
+		allowed_moves[2] = allowed_moves_3;
+		allowed_moves[3] = allowed_moves_4;
+		allowed_moves[4] = allowed_moves_5;
+		allowed_moves[5] = allowed_moves_6;
+		std::cout <<  "YEP" << std::endl;
+	}
+	first = false;
+
+	return allowed_moves[previous_move % 6]; // TODO: TEST THIS
 }
