@@ -1,4 +1,5 @@
 #include <string>
+#include <fstream>
 #include "cubiecube_utils.hpp"
 
 int				factorial(int n)
@@ -65,3 +66,23 @@ int				sum_cnk(int n0, int n1, int k)
 	// Sun of binomial coefs for C(n0, k) to C(n1, k) included
 	return (binomial_coefficient(n1 + 1, k + 1) - binomial_coefficient(n0, k + 1));
 }
+
+
+int** read_raw_move_table(int coord_max, std::string filename)
+{
+	int*			table;
+	table = (int*)malloc(N_MOVES * (coord_max + 1) * sizeof(int));
+	int**			pretty_table;
+	pretty_table = (int**)malloc((coord_max + 1) * sizeof(int*));
+
+	std::ifstream in(filename, std::ios_base::binary);
+	in.read((char*)table, N_MOVES * (coord_max + 1) * sizeof(int));
+
+	for (int i = 0; i < coord_max + 1; i++)
+	{
+		pretty_table[i] = &table[i * N_MOVES];
+	}
+	return pretty_table;
+}
+
+

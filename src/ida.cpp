@@ -5,8 +5,8 @@
 
 using namespace std;
 
-int MAX_ITER = 6;
-int SUCCESS = -1;
+#define MAX_ITER	6
+#define SUCCESS		-1
 
 pair <int, stack<Node*>>		search(Node *current, int threshold, int goal, stack<Node*> path)
 {

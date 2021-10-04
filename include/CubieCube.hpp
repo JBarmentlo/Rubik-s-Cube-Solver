@@ -37,19 +37,4 @@ public:
 	cubiecube_t	data;
 };
 
-class CoordCube
-{
-private:
-	/* data */
-public:
-	CoordCube(/* args */);
-	~CoordCube();
-
-	int		corner_orientation_coord;
-	int		edge_orientation_coord;
-	int		UD_slice_coord;
-
-
-};
-
 #endif
