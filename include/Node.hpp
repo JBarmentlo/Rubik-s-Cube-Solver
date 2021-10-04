@@ -2,6 +2,7 @@
 #define NODE_HPP
 
 #include <vector>
+#include "CoordCube.hpp"
 
 using namespace std;
 
@@ -11,20 +12,16 @@ class Node
 
  
     public:
-        char            name;
-        int             g = 0;
-        int             h = 0;
+        int             g;
+        int             h;
         int             f;
-        int             something;
-        vector<Node*>     bebes;
+        CoordCube*    coordcube;
 
-        Node(short g, short h, int something, char name);
+        Node(short g, short h, CoordCube* coordcube);
         ~Node(void);
 
-
-        vector<Node*>        get_bebes();
+        vector<Node*>       get_bebes();
         void                print();
-
 };
 
 

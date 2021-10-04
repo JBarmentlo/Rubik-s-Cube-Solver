@@ -1,39 +1,40 @@
 #include "Node.hpp"
 #include <iostream>
 #include <vector>
+#include "cubiecube_utils.hpp"
 
 using namespace std;
 
-Node::Node(short g, short h, int something, char name)
+Node::Node(short g, short h, CoordCube* coordcube)
 {
-    this->name = name; //temporary
     this->g = g;
     this->h = h;
     this->f = g + h;
-    this->something = something;
-    // this->bebes = NULL;
-}
-
-vector<Node*> Node::get_bebes()
-{
-    return (this->bebes); // temporary
+    this->coordcube = coordcube;
 }
 
 Node::~Node(void)
 {
     std::cout << "Node deconstructor\n";
-    // delete something;
+    // delete data;
 }
 
-void        Node::print(void)
+vector<Node*> Node::get_bebes()
 {
-    std::cout << "Name = [" << this->name << "]\n";
-    std::cout << "f = [" << this->f << "] and something = [" << this->something << "]\n";
-    // std::cout << "Bebes:\n";
-    // for(auto bebe : this->bebes)
-    // {
-        // std::cout << bebe->name << " ; ";
-    // }
+    vector<Node*> bebes(N_MOVES);
+    for (int move = 0; move < N_MOVES; move++)
+    {
+        bebes[move] = new Node(this->g + 1, 0, this->coordcube);
+    }
+    return (bebes);
+}
 
 
+void    Node::print(void)
+{
+    std::cout << "g = [" << this->g << "]\n";
+    std::cout << "h = [" << this->h << "]\n";
+    std::cout << "corner coord: [" << this->coordcube->corner_orientation_coord << "]\n";
+    std::cout << "edge coord: [" << this->coordcube->edge_orientation_coord << "]\n";
+    std::cout << "UD slice coord: [" << this->coordcube->UD_slice_coord << "]\n";
 }

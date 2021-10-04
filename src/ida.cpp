@@ -5,7 +5,7 @@
 
 using namespace std;
 
-#define MAX_ITER	6
+#define MAX_ITER	100
 #define SUCCESS		-1
 
 pair <int, stack<Node*>>		search(Node *current, int threshold, int goal, stack<Node*> path)
@@ -19,8 +19,8 @@ pair <int, stack<Node*>>		search(Node *current, int threshold, int goal, stack<N
 	path.push(current);
 	cout << "\n\nEXPLORING: \n";
 	current->print();
-	if(current->something == goal) // "something" is temporary
-			return {SUCCESS, path};
+	// if(current->CoordCube == goal)
+			// return {SUCCESS, path};
 	if(f > threshold)
 	{
 		path.pop();
@@ -52,7 +52,6 @@ bool		ida(Node *start, int goal)
 	int				i;
 	int				threshold;
 	int				tmp;
-	Node			*finalo; //temporary
 
 	i = 0;
 	tmp = 0;
@@ -65,17 +64,12 @@ bool		ida(Node *start, int goal)
 		if(tmp == SUCCESS)
 		{
 			std::cout << "SUCCESS: \n";
-			while (path.empty() == false)
-			{
-				finalo = path.top();
-				cout << finalo->name <<" - ";
-				path.pop();
-			}
 			return true;
 		}
 		threshold = tmp;
 		i += 1;
 	}
+	std::cout << "FAILUUUURE\n";
 	return false;
 }
 
