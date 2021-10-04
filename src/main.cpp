@@ -45,37 +45,18 @@ int main()
 	// make_raw_move_table(edge_orientation_coordinate, set_edge_orientation_coord, N_EDGE_ORI, "../tables/edge_ori_move");
 
 	CubieCube cube;
+	cube.set_solved();
 	std::cout << std::endl;
 	std::cout << std::endl;
 
+	int e2 =phase2_edge_permutaion_coordinate(&cube.data);
+	std::cout << e2 << std::endl;
 
 	// auto table = read_raw_move_table(N_CORNER_ORI, "../tables/corner_ori_move");
 	// for (int i = 0; i < 18; i++) 
 	// {
 	// 	std::cout << table[1][i] << std::endl;
 	// }
-	int m = 0;
-	const bool* allowed;
 
-	allowed = allowed_moves(m);
-	allowed = allowed_moves(m);
-	for (int j = 0; j < N_MOVES; j++)
-	{
-		allowed = allowed_moves(j);
-		std::cout << j << std::endl;
-		std::cout << "|" ;
-		for (int i = 0; i < N_MOVES; i++)
-		{
-			if (allowed[i])
-			{
-				std::cout << "   |";
-			}
-			else
-			{
-				std::cout << " X |";
-			}
-		}
-		std::cout << std::endl;
-	}
 
 }

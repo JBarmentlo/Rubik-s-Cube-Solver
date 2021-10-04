@@ -242,7 +242,26 @@ int				UD_slice_coordinate(cubiecube_t* cube)
 	return (out);
 };
 
+int				phase2_edge_permutaion_coordinate(cubiecube_t* cube)
+{
 
+	int x = 0;
+	int s;
+	for (int i = DB; i >= FIRST_EDGE; i--)
+	{
+		s = 0;
+		for (int j = i - 1; j >= UR; j--)
+		{
+			s = 0;
+			if (cube->edge_positions[j] > cube->edge_positions[i])
+			{
+				s = s + 1;
+			}
+		}
+		x = (x + s) * i;
+	}
+	return (x);
+}
 
 cubiecube_t		create_cubie_with_corner_orientation_coord(int coord)	
 {

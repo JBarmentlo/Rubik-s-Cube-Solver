@@ -86,6 +86,8 @@ int				corner_permutation_coordinate(cubiecube_t* cube);
 int				edge_permutation_coordinate(cubiecube_t* cube);
 int				UD_slice_coordinate(cubiecube_t* cube);
 
+int				phase2_edge_permutaion_coordinate(cubiecube_t* cube);
+
 void			set_corner_orientation_coord(int coord, cubiecube_t* cube);
 void			set_edge_orientation_coord(int coord, cubiecube_t* cube);
 void			set_UD_slice_coord(int coord, cubiecube_t* cube);
