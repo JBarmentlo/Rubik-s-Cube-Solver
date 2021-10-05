@@ -20,7 +20,14 @@ CoordCube::CoordCube(int corner_orientation_coord, int edge_orientation_coord, i
 
 CoordCube::~CoordCube(void)
 {
-    std::cout << "Deconstructing CoordCube\n";
+    // std::cout << "Deconstructing CoordCube\n";
+}
+
+void        CoordCube::set_solved(void)
+{
+    this->corner_orientation_coord = 0;
+	this->edge_orientation_coord = 0;
+	this->UD_slice_coord = 0;   
 }
 
 
@@ -32,7 +39,7 @@ void    CoordCube::print(void)
 }
 
 
-bool	CoordCube::operator==(CoordCube &cube)
+bool	CoordCube::operator==(const CoordCube &cube)
 {
     if (cube.corner_orientation_coord == this->corner_orientation_coord)
 		return true;
@@ -69,9 +76,8 @@ CoordCube*    create_baby_from_move(CoordCube* mommy_cube, int move)
     corner_orientation_table[mommy_cube->corner_orientation_coord][move],
     edge_orientation_table[mommy_cube->edge_orientation_coord][move],
     UD_slice_table[mommy_cube->UD_slice_coord][move]
+
     );
     
     return (bb_cube);
 }
-
-

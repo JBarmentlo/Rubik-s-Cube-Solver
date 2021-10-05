@@ -2,6 +2,7 @@
 #include <iostream>
 #include <vector>
 #include "cubiecube_utils.hpp"
+#include "CoordCube.hpp"
 
 using namespace std;
 
@@ -16,12 +17,12 @@ Node::Node(short g, short h, CoordCube* coordcube)
 Node::~Node(void)
 {
     std::cout << "Node deconstructor\n";
-    // delete data;
+    // delete coordcube;
 }
 
-vector<Node*> Node::get_bebes()
+vector<Node*>    Node::get_bebes()
 {
-    vector<Node*> bebes(N_MOVES);
+    vector<Node*>    bebes(N_MOVES);
     for (int move = 0; move < N_MOVES; move++)
     {
         bebes[move] = new Node(this->g + 1, 0, create_baby_from_move(this->coordcube, move));
