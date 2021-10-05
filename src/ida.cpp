@@ -19,7 +19,6 @@ pair <int, stack<Node*>>		search(Node *current, int threshold, CoordCube *goal, 
 	f = current->f;
 	path.push(current);
 	if(*current->coordcube == *goal)
-	// if (current->coordcube.corner_orientation_coord = 0)
 		return {SUCCESS, path};
 	if(f > threshold)
 	{
@@ -65,13 +64,13 @@ bool		ida(Node *start, CoordCube *goal)
 		path = test.second;
 		if(tmp == SUCCESS)
 		{
-			std::cout << "SUCCESS: \n";
+			std::cout << "SUCCESSO: \n";
 			std::cout << "path size = " << path.size() << "\n\n";
 			Node*	todelete;
 			while (path.empty() == false)
 			{
 				todelete = path.top();
-				std::cout << todelete->coordcube.corner_orientation_coord << std::endl;
+				std::cout << todelete->coordcube->corner_orientation_coord << std::endl;
 				path.pop();
 			}
 			return true;

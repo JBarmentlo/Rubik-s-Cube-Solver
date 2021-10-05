@@ -45,8 +45,7 @@ int main()
 
 	int move;
 	CoordCube* mommy_cube = new CoordCube();
-	mommy_cube->print();
-	CoordCube bb_cube;
+	CoordCube *bb_cube;
 
 	move = 1;
 
@@ -55,6 +54,7 @@ int main()
 	bb_cube = create_baby_from_move(bb_cube, 2);
 	bb_cube = create_baby_from_move(bb_cube, 9);
 	bb_cube = create_baby_from_move(bb_cube, 8);
+
 
 	Node *start = new Node(0, 0, bb_cube);
 

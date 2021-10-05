@@ -39,20 +39,6 @@ void    CoordCube::print(void)
 }
 
 
-bool	CoordCube::operator==(const CoordCube &cube)
-{
-    if (cube.corner_orientation_coord == this->corner_orientation_coord)
-		return true;
-    return false;
-}
-
-void        CoordCube::set_solved()
-{
-    this->corner_orientation_coord = 0;
-	this->edge_orientation_coord = 0;
-	this->UD_slice_coord = 0;   
-}
-
 
 void    CoordCube::apply_move(int move)
 {
@@ -65,6 +51,13 @@ void    CoordCube::apply_move(int move)
     this->UD_slice_coord = UD_slice_table[this->UD_slice_coord][move];
 }
 
+bool	CoordCube::operator==(const CoordCube &cube)
+{
+    if (cube.corner_orientation_coord == this->corner_orientation_coord)
+        return true;
+    return false;
+}
+
 
 CoordCube*    create_baby_from_move(CoordCube* mommy_cube, int move)
 {
@@ -73,11 +66,10 @@ CoordCube*    create_baby_from_move(CoordCube* mommy_cube, int move)
     static int** UD_slice_table = get_raw_table(N_UD, UD_SLICE_NAME);
 
     CoordCube* bb_cube = new CoordCube(
-    corner_orientation_table[mommy_cube->corner_orientation_coord][move],
-    edge_orientation_table[mommy_cube->edge_orientation_coord][move],
-    UD_slice_table[mommy_cube->UD_slice_coord][move]
-
+        corner_orientation_table[mommy_cube->corner_orientation_coord][move],
+        edge_orientation_table[mommy_cube->edge_orientation_coord][move],
+        UD_slice_table[mommy_cube->UD_slice_coord][move]
     );
-    
+
     return (bb_cube);
 }

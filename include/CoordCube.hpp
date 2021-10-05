@@ -16,8 +16,8 @@ class CoordCube
     ~CoordCube(void);
 
     void    print(void);
-    bool	operator==(CoordCube &cube);
-    void    set_solved();
+    bool	operator==(const CoordCube &cube);
+    void    set_solved(void);
     void    apply_move(int move);
 
 };
