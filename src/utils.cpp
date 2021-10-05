@@ -192,7 +192,7 @@ void			rotate_right(corner_t* arr, int l, int r)
 }
 
 
-void print_array(int* arr, int size)
+void 			print_array(int* arr, int size)
 {
 	for (int i = 0; i < size; i++)
 	{
@@ -202,7 +202,7 @@ void print_array(int* arr, int size)
 }
 	
 
-int** read_raw_move_table(int coord_max, std::string filename)
+int** 		read_raw_move_table(int coord_max, std::string filename)
 {
 	int*			table;
 	table = (int*)malloc(N_MOVES * (coord_max + 1) * sizeof(int));
@@ -219,4 +219,19 @@ int** read_raw_move_table(int coord_max, std::string filename)
 	return pretty_table;
 }
 
+int** 		read_raw_move_table_phase_2(int coord_max, std::string filename)
+{
+	int*			table;
+	table = (int*)malloc(N_MOVES * (coord_max + 1) * sizeof(int));
+	int**			pretty_table;
+	pretty_table = (int**)malloc((coord_max + 1) * sizeof(int*));
 
+	std::ifstream in(filename, std::ios_base::binary);
+	in.read((char*)table, N_MOVES * (coord_max + 1) * sizeof(int));
+
+	for (int i = 0; i < coord_max + 1; i++)
+	{
+		pretty_table[i] = &table[i * N_MOVES];
+	}
+	return pretty_table;
+}

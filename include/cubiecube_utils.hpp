@@ -54,9 +54,6 @@ void			set_UD_slice_sorted_coordinate_2(int index,cubiecube_t* cube);
 
 
 
-
-
-
 std::string 	corner_position_to_string(corner_t c);
 
 

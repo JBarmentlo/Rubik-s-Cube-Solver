@@ -1,6 +1,9 @@
 #ifndef DEFINE_HPP
 #define DEFINE_HPP
 
+#include "corners.hpp"
+#include "edges.hpp"
+#include "moves.hpp"
 
 #define FIRST_CORNER 			URF
 #define LAST_CORNER 			DRB
@@ -17,19 +20,20 @@
 
 
 #define N_MOVES					18
+#define N_MOVES_PHASE_2			10
 #define N_BASIC_MOVES			6
 
 #define EDGE_NUM 				12
 #define CORNER_NUM 				8
 
 //  IDA DEFINES
-#define MAX_ITER	10000
-#define SUCCESS		-1
+#define MAX_ITER				10000
+#define SUCCESS					-1
 
 
 
-#define CORNER_ORI_NAME	"../tables/corner_ori_move"
-#define EDGE_ORI_NAME	"../tables/edge_ori_move"
-#define UD_SLICE_NAME	"../tables/UD_slice_move"
+#define CORNER_ORI_NAME			"../tables/corner_ori_move"
+#define EDGE_ORI_NAME			"../tables/edge_ori_move"
+#define UD_SLICE_NAME			"../tables/UD_slice_move"
 
 #endif
