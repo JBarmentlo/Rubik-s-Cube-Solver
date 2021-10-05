@@ -3,6 +3,7 @@
 
 #include "cubiecube_utils.hpp"
 
+
 int 			factorial(int n);
 int 			binomial_coefficient(int n, int k);
 int				power_three(int n);
@@ -19,6 +20,9 @@ void			rotate_left(corner_t* arr, int l, int r);
 void			rotate_right(int* arr, int l, int r);
 void			rotate_right(edge_t* arr, int l, int r);
 void			rotate_right(corner_t* arr, int l, int r);
+int**           read_raw_move_table(int coord_max, std::string filename);
+// void			rotate_left_corner_array();
+// void			rotate_right_corner_array();
 // void			rotate_left_edge_array();
 // void			rotate_right_edge_array();
 

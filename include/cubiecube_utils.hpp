@@ -26,6 +26,11 @@
 #define N_BASIC_MOVES			6
 
 
+#define CORNER_ORI_NAME	"../tables/corner_ori_move"
+#define EDGE_ORI_NAME	"../tables/edge_ori_move"
+#define UD_SLICE_NAME	"../tables/UD_slice_move"
+
+
 typedef enum {
     URF, UFL, ULB, UBR, DFR, DLF, DBL, DRB
 } corner_t;
