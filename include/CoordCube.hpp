@@ -1,6 +1,10 @@
 #ifndef COORDCUBE_HPP
 #define COORDCUBE_HPP
 
+#include "utils.hpp"
+#include "cubiecube_utils.hpp"
+#include "move_tables.hpp"
+
 class CoordCube
 {
     private:

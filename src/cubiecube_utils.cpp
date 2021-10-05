@@ -329,32 +329,18 @@ int				edge_permutation_coordinate(cubiecube_t* cube)
 }
 
 
-int				UD_slice_coordinate(cubiecube_t* cube) // ! CAREFULL DIFFERENT COORDINATE SYSTEM THEN KOCIEMBA BUT WORKS
+int				UD_slice_coordinate(cubiecube_t* cube)
 {
 	int		occupied[12] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
-	int		k[12];
+	int		x(0);
 	int		out(0);
 
-	for (int i = 0; i < EDGE_NUM; i++) // we iterate over the UD slice edges
+	for (int j = LAST_EDGE; j >= FIRST_EDGE; j--)
 	{
-		if (is_ud_slice_edge(cube->edge_positions[i]))
+		if (is_ud_slice_edge(cube->edge_positions[j]))
 		{
-			occupied[i] = 1;
-		}
-	}
-	for (int i = 0; i < EDGE_NUM; i++)
-	{
-		k[i] = 3;
-		for (int j = i; j < EDGE_NUM; j++)
-		{
-			k[i] = k[i] - occupied[j];
-		}
-	}
-	for (int i = 0; i < EDGE_NUM; i++)
-	{
-		if (occupied[i] == 0)
-		{
-			out = out + binomial_coefficient(i, k[i]);
+			out = out + binomial_coefficient(11 - j, x + 1);
+			x = x + 1;
 		}
 	}
 	return (out);
@@ -365,43 +351,27 @@ void			set_UD_slice_coord(int coord, cubiecube_t* cube)
 	int x = 4;
 	// int a = coord;
 
-	bool filled[EDGE_NUM];
-	int leftest_ud_edge = 12;
+	bool filled[EDGE_NUM] = {false, false, false, false, false, false, false, false, false, false, false, false};
 	int cnk;
 	edge_t slice_edge[4] = {FR, FL, BL, BR};
 	edge_t other_edge[8] = {UR, UF, UL, UB, DR, DF, DL, DB};
 
 	for (int j = FIRST_EDGE; j <= LAST_EDGE; j++)
 	{
-		filled[j] = false;
-		cube->edge_positions[j] = UR;
-
-	}
-	for (int a = 0; a < 4; a++)
-	{
-		for (int j = FIRST_EDGE; j < leftest_ud_edge; j++)
+		cnk = binomial_coefficient(11 - j, x);
+		if (coord - cnk >= 0)
 		{
-			cnk = sum_cnk(j + 1, leftest_ud_edge - 1, x - 1);
-			// std::cout << j << " coord: " << coord << " sum_C("<< j + 1 << ", " << leftest_ud_edge - 1 << ", "<< x - 1 << ") " << cnk << std::endl;
-
-			if (coord - cnk >= 0)
-			{
-				cube->edge_positions[j] = slice_edge[4 - x];
-				coord = coord - cnk;
-				x = x - 1;
-				filled[j] = true;
-				leftest_ud_edge = j;
-				// std::cout << "Placed " << j << std::endl;
-
-			}
-			// UD_slice_coordinate(&cube);
+			cube->edge_positions[j] = slice_edge[4 - x];
+			filled[j] = true;
+			coord = coord - cnk;
+			x = x - 1;
 		}
 	}
 
 	x = 0;
 	for (int j = FIRST_EDGE; j <= LAST_EDGE; j++)
 	{
-		if (!filled[j])
+		if (not filled[j])
 		{
 			cube->edge_positions[j] = other_edge[x];
 			x = x + 1;

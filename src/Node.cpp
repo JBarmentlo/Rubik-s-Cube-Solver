@@ -1,8 +1,7 @@
 #include "Node.hpp"
 #include <iostream>
 #include <vector>
-#include "cubiecube_utils.hpp"
-#include "CoordCube.hpp"
+
 
 using namespace std;
 

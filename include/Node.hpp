@@ -3,6 +3,7 @@
 
 #include <vector>
 #include "CoordCube.hpp"
+#include "cubiecube_utils.hpp"
 
 using namespace std;
 

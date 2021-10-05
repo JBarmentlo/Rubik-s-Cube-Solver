@@ -2,7 +2,7 @@
 #include <cstring>
 
 #include <fstream>
-#include "cubiecube_utils.hpp"
+#include "utils.hpp"
 
 int				factorial(int n)
 {

@@ -3,15 +3,9 @@
 
 #include "cubiecube_utils.hpp"
 #include "CubieCube.hpp"
-#include "CoordCube.hpp"
-
-
-#include "utils.hpp"
+// #include "CoordCube.hpp"
 #include "tests.hpp"
 #include "move_tables.hpp"
-
-using namespace std;
-
 
 
 int main()
@@ -29,7 +23,7 @@ int main()
 
 	// bb_cube->print();
 	// std::cout << "\n";
-	// check_set_get_coord_equivalency(corner_permutation_coordinate, set_corner_permutation_coordinate, 40319);
+	check_set_get_coord_equivalency(UD_slice_coordinate, set_UD_slice_coord, 495);
 
 	// int move[] = {1, 2, 9, 8};
 
