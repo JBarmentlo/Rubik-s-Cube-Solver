@@ -43,4 +43,10 @@
 #define UD_2_THEO_NAME			"../tables/ud_2_big_move"
 #define EDGE_PERMUTATION_2_NAME 	"../tables/edge_perm_2_move"
 #define CORNER_PERMUTATION_NAME 	"../tables/corner_perm_2_move"
+
+#define CORNER_ORI_HEURISTIC_NAME 	"../tables/corner_orientation_heuristics"
+#define EDGE_ORI_HEURISTIC_NAME 	"../tables/edge_orientation_heuristics"
+#define UD_SLICE_HEURISTIC_NAME 	"../tables/UD_slice_heuristics"
+
+
 #endif
