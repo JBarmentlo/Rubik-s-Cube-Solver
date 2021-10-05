@@ -14,9 +14,11 @@ set(SOURCES
     src/utils.cpp
     src/Node.cpp
     src/ida.cpp
+    src/ida_utils.cpp
     src/CubieCube.cpp
     src/move_tables.cpp
     src/CoordCube.cpp
+    src/heuristics_tables.cpp
 )
 
 add_executable(Roobik ${SOURCES})

@@ -3,17 +3,7 @@
 
 #include "ida.hpp"
 
-
-
 using namespace std;
-
-
-// bool corner_heuristic(CoordCube* coordcube)
-// {
-// 	if (coordcube->corner_orientation_coord != 0)
-// 		return (false);
-// 	return (true);
-// }
 
 pair <int, stack<Node*>>		search(Node *current, int threshold, is_goal_function is_goal, stack<Node*> path)
 {
@@ -88,36 +78,4 @@ bool		ida(Node *start, is_goal_function is_goal)
 	return false;
 }
 
-
-void	walk(int coord, int steps, int** moves_table, int* heuristics_table, int size)
-{
-	int new_coord;
-
-	if (heuristics_table[coord] != -1 and heuristics_table[coord] <= steps)
-	{
-		return;
-	}
-	
-	heuristics_table[coord] = steps;
-	for (int move = 0; move < N_MOVES; move++)
-	{
-		new_coord = moves_table[coord][move];
-		walk(new_coord, steps + 1, moves_table, heuristics_table, size);
-	}
-	return;
-}
-
-
-int*		create_heuristics_table(int size, reading_table_function read)
-{
-	int** moves_table = read();
-
-	int* heuristics_table = (int*)malloc(sizeof(int) * size);
-
-	fill_table_with_value(heuristics_table, -1, size);
-
-	walk(0, 0, moves_table, heuristics_table, size);
-	
-	return heuristics_table;
-}
 
