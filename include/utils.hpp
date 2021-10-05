@@ -18,6 +18,10 @@ void			rotate_right(int* arr, int l, int r);
 // void			rotate_left_edge_array();
 // void			rotate_right_edge_array();
 
+
+void print_array(int* arr, int size);
+
+
 #endif
 
 

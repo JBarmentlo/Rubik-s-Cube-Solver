@@ -134,3 +134,13 @@ void			rotate_right(int* arr, int l, int r)
 	arr[l] = tmp;
 }
 
+
+void print_array(int* arr, int size)
+{
+	for (int i = 0; i < size; i++)
+	{
+		std::cout << arr[i] << ", ";
+	}
+	std::cout << std::endl;
+}
+	

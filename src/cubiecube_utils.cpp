@@ -169,7 +169,7 @@ int				edge_orientation_coordinate(cubiecube_t* cube)
 	return out;
 }
 
-int				corner_permutation_coordinate(cubiecube_t* cube)
+int				corner_permutation_coordinate_old(cubiecube_t* cube)
 {
 	int out(0);
 	int left;
@@ -189,6 +189,56 @@ int				corner_permutation_coordinate(cubiecube_t* cube)
 
 	return out;
 };
+
+int				corner_permutation_coordinate(cubiecube_t* cube)
+{
+	int out(0);
+	int cp[8];
+	int k;
+
+	memcpy(cp, cube->corner_positions, sizeof(cp));
+	for (int i = LAST_CORNER; i > FIRST_CORNER; i--)
+	{
+		k = 0;
+		while(cp[i] != i)
+		{
+			rotate_left(cp, 0, i);
+			k = k + 1;
+		}
+		out = (i + 1) * out + k;
+	}
+	return out;
+};
+
+int				edge_permutation_coordinate_2(cubiecube_t* cube)
+{
+	int perm[8];
+	int out(0);
+	int	k;
+
+	memcpy(perm, cube->edge_positions, sizeof(perm)); // We copy all the UD edges
+	for (int i = DB; i > UR; i--)
+	{
+		k = 0;
+		while (perm[i] != i)
+		{
+			rotate_left(perm, 0, i);
+			k = k + 1;
+		}
+		out = out * (i + 1) + k;
+	}
+	return (out);
+}
+
+int				UD_slice_sorted_coordinate_2(cubiecube_t* cube, int index)
+{
+	int a(0);
+	int x(0);
+	int edges_4[4] = {0, 0, 0, 0};
+	
+	return (0);
+}
+
 
 int				edge_permutation_coordinate(cubiecube_t* cube)
 {
@@ -440,6 +490,46 @@ void			set_UD_slice_coord(int coord, cubiecube_t* cube)
 	}
 }
 
+void			set_corner_permutation_coordinate(cubiecube_t* cube, int index)
+{
+	int out(0);
+	int perm[8];
+	int k;
+
+	memcpy(cube->corner_positions, homecube.corner_positions, sizeof(cube->corner_positions));
+	for (int i = FIRST_CORNER; i <= LAST_CORNER; i++)
+	{
+		k = index % (i + 1);
+		index = index / (i + 1);
+		while (k > 0)
+		{
+			rotate_right((int*)cube->corner_positions, 0, i);
+			k = k - 1;
+		}
+	}
+}
+
+void			set_edge_permutation_coordinate_2(cubiecube_t* cube, int index)
+{
+	int k;
+
+	for (int i = FIRST_EDGE; i < 8; i++)
+	{
+		cube->edge_positions[i] = (edge_t)i;
+	}
+	for (int i = FIRST_EDGE; i < 8; i++)
+	{
+		k = index % (i + 1);
+		index = index / (i + 1);
+		while (k > 0)
+		{
+			rotate_right((int*)cube->edge_positions, 0, i);
+			k = k - 1;
+		}
+	}
+}
+
+void			set_UD_slice_sorted_coordinate_2(cubiecube_t* cube, int index);
 
 void 			print_corners(cubiecube_t* cube)
 {
