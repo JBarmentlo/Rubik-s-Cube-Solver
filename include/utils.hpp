@@ -14,7 +14,11 @@ bool 			is_ud_slice_edge(edge_t e);
 int				sum_cnk(int n0, int n1, int k);
 const bool*		allowed_moves(int previous_move);
 void			rotate_left(int* arr, int l, int r);
+void			rotate_left(edge_t* arr, int l, int r);
+void			rotate_left(corner_t* arr, int l, int r);
 void			rotate_right(int* arr, int l, int r);
+void			rotate_right(edge_t* arr, int l, int r);
+void			rotate_right(corner_t* arr, int l, int r);
 // void			rotate_left_edge_array();
 // void			rotate_right_edge_array();
 

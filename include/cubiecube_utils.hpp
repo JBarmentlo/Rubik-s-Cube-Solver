@@ -5,16 +5,25 @@
 #include <cstdint>
 
 
-#define FIRST_CORNER 	URF
-#define LAST_CORNER 	DRB
-#define FIRST_EDGE 		UR
-#define LAST_EDGE 		BR
+#define FIRST_CORNER 			URF
+#define LAST_CORNER 			DRB
+#define FIRST_EDGE 				UR
+#define LAST_EDGE 				BR
 
-#define N_UD 			494 // Max values for coordinates
-#define N_CORNER_ORI 	2186
-#define N_EDGE_ORI 		2047
-#define N_MOVES			18
-#define N_BASIC_MOVES	6
+#define N_UD 					494 // Max values for coordinates
+#define N_CORNER_ORI 			2186
+#define N_EDGE_ORI 				2047
+#define N_UD_2	 				23
+#define N_UD_2_THEO				11879
+#define N_EDGE_PERMUTATION_2 	40319
+#define N_CORNER_PERMUTATION 	40319
+
+
+
+
+
+#define N_MOVES					18
+#define N_BASIC_MOVES			6
 
 
 typedef enum {
@@ -86,16 +95,16 @@ int				corner_permutation_coordinate(cubiecube_t* cube);
 int				edge_permutation_coordinate(cubiecube_t* cube);
 int				UD_slice_coordinate(cubiecube_t* cube);
 int				edge_permutation_coordinate_2(cubiecube_t* cube);
-int				phase2_edge_permutaion_coordinate(cubiecube_t* cube);
+int				edge_permutation_coordinate_2(cubiecube_t* cube);
 int				UD_slice_sorted_coordinate_2(cubiecube_t* cube);
 
 
 void			set_corner_orientation_coord(int coord, cubiecube_t* cube);
 void			set_edge_orientation_coord(int coord, cubiecube_t* cube);
 void			set_UD_slice_coord(int coord, cubiecube_t* cube);
-void			set_corner_permutation_coordinate(cubiecube_t* cube, int index);
-void			set_edge_permutation_coordinate_2(cubiecube_t* cube, int index);
-void			set_UD_slice_sorted_coordinate_2(cubiecube_t* cube, int index);
+void			set_corner_permutation_coordinate(int index, cubiecube_t* cube);
+void			set_edge_permutation_coordinate_2(int index, cubiecube_t* cube);
+void			set_UD_slice_sorted_coordinate_2(int index,cubiecube_t* cube);
 
 
 

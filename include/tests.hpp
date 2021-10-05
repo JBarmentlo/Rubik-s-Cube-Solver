@@ -2,6 +2,8 @@
 #include "CubieCube.hpp"
 
 #include "utils.hpp"
+typedef int (*get_coord_function)(cubiecube_t*);
+typedef void (*set_coord_function)(int, cubiecube_t*);
 
 void check_identity()
 {
@@ -215,6 +217,21 @@ void check_set_coords_1()
 		if (cubo.UD_coord() !=  i)
 		{
 			std::cout << "UD " << cubo.UD_coord() << std::endl;
+		}
+	}
+}
+
+void check_set_get_coord_equivalency(get_coord_function get_coord, set_coord_function set_coord, int range)
+{
+	CubieCube cube;
+	cube.set_solved();
+
+	for (int i = 0; i < range; i++)
+	{
+		set_coord(i, &cube.data);
+		if (get_coord(&cube.data) != i)
+		{
+			std::cout << "COORD ERROR " << i << std::endl;
 		}
 	}
 }

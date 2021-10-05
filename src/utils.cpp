@@ -11,14 +11,26 @@ int				factorial(int n)
 
 int				binomial_coefficient(int n, int k)
 {
+	int s(1);
+	int i(n);
+	int	j(1);
+
 	if (n < k)
 	{
 		return (0);
 	}
-	if (k < 0)
+	if (k > n / 2)
 	{
-		return (0);
+		k = n - k; // Optimization
 	}
+	while(i != (n - k))
+	{
+		s = s * i;
+		s = s / j;
+		i = i - 1;
+		j = j + 1;
+	}
+	return (s);
 	return (factorial(n) / (factorial(k) * factorial(n - k)));
 };
 
@@ -126,6 +138,50 @@ void			rotate_left(int* arr, int l, int r)
 void			rotate_right(int* arr, int l, int r)
 {
 	int tmp = arr[r];
+
+	for (int i = r; i > l; i--)
+	{
+		arr[i] = arr[i - 1];
+	}
+	arr[l] = tmp;
+}
+
+void			rotate_left(edge_t* arr, int l, int r)
+{
+	edge_t tmp = arr[l];
+
+	for (int i = l; i < r; i++)
+	{
+		arr[i] = arr[i + 1];
+	}
+	arr[r] = tmp;
+}
+
+void			rotate_right(edge_t* arr, int l, int r)
+{
+	edge_t tmp = arr[r];
+
+	for (int i = r; i > l; i--)
+	{
+		arr[i] = arr[i - 1];
+	}
+	arr[l] = tmp;
+}
+
+void			rotate_left(corner_t* arr, int l, int r)
+{
+	corner_t tmp = arr[l];
+
+	for (int i = l; i < r; i++)
+	{
+		arr[i] = arr[i + 1];
+	}
+	arr[r] = tmp;
+}
+
+void			rotate_right(corner_t* arr, int l, int r)
+{
+	corner_t tmp = arr[r];
 
 	for (int i = r; i > l; i--)
 	{

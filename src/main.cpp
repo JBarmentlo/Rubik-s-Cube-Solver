@@ -28,7 +28,9 @@ int main()
 	cubiecube_t* moves = get_moves();
 	cubiecube_t eo = create_cubie_with_edge_orientation_coord(1245);
 	cubiecube_t co = create_cubie_with_corner_orientation_coord(1111);
-	cubiecube_t test;
+	CubieCube cube;
+	cube.set_solved();
+	cubiecube_t test = cube.data;
 
 	// cubiecube_t test = {{URF, UFL, ULB, UBR, DFR, DLF, DBL, DRB}, {0, 0, 0, 0, 0, 0, 0, 0}, {UR, UR, UR, UR, UR, UR, UR, FL, FR, BL, UR, BR}, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}};
 	// cubiecube_t test = {{URF, UFL, ULB, UBR, DFR, DLF, DBL, DRB}, {0, 0, 0, 0, 0, 0, 0,  {UR, UF, UL, UB, DR, DF, DL, DB, FR, FL, BL, BR}, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}};
@@ -41,24 +43,11 @@ int main()
 	// make_raw_move_table(corner_orientation_coordinate, set_corner_orientation_coord, N_CORNER_ORI, "../tables/corner_ori_move");
 	// make_raw_move_table(UD_slice_coordinate, set_UD_slice_coord, N_UD, "../tables/UD_move");
 	// make_raw_move_table(edge_orientation_coordinate, set_edge_orientation_coord, N_EDGE_ORI, "../tables/edge_ori_move");
+	// print_array((int*)test.edge_positions, 12);
+	set_UD_slice_sorted_coordinate_2(3, &test);
+	set_UD_slice_sorted_coordinate_2(3, &test);
+	// print_array((int*)test.edge_positions, 12);
 
-	CubieCube cube;
-	cube.set_solved();
-	std::cout << std::endl;
-	bool testa[40320];
-	for (int i = 0; i < 40320; i++)
-	{
-		testa[i] = false;
-	}
-	
-	for (int i = 0; i < 40320; i++)
-	{
-		set_edge_permutation_coordinate_2(&cube.data, i);
-		if (edge_permutation_coordinate_2(&cube.data) != i)
-		{
-			std::cout << edge_permutation_coordinate_2(&cube.data) << std::endl;
-			std::cout << std::endl;
-		}
-	}
-
+	// UD_slice_sorted_coordinate_2(&test);
+	check_set_get_coord_equivalency(corner_permutation_coordinate, set_corner_permutation_coordinate, 40319);
 }
