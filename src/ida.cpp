@@ -3,11 +3,9 @@
 
 #include "Node.hpp"
 #include "ida.hpp"
+#include "define.hpp"
 
 using namespace std;
-
-#define MAX_ITER	10000
-#define SUCCESS		-1
 
 
 bool corner_heuristic(CoordCube* coordcube)

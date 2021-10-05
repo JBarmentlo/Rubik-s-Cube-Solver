@@ -7,8 +7,8 @@
 #include <fstream>
 
 
-typedef int (*get_coord_function)(cubiecube_t*);
-typedef void (*set_coord_function)(int, cubiecube_t*);
+typedef int 	(*get_coord_function)(cubiecube_t*);
+typedef void 	(*set_coord_function)(int, cubiecube_t*);
 
 
 void make_raw_move_table(get_coord_function get_coord, set_coord_function set_coord, int coord_max, std::string filename)

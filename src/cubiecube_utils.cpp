@@ -3,7 +3,7 @@
 
 #include <cstring>
 
-void apply_move(cubiecube_t* cube, cubiecube_t* move)
+void			apply_move(cubiecube_t* cube, cubiecube_t* move)
 {
 	cubiecube_t			tmp;
 	memcpy(&tmp, cube, sizeof(tmp));
@@ -19,7 +19,7 @@ void apply_move(cubiecube_t* cube, cubiecube_t* move)
 	}
 }
 
-void apply_move_corners(cubiecube_t* cube, cubiecube_t* move)
+void			apply_move_corners(cubiecube_t* cube, cubiecube_t* move)
 {
 	cubiecube_t			tmp;
 	memcpy(&tmp, cube, sizeof(tmp));
@@ -30,7 +30,7 @@ void apply_move_corners(cubiecube_t* cube, cubiecube_t* move)
 	}
 }
 
-void apply_move_edges(cubiecube_t* cube, cubiecube_t* move)
+void			apply_move_edges(cubiecube_t* cube, cubiecube_t* move)
 {
 	cubiecube_t			tmp;
 	memcpy(&tmp, cube, sizeof(tmp));
@@ -42,7 +42,7 @@ void apply_move_edges(cubiecube_t* cube, cubiecube_t* move)
 }
 
 
-cubiecube_t* get_moves()
+cubiecube_t*	get_moves()
 {
 	static  cubiecube_t	moves[18];
 	static	bool		first = true;

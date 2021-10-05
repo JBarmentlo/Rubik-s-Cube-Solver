@@ -1,3 +1,7 @@
+#ifndef TEST_HPP
+#define TEST_HPP
+
+
 #include "cubiecube_utils.hpp"
 #include "CubieCube.hpp"
 
@@ -235,3 +239,5 @@ void check_set_get_coord_equivalency(get_coord_function get_coord, set_coord_fun
 		}
 	}
 }
+
+#endif
