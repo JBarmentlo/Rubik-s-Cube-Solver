@@ -68,7 +68,6 @@ int				sum_cnk(int n0, int n1, int k)
 	return (binomial_coefficient(n1 + 1, k + 1) - binomial_coefficient(n0, k + 1));
 }
 
-
 const bool*			allowed_moves(int previous_move)
 {
 	static const bool*			allowed_moves[6];
@@ -111,3 +110,27 @@ const bool*			allowed_moves(int previous_move)
 
 	return allowed_moves[previous_move % 6]; // TODO: TEST THIS
 }
+
+// Rotate array to the lesft left between l and r. r is included.
+void			rotate_left(int* arr, int l, int r)
+{
+	int tmp = arr[l];
+
+	for (int i = l; i < r; i++)
+	{
+		arr[i] = arr[i + 1];
+	}
+	arr[r] = tmp;
+}
+
+void			rotate_right(int* arr, int l, int r)
+{
+	int tmp = arr[r];
+
+	for (int i = r; i > l; i--)
+	{
+		arr[i] = arr[i - 1];
+	}
+	arr[l] = tmp;
+}
+

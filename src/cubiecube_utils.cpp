@@ -192,23 +192,22 @@ int				corner_permutation_coordinate(cubiecube_t* cube)
 
 int				edge_permutation_coordinate(cubiecube_t* cube)
 {
-	int out(0);
-	int left;
-
-	for (int i = FIRST_EDGE; i <= LAST_EDGE; i++)
+	int x = 0;
+	int s;
+	for (int i = LAST_EDGE; i >= FIRST_EDGE; i--)
 	{
-		left = 0;
-		for (int j = 0; j < i; j++)
+		s = 0;
+		for (int j = i - 1; j >= UR; j--)
 		{
+			s = 0;
 			if (cube->edge_positions[j] > cube->edge_positions[i])
 			{
-				left = left + 1;
+				s = s + 1;
 			}
 		}
-		out = out + (left * factorial(i));
+		x = (x + s) * i;
 	}
-
-	return out;
+	return (x);
 }
 
 int				UD_slice_coordinate(cubiecube_t* cube)
@@ -440,12 +439,6 @@ void			set_UD_slice_coord(int coord, cubiecube_t* cube)
 		}
 	}
 }
-
-
-
-
-
-
 
 
 void 			print_corners(cubiecube_t* cube)

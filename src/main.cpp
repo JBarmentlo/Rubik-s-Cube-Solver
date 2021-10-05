@@ -22,7 +22,15 @@ int** read_raw_move_table(int coord_max, std::string filename)
 	return pretty_table;
 }
 
-
+void print_array(int* arr, int size)
+{
+	for (int i = 0; i < size; i++)
+	{
+		std::cout << arr[i] << ", ";
+	}
+	std::cout << std::endl;
+	
+}
 
 
 int main()
@@ -47,16 +55,9 @@ int main()
 	CubieCube cube;
 	cube.set_solved();
 	std::cout << std::endl;
-	std::cout << std::endl;
-
-	int e2 =phase2_edge_permutaion_coordinate(&cube.data);
-	std::cout << e2 << std::endl;
-
-	// auto table = read_raw_move_table(N_CORNER_ORI, "../tables/corner_ori_move");
-	// for (int i = 0; i < 18; i++) 
-	// {
-	// 	std::cout << table[1][i] << std::endl;
-	// }
-
-
+	int	arr[4] = {1, 2, 3, 4};
+	print_array(arr, 4);
+	rotate_right(arr, 0, 3);
+	print_array(arr, 4);
+	std::cout << binomial_coefficient(11, 3) << std::endl;
 }
