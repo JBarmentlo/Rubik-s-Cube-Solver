@@ -8,5 +8,7 @@ bool corner_heuristic(CoordCube* coordcube);
 
 bool		ida(Node *start, is_goal_function is_goal);
 
+bool		create_corner_heuristic_table(void);
+
 
 #endif
