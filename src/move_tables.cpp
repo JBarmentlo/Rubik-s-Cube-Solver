@@ -10,7 +10,7 @@ void 		make_raw_move_table(get_coord_function get_coord, set_coord_function set_
 	memcpy(&cube, &homecube, sizeof(cube));
 	cubiecube_t* moves = get_moves();
 
-	for (int i = 0; i <= coord_max; i++)
+	for (int i = 0; i < coord_max; i++)
 	{
 		set_coord(i, &cube);
 		for (int j = 0; j < N_BASIC_MOVES; j++)
@@ -31,14 +31,14 @@ void 		make_raw_move_table(get_coord_function get_coord, set_coord_function set_
 int** 		read_raw_move_table(int coord_max, std::string filename)
 {
 	int*			table;
-	table = (int*)malloc(N_MOVES * (coord_max + 1) * sizeof(int));
+	table = (int*)malloc(N_MOVES * (coord_max) * sizeof(int));
 	int**			pretty_table;
-	pretty_table = (int**)malloc((coord_max + 1) * sizeof(int*));
+	pretty_table = (int**)malloc((coord_max) * sizeof(int*));
 
 	std::ifstream in(filename, std::ios_base::binary);
-	in.read((char*)table, N_MOVES * (coord_max + 1) * sizeof(int));
+	in.read((char*)table, N_MOVES * (coord_max) * sizeof(int));
 
-	for (int i = 0; i < coord_max + 1; i++)
+	for (int i = 0; i < coord_max; i++)
 	{
 		pretty_table[i] = &table[i * N_MOVES];
 	}
@@ -63,16 +63,27 @@ int**		read_UD_move_table()
 int** 		read_raw_move_table_phase_2(int coord_max, std::string filename)
 {
 	int*			table;
-	table = (int*)malloc(N_MOVES * (coord_max + 1) * sizeof(int));
+	table = (int*)malloc(N_MOVES * (coord_max) * sizeof(int));
 	int**			pretty_table;
-	pretty_table = (int**)malloc((coord_max + 1) * sizeof(int*));
+	pretty_table = (int**)malloc((coord_max) * sizeof(int*));
 
 	std::ifstream in(filename, std::ios_base::binary);
-	in.read((char*)table, N_MOVES * (coord_max + 1) * sizeof(int));
+	in.read((char*)table, N_MOVES * (coord_max ) * sizeof(int));
 
 	for (int i = 0; i < coord_max + 1; i++)
 	{
 		pretty_table[i] = &table[i * N_MOVES];
 	}
 	return pretty_table;
+}
+
+void 		make_all_move_tables(void)
+{
+	for (int i = 0; i < 4; i++)
+	{
+		std::cout << "Making " << table_file_names[i] << " of size: " << coord_range[i] << std::endl;
+		
+		make_raw_move_table(coord_getters[i], coord_setters[i], coord_range[i], table_file_names[i]);
+		std::cout << "Done" << std::endl;
+	}
 }

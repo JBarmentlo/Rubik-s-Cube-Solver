@@ -4,6 +4,7 @@
 #include <cstring>
 
 #include "cubiecube_utils.hpp"
+#include "utils.hpp"
 
 
 
