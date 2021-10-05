@@ -2,6 +2,7 @@
 #include <stack>
 
 #include "Node.hpp"
+#include "ida.hpp"
 
 using namespace std;
 
@@ -9,7 +10,14 @@ using namespace std;
 #define SUCCESS		-1
 
 
-pair <int, stack<Node*>>		search(Node *current, int threshold, CoordCube *goal, stack<Node*> path)
+bool corner_heuristic(CoordCube* coordcube)
+{
+	if (coordcube->corner_orientation_coord != 0)
+		return (false);
+	return (true);
+}
+
+pair <int, stack<Node*>>		search(Node *current, int threshold, is_goal_function is_goal, stack<Node*> path)
 {
 	int		min;
 	int		f;
@@ -18,7 +26,7 @@ pair <int, stack<Node*>>		search(Node *current, int threshold, CoordCube *goal, 
 
 	f = current->f;
 	path.push(current);
-	if(*current->coordcube == *goal)
+	if(is_goal(current->coordcube) == true)
 		return {SUCCESS, path};
 	if(f > threshold)
 	{
@@ -31,7 +39,7 @@ pair <int, stack<Node*>>		search(Node *current, int threshold, CoordCube *goal, 
 	{
 		for(auto bebe : bebes)
 		{
-			pair <int, stack<Node*>> test = search(bebe, threshold, goal, path);
+			pair <int, stack<Node*>> test = search(bebe, threshold, is_goal, path);
 			tmp = test.first;
 			path = test.second;
 			if(tmp == SUCCESS)
@@ -45,7 +53,7 @@ pair <int, stack<Node*>>		search(Node *current, int threshold, CoordCube *goal, 
 }
 
 
-bool		ida(Node *start, CoordCube *goal)
+bool		ida(Node *start, is_goal_function is_goal)
 {
 	stack<Node*>		path;
 	int				i;
@@ -59,7 +67,7 @@ bool		ida(Node *start, CoordCube *goal)
 	{
 		std::cout << "\n\n****\niter = " << i << "\n";
 		std::cout << "threshold = " << threshold << "\n";
-		pair <int, stack<Node*>> test = search(start, threshold, goal, path);
+		pair <int, stack<Node*>> test = search(start, threshold, is_goal, path);
 		tmp = test.first;
 		path = test.second;
 		if(tmp == SUCCESS)

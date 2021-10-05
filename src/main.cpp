@@ -13,27 +13,8 @@
 
 using namespace std;
 
-// typedef bool (is_goal_function*)(&CoordCube);
 
-// bool phase_one_objective(&CoordCube)
-// {
-// 	if (CoordCube.corner_orientation_coord != 0)
-// 	{
-// 		return (false);
-// 	}
-// 	if (CoordCube.edge_orientation_coord != 0)
-// 	{
-// 		return (false);
-// 	}
-// 	if (CoordCube.UD_slice_coord != 0)
-// 	{
-// 		return (false);
-// 	}
-// 	else
-// 	{
-// 		return (true);
-// 	}
-// }
+
 
 
 int main()
@@ -43,24 +24,24 @@ int main()
     // make_raw_move_table(edge_orientation_coordinate, set_edge_orientation_coord, N_EDGE_ORI, EDGE_ORI_NAME);
 	
 
-	int move;
-	CoordCube* mommy_cube = new CoordCube();
-	CoordCube *bb_cube;
+	CoordCube *bb_cube = new CoordCube();
 
-	move = 1;
+	bb_cube->print();
+	std::cout << "\n";
 
-	mommy_cube->set_solved();
-	bb_cube = create_baby_from_move(mommy_cube, move);
-	bb_cube = create_baby_from_move(bb_cube, 2);
-	bb_cube = create_baby_from_move(bb_cube, 9);
-	bb_cube = create_baby_from_move(bb_cube, 8);
+	int move[] = {1, 2, 9, 8};
 
+	for(auto i : move)
+		bb_cube->apply_move(i);
+
+	bb_cube->print();
+	std::cout << "\n";
 
 	Node *start = new Node(0, 0, bb_cube);
 
-	// is_goal_function	is_goal = phase_one_objective;
+	// is_goal_function is_goal = corner_heuristic;
 
 
-	ida(start, mommy_cube);
+	ida(start, corner_heuristic);
 
 }
