@@ -5,6 +5,7 @@
 #include "CubieCube.hpp"
 #include "CoordCube.hpp"
 #include "tests.hpp"
+#include "move_tables.hpp"
 
 
 int main()
@@ -20,6 +21,6 @@ int main()
 	Node *start = new Node(0, 0, bb_cube);
 
 	// ida(start, corner_heuristic);
-	create_corner_heuristic_table();
+	create_corner_heuristic_table(N_CORNER_ORI, read_corner_orientation_move_table);
 
 }

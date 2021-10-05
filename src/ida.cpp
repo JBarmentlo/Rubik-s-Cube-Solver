@@ -91,14 +91,14 @@ bool		ida(Node *start, is_goal_function is_goal)
 
 
 
-bool		create_corner_heuristic_table()
+bool		create_corner_heuristic_table(int size, reading_table_function read)
 {
-	static int** corner_orientation_table = read_corner_orientation_move_table();
+	static int** moves_table = read();
 
-	static int corner_orientation_heuristics_table[N_CORNER_ORI];
+	int heuristics_table[size];
 
-	std::cout << corner_orientation_table[0][5] << std::endl;
-	std::cout << corner_orientation_heuristics_table[0] << std::endl;
+	std::cout << moves_table[0][5] << std::endl;
+	std::cout << heuristics_table[2] << std::endl;
 	
 	return true;
 }
