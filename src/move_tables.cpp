@@ -1,4 +1,7 @@
 #include "move_tables.hpp"
+#include <string.h>
+#include <fstream>
+
 
 void 		make_raw_move_table(get_coord_function get_coord, set_coord_function set_coord, int coord_max, std::string filename)
 {
@@ -10,14 +13,12 @@ void 		make_raw_move_table(get_coord_function get_coord, set_coord_function set_
 	for (int i = 0; i < coord_max; i++)
 	{
 		set_coord(i, &cube);
-
 		for (int j = 0; j < N_BASIC_MOVES; j++)
 		{
 			for (int k = 0; k < 3; k++)
 			{
 				apply_move(&cube, &moves[j]);
 				table[N_MOVES * i + j + 6 * k] = get_coord(&cube);
-
 			}
 			apply_move(&cube, &moves[j]);
 		}
@@ -26,15 +27,6 @@ void 		make_raw_move_table(get_coord_function get_coord, set_coord_function set_
 	out.write((char*)table, sizeof(int) * (N_MOVES * (coord_max)));
 }
 
-// void make_all_move_tables(void)
-// {
-// 	for (int i = 0; i < N_TABLES; i++)
-// 	{
-// 		std::cout << "Making " << table_file_names[i] << "of size: " << coord_range[i] << std::endl;
-// 		make_raw_move_table(coord_getters[i], coord_setters[i], coord_range[i], table_file_names[i]);
-// 		std::cout << "Done" << std::endl;
-// 	}
-// }
 
 int** 		read_raw_move_table(int coord_max, std::string filename)
 {
@@ -87,7 +79,7 @@ int** 		read_raw_move_table_phase_2(int coord_max, std::string filename)
 
 void 		make_all_move_tables(void)
 {
-	for (int i = 0; i < N_TABLES; i++)
+	for (int i = 0; i < 4; i++)
 	{
 		std::cout << "Making " << table_file_names[i] << " of size: " << coord_range[i] << std::endl;
 		

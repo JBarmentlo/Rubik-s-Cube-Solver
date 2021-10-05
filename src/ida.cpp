@@ -2,7 +2,8 @@
 #include <stack>
 
 #include "ida.hpp"
-
+#include "define.hpp"
+#include "move_tables.hpp"
 
 using namespace std;
 
@@ -85,5 +86,19 @@ bool		ida(Node *start, is_goal_function is_goal)
 	}
 	std::cout << "FAILUUUURE\n";
 	return false;
+}
+
+
+
+bool		create_corner_heuristic_table()
+{
+	static int** corner_orientation_table = read_corner_orientation_move_table();
+
+	static int corner_orientation_heuristics_table[N_CORNER_ORI];
+
+	std::cout << corner_orientation_table[0][5] << std::endl;
+	std::cout << corner_orientation_heuristics_table[0] << std::endl;
+	
+	return true;
 }
 
