@@ -141,6 +141,8 @@ void 			apply_move(cubiecube_t* cube, int move)
 	}
 }
 
+
+
 int				corner_orientation_coordinate(cubiecube_t* cube)
 {
 	// The loop iterates over all corners except the last (which is not used to compute the coordinate)
@@ -155,6 +157,25 @@ int				corner_orientation_coordinate(cubiecube_t* cube)
 	return out;
 };
 
+void			set_corner_orientation_coord(int coord, cubiecube_t* cube)	
+{
+	int parity = 0;
+	int corner;
+
+	corner = DBL;
+	while (corner >= URF)
+	{
+		parity = parity + (coord % 3);
+		cube->corner_orientations[corner] = coord % 3;
+		coord = coord / 3;
+		corner = (corner - 1);
+	}
+
+	parity = parity % 3;
+	cube->corner_orientations[DRB] = 3 - parity;
+};
+
+
 int				edge_orientation_coordinate(cubiecube_t* cube)
 {
 	// The loop iterates over all edges except the last (which is not used to compute the coordinate)
@@ -168,6 +189,22 @@ int				edge_orientation_coordinate(cubiecube_t* cube)
 
 	return out;
 }
+
+void			set_edge_orientation_coord(int coord, cubiecube_t* cube)
+{
+	int parity = 0;
+
+	for (int e = LAST_EDGE - 1; e >= FIRST_EDGE; e--)
+	{
+		parity = parity + (coord % 2);
+		cube->edge_orientations[e] = coord % 2;
+		coord = coord / 2;
+	}
+
+	parity = parity % 2;
+	cube->corner_orientations[LAST_EDGE] = 2 - parity; //TODO: CHECK IF THIS IS GOOD PARTITY
+};
+
 
 int				corner_permutation_coordinate_old(cubiecube_t* cube)
 {
@@ -210,6 +247,26 @@ int				corner_permutation_coordinate(cubiecube_t* cube)
 	return out;
 };
 
+
+void			set_corner_permutation_coordinate(int index, cubiecube_t* cube)
+{
+	int out(0);
+	int perm[8];
+	int k;
+
+	memcpy(cube->corner_positions, homecube.corner_positions, sizeof(cube->corner_positions));
+	for (int i = FIRST_CORNER; i <= LAST_CORNER; i++)
+	{
+		k = index % (i + 1);
+		index = index / (i + 1);
+		while (k > 0)
+		{
+			rotate_right((int*)cube->corner_positions, 0, i);
+			k = k - 1;
+		}
+	}
+}
+
 int				edge_permutation_coordinate_2(cubiecube_t* cube)
 {
 	int perm[8];
@@ -228,6 +285,27 @@ int				edge_permutation_coordinate_2(cubiecube_t* cube)
 		out = out * (i + 1) + k;
 	}
 	return (out);
+}
+
+
+void			set_edge_permutation_coordinate_2(int index, cubiecube_t* cube)
+{
+	int k;
+
+	for (int i = FIRST_EDGE; i < 8; i++)
+	{
+		cube->edge_positions[i] = (edge_t)i;
+	}
+	for (int i = FIRST_EDGE; i < 8; i++)
+	{
+		k = index % (i + 1);
+		index = index / (i + 1);
+		while (k > 0)
+		{
+			rotate_right((int*)cube->edge_positions, 0, i);
+			k = k - 1;
+		}
+	}
 }
 
 int				edge_permutation_coordinate(cubiecube_t* cube)
@@ -249,6 +327,7 @@ int				edge_permutation_coordinate(cubiecube_t* cube)
 	}
 	return (x);
 }
+
 
 int				UD_slice_coordinate(cubiecube_t* cube) // ! CAREFULL DIFFERENT COORDINATE SYSTEM THEN KOCIEMBA BUT WORKS
 {
@@ -279,71 +358,6 @@ int				UD_slice_coordinate(cubiecube_t* cube) // ! CAREFULL DIFFERENT COORDINATE
 		}
 	}
 	return (out);
-};
-
-int				UD_slice_sorted_coordinate_2(cubiecube_t* cube)
-{
-	int a(0); // Index of unsorted permutaion of UD_slice edges;
-	int b(0); // Index of permutation within UD_slice edges
-	int x(0);
-	int k;
-
-	int UD_edges[4] = {0, 0, 0, 0};
-
-	for (int j = LAST_EDGE; j >= FIRST_EDGE ; j--)
-	{
-		if (is_ud_slice_edge(cube->edge_positions[j])) // The edge is in the UD slice
-		{
-			a  = a + binomial_coefficient(11 - j, x + 1);
-			UD_edges[3 - x] = cube->edge_positions[j];
-			x = x + 1;
-		}
-	}
-	for (int i = 3; i > 0; i--)
-	{
-		k = 0;
-		while (UD_edges[i] != i + 8)
-		{
-			rotate_left(UD_edges, 0, i);
-			k = k + 1;
-		}
-		b = b * (i + 1) + k;
-	}
-	return (24 * a + b);
-}
-
-
-void			set_corner_orientation_coord(int coord, cubiecube_t* cube)	
-{
-	int parity = 0;
-	int corner;
-
-	corner = DBL;
-	while (corner >= URF)
-	{
-		parity = parity + (coord % 3);
-		cube->corner_orientations[corner] = coord % 3;
-		coord = coord / 3;
-		corner = (corner - 1);
-	}
-
-	parity = parity % 3;
-	cube->corner_orientations[DRB] = 3 - parity;
-};
-
-void			set_edge_orientation_coord(int coord, cubiecube_t* cube)
-{
-	int parity = 0;
-
-	for (int e = LAST_EDGE - 1; e >= FIRST_EDGE; e--)
-	{
-		parity = parity + (coord % 2);
-		cube->edge_orientations[e] = coord % 2;
-		coord = coord / 2;
-	}
-
-	parity = parity % 2;
-	cube->corner_orientations[LAST_EDGE] = 2 - parity; //TODO: CHECK IF THIS IS GOOD PARTITY
 };
 
 void			set_UD_slice_coord(int coord, cubiecube_t* cube)
@@ -395,43 +409,36 @@ void			set_UD_slice_coord(int coord, cubiecube_t* cube)
 	}
 }
 
-void			set_corner_permutation_coordinate(int index, cubiecube_t* cube)
+
+int				UD_slice_sorted_coordinate_2(cubiecube_t* cube)
 {
-	int out(0);
-	int perm[8];
+	int a(0); // Index of unsorted permutaion of UD_slice edges;
+	int b(0); // Index of permutation within UD_slice edges
+	int x(0);
 	int k;
 
-	memcpy(cube->corner_positions, homecube.corner_positions, sizeof(cube->corner_positions));
-	for (int i = FIRST_CORNER; i <= LAST_CORNER; i++)
+	int UD_edges[4] = {0, 0, 0, 0};
+
+	for (int j = LAST_EDGE; j >= FIRST_EDGE ; j--)
 	{
-		k = index % (i + 1);
-		index = index / (i + 1);
-		while (k > 0)
+		if (is_ud_slice_edge(cube->edge_positions[j])) // The edge is in the UD slice
 		{
-			rotate_right((int*)cube->corner_positions, 0, i);
-			k = k - 1;
+			a  = a + binomial_coefficient(11 - j, x + 1);
+			UD_edges[3 - x] = cube->edge_positions[j];
+			x = x + 1;
 		}
 	}
-}
-
-void			set_edge_permutation_coordinate_2(int index, cubiecube_t* cube)
-{
-	int k;
-
-	for (int i = FIRST_EDGE; i < 8; i++)
+	for (int i = 3; i > 0; i--)
 	{
-		cube->edge_positions[i] = (edge_t)i;
-	}
-	for (int i = FIRST_EDGE; i < 8; i++)
-	{
-		k = index % (i + 1);
-		index = index / (i + 1);
-		while (k > 0)
+		k = 0;
+		while (UD_edges[i] != i + 8)
 		{
-			rotate_right((int*)cube->edge_positions, 0, i);
-			k = k - 1;
+			rotate_left(UD_edges, 0, i);
+			k = k + 1;
 		}
+		b = b * (i + 1) + k;
 	}
+	return (24 * a + b);
 }
 
 void			set_UD_slice_sorted_coordinate_2(int index, cubiecube_t* cube)
@@ -485,6 +492,7 @@ void			set_UD_slice_sorted_coordinate_2(int index, cubiecube_t* cube)
 		j = j + 1;
 	}
 }
+
 
 
 

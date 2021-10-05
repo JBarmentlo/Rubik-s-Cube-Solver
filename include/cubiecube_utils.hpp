@@ -90,21 +90,25 @@ cubiecube_t		create_cubie_with_UD_slice_coord(int coord);
 // void			display(cubiecube_t* cube);
 
 int				corner_orientation_coordinate(cubiecube_t* cube);
+void			set_corner_orientation_coord(int coord, cubiecube_t* cube);
+
 int				edge_orientation_coordinate(cubiecube_t* cube);
+void			set_edge_orientation_coord(int coord, cubiecube_t* cube);
+
 int				corner_permutation_coordinate(cubiecube_t* cube);
+void			set_corner_permutation_coordinate(int index, cubiecube_t* cube);
+
 int				edge_permutation_coordinate(cubiecube_t* cube);
 int				UD_slice_coordinate(cubiecube_t* cube);
-int				edge_permutation_coordinate_2(cubiecube_t* cube);
-int				edge_permutation_coordinate_2(cubiecube_t* cube);
-int				UD_slice_sorted_coordinate_2(cubiecube_t* cube);
-
-
-void			set_corner_orientation_coord(int coord, cubiecube_t* cube);
-void			set_edge_orientation_coord(int coord, cubiecube_t* cube);
 void			set_UD_slice_coord(int coord, cubiecube_t* cube);
-void			set_corner_permutation_coordinate(int index, cubiecube_t* cube);
+
+int				edge_permutation_coordinate_2(cubiecube_t* cube);
 void			set_edge_permutation_coordinate_2(int index, cubiecube_t* cube);
+
+int				UD_slice_sorted_coordinate_2(cubiecube_t* cube);
 void			set_UD_slice_sorted_coordinate_2(int index,cubiecube_t* cube);
+
+
 
 
 
