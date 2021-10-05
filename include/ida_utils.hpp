@@ -5,6 +5,8 @@
 
 typedef bool	(*is_goal_function)(CoordCube*);
 
-bool corner_heuristic(CoordCube* coordcube);
+bool            phase_one_goal(CoordCube* coordcube);
+
+bool            corner_heuristic(CoordCube* coordcube);
 
 #endif

@@ -29,6 +29,13 @@ vector<Node*>    Node::get_bebes()
     return (bebes);
 }
 
+void                Node::set_h(int new_h)
+{
+    this->h = new_h;
+    this->f = this->g + this->h;
+}
+
+
 
 void    Node::print(void)
 {

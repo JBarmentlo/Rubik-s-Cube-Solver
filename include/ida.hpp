@@ -9,10 +9,9 @@
 
 typedef bool	(*is_goal_function)(CoordCube*);
 
-typedef int**	(*reading_table_function)(void);
 
 
-bool		ida(Node *start, is_goal_function is_goal);
+bool		ida(Node *start, is_goal_function is_goal, int (*heuristic)(CoordCube*));
 
 
 #endif

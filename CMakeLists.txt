@@ -19,6 +19,8 @@ set(SOURCES
     src/move_tables.cpp
     src/CoordCube.cpp
     src/heuristics_tables.cpp
+    src/heuristics.cpp
+
 )
 
 add_executable(Roobik ${SOURCES})

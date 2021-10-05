@@ -23,6 +23,7 @@ class Node
 
         vector<Node*>       get_bebes();
         void                print();
+        void                set_h(int h);
 };
 
 

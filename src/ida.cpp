@@ -5,13 +5,14 @@
 
 using namespace std;
 
-pair <int, stack<Node*>>		search(Node *current, int threshold, is_goal_function is_goal, stack<Node*> path)
+pair <int, stack<Node*>>		search(Node *current, int threshold, is_goal_function is_goal, stack<Node*> path, int (*heuristic)(CoordCube*))
 {
 	int		min;
 	int		f;
 	int		tmp;
 	vector <Node*> bebes;
 
+	current->set_h(heuristic(current->coordcube));
 	f = current->f;
 	path.push(current);
 	if(is_goal(current->coordcube) == true)
@@ -27,7 +28,7 @@ pair <int, stack<Node*>>		search(Node *current, int threshold, is_goal_function 
 	{
 		for(auto bebe : bebes)
 		{
-			pair <int, stack<Node*>> test = search(bebe, threshold, is_goal, path);
+			pair <int, stack<Node*>> test = search(bebe, threshold, is_goal, path, heuristic);
 			tmp = test.first;
 			path = test.second;
 			if(tmp == SUCCESS)
@@ -41,34 +42,28 @@ pair <int, stack<Node*>>		search(Node *current, int threshold, is_goal_function 
 }
 
 
-bool		ida(Node *start, is_goal_function is_goal)
+bool		ida(Node *start, is_goal_function is_goal, int (*heuristic)(CoordCube*))
 {
-	stack<Node*>		path;
+	stack<Node*>	path;
 	int				i;
 	int				threshold;
 	int				tmp;
 
 	i = 0;
 	tmp = 0;
+	start->set_h(heuristic(start->coordcube));
 	threshold = start->f;
 	while(i < MAX_ITER)
 	{
 		std::cout << "\n\n****\niter = " << i << "\n";
 		std::cout << "threshold = " << threshold << "\n";
-		pair <int, stack<Node*>> test = search(start, threshold, is_goal, path);
+		pair <int, stack<Node*>> test = search(start, threshold, is_goal, path, heuristic);
 		tmp = test.first;
 		path = test.second;
 		if(tmp == SUCCESS)
 		{
 			std::cout << "SUCCESSO: \n";
 			std::cout << "path size = " << path.size() << "\n\n";
-			Node*	todelete;
-			while (path.empty() == false)
-			{
-				todelete = path.top();
-				std::cout << todelete->coordcube->corner_orientation_coord << std::endl;
-				path.pop();
-			}
 			return true;
 		}
 		threshold = tmp;
