@@ -11,7 +11,7 @@ typedef int 	(*get_coord_function)(cubiecube_t*);
 typedef void 	(*set_coord_function)(int, cubiecube_t*);
 
 
-void make_raw_move_table(get_coord_function get_coord, set_coord_function set_coord, int coord_max, std::string filename)
+void 		make_raw_move_table(get_coord_function get_coord, set_coord_function set_coord, int coord_max, std::string filename)
 {
 	cubiecube_t	cube;
 	int			table[N_MOVES * (coord_max)];
@@ -32,7 +32,7 @@ void make_raw_move_table(get_coord_function get_coord, set_coord_function set_co
 		}
 	}
 	std::ofstream out(filename, std::ios_base::binary);
-	out.write((char*)table, sizeof(int) * (N_MOVES * (coord_max + 1)));
+	out.write((char*)table, sizeof(int) * (N_MOVES * (coord_max)));
 }
 
 
@@ -53,17 +53,17 @@ int** 		read_raw_move_table(int coord_max, std::string filename)
 	return pretty_table;
 }
 
-int**	read_corner_orientation_move_table()
+int**		read_corner_orientation_move_table()
 {
 	return (read_raw_move_table(N_CORNER_ORI, CORNER_ORI_NAME));
 }
 
-int**	read_edge_orientation_move_table()
+int**		read_edge_orientation_move_table()
 {
 	return (read_raw_move_table(N_EDGE_ORI, EDGE_ORI_NAME));
 }
 
-int**	read_UD_move_table()
+int**		read_UD_move_table()
 {
 	return (read_raw_move_table(N_UD, UD_SLICE_NAME));
 }
