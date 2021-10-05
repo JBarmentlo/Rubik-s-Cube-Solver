@@ -27,6 +27,14 @@ void 		make_raw_move_table(get_coord_function get_coord, set_coord_function set_
 				{
 					table[N_MOVES * i + j + 6 * k] = get_coord(&cube);
 				}
+				else
+				{
+					table[N_MOVES * i + j + 6 * k] = i; //TODO: check if necesary
+				}
+				if (table[N_MOVES * i + j + 6 * k] >= coord_max)
+				{
+					std::cout << "THIS SHOULD NEVER PRINT" << std::endl;
+				}
 			}
 			apply_move(&cube, &moves[j]);
 		}
