@@ -4,14 +4,7 @@
 #include "cubiecube_utils.hpp"
 #include "CubieCube.hpp"
 #include "CoordCube.hpp"
-
-
-#include "utils.hpp"
 #include "tests.hpp"
-#include "move_tables.hpp"
-
-using namespace std;
-
 
 
 int main()
