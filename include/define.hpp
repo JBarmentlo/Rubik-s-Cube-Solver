@@ -13,10 +13,13 @@
 #define N_UD 					495 // Max values for coordinates
 #define N_CORNER_ORI 			2187
 #define N_EDGE_ORI 				2048
+#define N_CORNER_PERMUTATION 	40320
+
 
 #define N_UD_2	 				24
 #define N_UD_2_THEO				11880
 #define N_EDGE_PERMUTATION_2 	40320
+
 
 
 #define N_MOVES					18
@@ -37,7 +40,7 @@
 #define UD_SLICE_NAME			"../tables/UD_slice_move"
 
 #define UD_2_NAME	 				"../tables/ud_2_move"
-#define N_UD_2_THEO_NAME			"../tables/ud_2_big_move"
-#define N_EDGE_PERMUTATION_2_NAME 	"../tables/edge_perm_2_move"
-#define N_CORNER_PERMUTATION_NAME 	"../tables/corner_perm_2_move"
+#define UD_2_THEO_NAME			"../tables/ud_2_big_move"
+#define EDGE_PERMUTATION_2_NAME 	"../tables/edge_perm_2_move"
+#define CORNER_PERMUTATION_NAME 	"../tables/corner_perm_2_move"
 #endif

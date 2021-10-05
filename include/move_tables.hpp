@@ -3,12 +3,20 @@
 
 #include "cubiecube_utils.hpp"
 #include "CubieCube.hpp"
+#include "define.hpp"
 #include <string.h>
 #include <fstream>
 
 
 typedef int 	(*get_coord_function)(cubiecube_t*);
 typedef void 	(*set_coord_function)(int, cubiecube_t*);
+
+#define N_TABLES 6
+static get_coord_function 	coord_getters[N_TABLES] 	= {corner_orientation_coordinate, edge_orientation_coordinate, corner_permutation_coordinate, UD_slice_coordinate, edge_permutation_coordinate_2, UD_slice_sorted_coordinate_2};
+static set_coord_function 	coord_setters[N_TABLES] 	= {set_corner_orientation_coord, set_edge_orientation_coord, set_corner_permutation_coordinate, set_UD_slice_coord, set_edge_permutation_coordinate_2, set_UD_slice_sorted_coordinate_2};
+static std::string			table_file_names[N_TABLES] 	= {CORNER_ORI_NAME, EDGE_ORI_NAME, CORNER_PERMUTATION_NAME, UD_SLICE_NAME, EDGE_PERMUTATION_2_NAME, UD_2_NAME};
+static int					coord_range[N_TABLES] 		= {N_CORNER_ORI, N_EDGE_ORI, N_CORNER_PERMUTATION, N_UD, N_EDGE_PERMUTATION_2, N_UD_2};
+
 
 
 void 		make_raw_move_table(get_coord_function get_coord, set_coord_function set_coord, int coord_max, std::string filename)
@@ -35,6 +43,15 @@ void 		make_raw_move_table(get_coord_function get_coord, set_coord_function set_
 	out.write((char*)table, sizeof(int) * (N_MOVES * (coord_max)));
 }
 
+void make_all_move_tables(void)
+{
+	for (int i = 0; i < N_TABLES; i++)
+	{
+		std::cout << "Making " << table_file_names[i] << "of size: " << coord_range[i] << std::endl;
+		make_raw_move_table(coord_getters[i], coord_setters[i], coord_range[i], table_file_names[i]);
+		std::cout << "Done" << std::endl;
+	}
+}
 
 int** 		read_raw_move_table(int coord_max, std::string filename)
 {

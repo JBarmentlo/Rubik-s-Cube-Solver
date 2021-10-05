@@ -16,34 +16,35 @@ using namespace std;
 
 int main()
 {
-	cubiecube_t* moves = get_moves();
-	CubieCube cube;
-	cube.set_solved();
-	cubiecube_t test = cube.data;
-	// make_raw_move_table(corner_orientation_coordinate, set_corner_orientation_coord, N_CORNER_ORI, "../tables/corner_ori_move");
-    // make_raw_move_table(UD_slice_coordinate, set_UD_slice_coord, N_UD, UD_SLICE_NAME);
-    // make_raw_move_table(edge_orientation_coordinate, set_edge_orientation_coord, N_EDGE_ORI, EDGE_ORI_NAME);
+	// cubiecube_t* moves = get_moves();
+	// CubieCube cube;
+	// cube.set_solved();
+	// cubiecube_t test = cube.data;
+	// // make_raw_move_table(corner_orientation_coordinate, set_corner_orientation_coord, N_CORNER_ORI, "../tables/corner_ori_move");
+    // // make_raw_move_table(UD_slice_coordinate, set_UD_slice_coord, N_UD, UD_SLICE_NAME);
+    // // make_raw_move_table(edge_orientation_coordinate, set_edge_orientation_coord, N_EDGE_ORI, EDGE_ORI_NAME);
 	
 
-	CoordCube *bb_cube = new CoordCube();
+	// CoordCube *bb_cube = new CoordCube();
 
-	bb_cube->print();
-	std::cout << "\n";
-	check_set_get_coord_equivalency(corner_permutation_coordinate, set_corner_permutation_coordinate, 40319);
+	// bb_cube->print();
+	// std::cout << "\n";
+	// check_set_get_coord_equivalency(corner_permutation_coordinate, set_corner_permutation_coordinate, 40319);
 
-	int move[] = {1, 2, 9, 8};
+	// int move[] = {1, 2, 9, 8};
 
-	for(auto i : move)
-		bb_cube->apply_move(i);
+	// for(auto i : move)
+	// 	bb_cube->apply_move(i);
 
-	bb_cube->print();
-	std::cout << "\n";
+	// bb_cube->print();
+	// std::cout << "\n";
 
-	Node *start = new Node(0, 0, bb_cube);
+	// Node *start = new Node(0, 0, bb_cube);
+	make_all_move_tables();
 
 	// is_goal_function is_goal = corner_heuristic;
 
 
-	ida(start, corner_heuristic);
+	// ida(start, corner_heuristic);
 
 }

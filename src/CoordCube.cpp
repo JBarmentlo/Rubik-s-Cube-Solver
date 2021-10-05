@@ -1,6 +1,7 @@
 #include "CoordCube.hpp"
 #include "utils.hpp"
 #include "cubiecube_utils.hpp"
+#include "move_tables.hpp"
 
 int**    get_raw_table(int size, std::string filename)
 {
