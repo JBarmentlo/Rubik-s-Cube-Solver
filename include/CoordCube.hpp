@@ -12,20 +12,16 @@ class CoordCube
     int UD_slice_coord;
     
     
-    CoordCube(void);
+    CoordCube(int corner_orientation = 0, int edge_orientation = 0, int UD_slice = 0);
     ~CoordCube(void);
 
     void    print(void);
-    bool	operator==(CoordCube &cube);
-    // bool	operator==(const CoordCube &cube);
-
-
+    bool	operator==(const CoordCube &cube);
+    void    set_solved(void);
+    void    apply_move(int move);
 };
 
 CoordCube*       create_baby_from_move(CoordCube *mommy_cube, int move);
-void            set_solved(CoordCube *cube);
-
-// bool	operator==(const CoordCube &cube1, const CoordCube &cube2);
 
 
 #endif

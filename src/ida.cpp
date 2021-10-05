@@ -8,6 +8,7 @@ using namespace std;
 #define MAX_ITER	10000
 #define SUCCESS		-1
 
+
 pair <int, stack<Node*>>		search(Node *current, int threshold, CoordCube *goal, stack<Node*> path)
 {
 	int		min;
@@ -18,6 +19,7 @@ pair <int, stack<Node*>>		search(Node *current, int threshold, CoordCube *goal, 
 	f = current->f;
 	path.push(current);
 	if(*current->coordcube == *goal)
+	// if (current->coordcube.corner_orientation_coord = 0)
 		return {SUCCESS, path};
 	if(f > threshold)
 	{
@@ -64,7 +66,14 @@ bool		ida(Node *start, CoordCube *goal)
 		if(tmp == SUCCESS)
 		{
 			std::cout << "SUCCESS: \n";
-			std::cout << "path size = " << path.size() << endl;
+			std::cout << "path size = " << path.size() << "\n\n";
+			Node*	todelete;
+			while (path.empty() == false)
+			{
+				todelete = path.top();
+				std::cout << todelete->coordcube.corner_orientation_coord << std::endl;
+				path.pop();
+			}
 			return true;
 		}
 		threshold = tmp;
