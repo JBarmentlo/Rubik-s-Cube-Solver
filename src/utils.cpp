@@ -202,3 +202,11 @@ void 			print_array(int* arr, int size)
 }
 	
 
+int*	fill_table_with_value(int* table, int value, int size)
+{
+	for (int i = 0; i < size; i++)
+	{
+		table[i] = value;
+	}
+	return (table);
+}

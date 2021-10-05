@@ -20,7 +20,7 @@ void			rotate_left(corner_t* arr, int l, int r);
 void			rotate_right(int* arr, int l, int r);
 void			rotate_right(edge_t* arr, int l, int r);
 void			rotate_right(corner_t* arr, int l, int r);
-// int**           read_raw_move_table(int coord_max, std::string filename);
+int*	        fill_table_with_value(int* table, int value, int size);
 // void			rotate_left_corner_array();
 // void			rotate_right_corner_array();
 // void			rotate_left_edge_array();
