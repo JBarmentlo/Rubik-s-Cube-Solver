@@ -227,6 +227,7 @@ int				corner_permutation_coordinate_old(cubiecube_t* cube)
 	return out;
 };
 
+
 int				corner_permutation_coordinate(cubiecube_t* cube)
 {
 	int out(0);
@@ -247,7 +248,6 @@ int				corner_permutation_coordinate(cubiecube_t* cube)
 	return out;
 };
 
-
 void			set_corner_permutation_coordinate(int index, cubiecube_t* cube)
 {
 	int out(0);
@@ -267,13 +267,25 @@ void			set_corner_permutation_coordinate(int index, cubiecube_t* cube)
 	}
 }
 
+
 int				edge_permutation_coordinate_2(cubiecube_t* cube)
 {
 	int perm[8];
 	int out(0);
 	int	k;
+	// static bool first = true;
+
+	// if (first)
+	// {
+	// 	std::cout << "edge 2" << std::endl;
+	// }
+	// first = false;
 
 	memcpy(perm, cube->edge_positions, sizeof(perm)); // We copy all the UD edges
+	// print_edges(cube);
+	// print_array(perm, 8);
+	// print_array((int*)cube->edge_positions, 12);
+
 	for (int i = DB; i > UR; i--)
 	{
 		k = 0;
@@ -284,9 +296,9 @@ int				edge_permutation_coordinate_2(cubiecube_t* cube)
 		}
 		out = out * (i + 1) + k;
 	}
+
 	return (out);
 }
-
 
 void			set_edge_permutation_coordinate_2(int index, cubiecube_t* cube)
 {
@@ -307,6 +319,7 @@ void			set_edge_permutation_coordinate_2(int index, cubiecube_t* cube)
 		}
 	}
 }
+
 
 int				edge_permutation_coordinate(cubiecube_t* cube)
 {

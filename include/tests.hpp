@@ -240,4 +240,12 @@ void check_set_get_coord_equivalency(get_coord_function get_coord, set_coord_fun
 	}
 }
 
+void check_all_coords(void)
+{
+	for (int i = 0; i < N_TABLES; i++)
+	{
+		std::cout << "Checking coord " << table_file_names[i] << std::endl;
+		check_set_get_coord_equivalency(coord_getters[i], coord_setters[i], coord_range[i]);
+	}
+}
 #endif
