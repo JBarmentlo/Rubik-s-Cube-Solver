@@ -31,6 +31,7 @@ int main()
 	// std::cout << "\n";
 
 	// Node *start = new Node(0, 0, bb_cube);
+	// check_all_coords();
 	make_all_move_tables();
 
 	// is_goal_function is_goal = corner_heuristic;

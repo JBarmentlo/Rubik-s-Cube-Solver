@@ -29,6 +29,8 @@
 #define EDGE_NUM 				12
 #define CORNER_NUM 				8
 
+static bool is_allowed_quarter_turns[6] = {true, false, false, true, false}; // Some faces are only allowed 180 turns in phase two
+
 //  IDA DEFINES
 #define MAX_ITER				10000
 #define SUCCESS					-1
