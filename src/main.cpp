@@ -3,24 +3,21 @@
 
 #include "cubiecube_utils.hpp"
 #include "CubieCube.hpp"
-// #include "CoordCube.hpp"
 #include "tests.hpp"
 #include "move_tables.hpp"
 
 
 int main()
 {
-	cubiecube_t* moves = get_moves();
-	// make_raw_move_table(corner_orientation_coordinate, set_corner_orientation_coord, N_CORNER_ORI, "../tables/corner_ori_move");
-    // make_raw_move_table(UD_slice_coordinate, set_UD_slice_coord, N_UD, UD_SLICE_NAME);
-    // make_raw_move_table(edge_orientation_coordinate, set_edge_orientation_coord, N_EDGE_ORI, EDGE_ORI_NAME);
-	
+	// cubiecube_t* moves = get_moves();
+	// check_set_get_coord_equivalency(UD_slice_coordinate, set_UD_slice_coord, 495);
+	// make_all_move_tables();
 
 	// CoordCube *bb_cube = new CoordCube();
 
 	// bb_cube->print();
 	// std::cout << "\n";
-	check_set_get_coord_equivalency(UD_slice_coordinate, set_UD_slice_coord, 495);
+	// check_set_get_coord_equivalency(UD_slice_coordinate, set_UD_slice_coord, 495);
 
 	// int move[] = {1, 2, 9, 8};
 
@@ -32,7 +29,7 @@ int main()
 
 	// Node *start = new Node(0, 0, bb_cube);
 	// check_all_coords();
-	make_all_move_tables();
+	// make_all_move_tables();
 
 	// is_goal_function is_goal = corner_heuristic;
 
@@ -42,5 +39,8 @@ int main()
 
 	// ida(start, corner_heuristic);
 	// create_corner_heuristic_table();
+	int* corner_h_table = create_heuristics_table(N_CORNER_ORI, read_corner_orientation_move_table);
+	int* UD_slice_h_table = create_heuristics_table(N_UD, read_UD_move_table);
+	int* edge_h_table = create_heuristics_table(N_EDGE_ORI, read_edge_orientation_move_table);
 
 }
