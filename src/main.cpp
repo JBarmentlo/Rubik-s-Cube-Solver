@@ -42,5 +42,11 @@ int main()
 	int* corner_h_table = create_heuristics_table(N_CORNER_ORI, read_corner_orientation_move_table);
 	int* UD_slice_h_table = create_heuristics_table(N_UD, read_UD_move_table);
 	int* edge_h_table = create_heuristics_table(N_EDGE_ORI, read_edge_orientation_move_table);
+	int** t = read_corner_orientation_move_table();
+	for (size_t i = 0; i < 18; i++)
+	{
+		std::cout << corner_h_table[t[0][i]] << std::endl;
+	}
+	
 
 }
