@@ -54,7 +54,7 @@ int main()
 
 	move = 1;
 
-	set_solved(mommy_cube);
+	mommy_cube->set_solved();
 	bb_cube = create_baby_from_move(mommy_cube, move);
 	bb_cube = create_baby_from_move(bb_cube, 2);
 	bb_cube = create_baby_from_move(bb_cube, 3);
