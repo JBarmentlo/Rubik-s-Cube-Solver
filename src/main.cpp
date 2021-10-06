@@ -22,13 +22,8 @@ int		main(void)
 		begin->apply_move(i);
 	}
 
+
 	Node *start = new Node(0, 0, begin);
-	bebes = start->get_bebes(phase_1_heuristic);
-
-	for(auto baby : bebes)
-	{
-		std::cout << "baby1->f = " << baby->f << std::endl;
-	}
-
+	ida(start, phase_one_goal, phase_1_heuristic, g_plusone);
 	return true;
 }

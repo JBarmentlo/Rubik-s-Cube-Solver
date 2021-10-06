@@ -1,5 +1,15 @@
 #include "heuristics.hpp"
 
+int	g_zero(int g)
+{
+	return(0);
+}
+
+int	g_plusone(int g)
+{
+	return(g + 1);
+}
+
 int	phase_1_heuristic(CoordCube *coord_cube)
 {
 	static int h_table_c_ori[N_CORNER_ORI];

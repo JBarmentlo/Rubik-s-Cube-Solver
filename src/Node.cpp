@@ -5,12 +5,13 @@
 
 using namespace std;
 
-Node::Node(short g, short h, CoordCube* coordcube)
+Node::Node(int g, int h, CoordCube* coordcube)
 {
+    this->coordcube = coordcube;
     this->g = g;
     this->h = h;
-    this->f = g + h;
-    this->coordcube = coordcube;
+    this->f = this->g + this->h;
+    // std::cout << "g = [" <<g << "] h = [" << h << "] --> f = [" << f<< "]\n"<< std::endl;
 }
 
 Node::~Node(void)
@@ -25,21 +26,33 @@ bool	f_sorting(Node *one, Node *two)
 }
 
 
-vector<Node*>    Node::get_bebes(int (*heuristic)(CoordCube*))
+vector<Node*>    Node::get_bebes(g_function g_func, heuristic_function heuristic)
 {
     vector<Node*>    bebes(N_MOVES);
+    CoordCube* baby_coordcube;
+    int baby_g;
+    int baby_h;
+
     for (int move = 0; move < N_MOVES; move++)
     {
-        bebes[move] = new Node(this->g + 1, 0, create_baby_from_move(this->coordcube, move));
-        bebes[move]->set_h(heuristic(bebes[move]->coordcube));
+        baby_coordcube = create_baby_from_move(this->coordcube, move);
+        baby_g = g_func(this->g);
+        baby_h = heuristic(baby_coordcube);
+        bebes[move] = new Node(baby_g, baby_h, baby_coordcube);
     }
     std::sort (bebes.begin(), bebes.end(), f_sorting);
     return (bebes);
 }
 
-void                Node::set_h(int new_h)
+void         Node::set_h(int new_h)
 {
     this->h = new_h;
+    this->f = this->g + this->h;
+}
+
+void         Node::set_g(int new_g)
+{
+    this->g = new_g;
     this->f = this->g + this->h;
 }
 
