@@ -25,7 +25,7 @@ int	phase_1_heuristic(CoordCube *coord_cube)
 		std::ifstream two(EDGE_ORI_HEURISTIC_NAME, std::ios_base::binary);
 		two.read((char*)h_table_e_ori, N_EDGE_ORI * sizeof(int));
 
-		std::ifstream thre(UD_SLICE_HEURISTIC_NAME, std::ios_base::binary);
+		std::ifstream thre(UD_SLICE1_HEURISTIC_NAME, std::ios_base::binary);
 		thre.read((char*)h_table_UD, N_UD * sizeof(int));
 		std::cout << "should print once" << std::endl;
 	}

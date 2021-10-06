@@ -49,7 +49,11 @@ static bool is_allowed_quarter_turns[6] = {true, false, false, true, false}; // 
 
 #define CORNER_ORI_HEURISTIC_NAME 	"../tables/corner_orientation_heuristics"
 #define EDGE_ORI_HEURISTIC_NAME 	"../tables/edge_orientation_heuristics"
-#define UD_SLICE_HEURISTIC_NAME 	"../tables/UD_slice_heuristics"
+#define UD_SLICE1_HEURISTIC_NAME 	"../tables/UD_slice1_heuristics"
+
+#define CORNER_PERM_HEURISTIC_NAME 	"../tables/corner_permutation_heuristics"
+#define EDGE_PERM_HEURISTIC_NAME 	"../tables/edge_permutation_heuristics"
+#define UD_SLICE2_HEURISTIC_NAME 	"../tables/UD_slice2_heuristics"
 
 
 #endif

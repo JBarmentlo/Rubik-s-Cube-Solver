@@ -35,7 +35,7 @@ vector<Node*>    Node::get_bebes(g_function g_func, heuristic_function heuristic
 
     for (int move = 0; move < N_MOVES; move++)
     {
-        if ((move % N_BASIC_MOVES) != (this->coordcube->origin_move % N_BASIC_MOVES) )
+        if ((move % N_BASIC_MOVES) != (this->coordcube->origin_move % N_BASIC_MOVES))
         {
             baby_coordcube = create_baby_from_move(this->coordcube, move);
             baby_g = g_func(this->g);

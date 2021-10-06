@@ -33,6 +33,9 @@ int** 		read_raw_move_table(int coord_max, std::string filename);
 int**		read_corner_orientation_move_table();
 int**		read_edge_orientation_move_table();
 int**		read_UD_move_table();
+int**		read_corner_permuation_move_table();
+int**		read_edge_permutation_move_table();
+int**		read_UD2_move_table();
 
 int** 		read_raw_move_table_phase_2(int coord_max, std::string filename);
 
