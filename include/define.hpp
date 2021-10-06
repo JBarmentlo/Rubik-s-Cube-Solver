@@ -34,6 +34,7 @@ static bool is_allowed_quarter_turns[6] = {true, false, false, true, false}; // 
 //  IDA DEFINES
 #define MAX_ITER				10000
 #define SUCCESS					-1
+#define NO_MOVE_APPLIED 		-1
 
 
 

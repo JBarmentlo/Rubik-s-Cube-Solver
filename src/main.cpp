@@ -15,6 +15,7 @@ int		main(void)
 {
 	CoordCube *begin = new CoordCube();
 	vector <Node*> bebes;
+	Node*	test;
 
 	for (int i = 0; i < 10; i++)
 	{
@@ -24,9 +25,22 @@ int		main(void)
 
 	Node *start = new Node(0, 0, begin);
 	bebes = start->get_bebes(g_plusone, phase_1_heuristic);
-	for(auto baby : bebes)
+	std::cout << "\n**********\n" << std::endl;
+	test = bebes[2];
+	vector <Node*> bebes2;
+
+	bebes2 = test->get_bebes(g_plusone, phase_1_heuristic);
+
+	for(auto baby : bebes2)
 	{
-		std::cout << baby->f << std::endl;
+		if (baby == nullptr)
+		{
+			std::cout << "-----------nullptr" << std::endl;
+		}
+		else
+		{
+			std::cout << baby->f << std::endl;
+		}
 	}
 	// ida(start, phase_one_goal, phase_1_heuristic, g_plusone);
 	return true;

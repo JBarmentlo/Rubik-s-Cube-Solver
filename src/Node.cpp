@@ -31,16 +31,20 @@ vector<Node*>    Node::get_bebes(g_function g_func, heuristic_function heuristic
     CoordCube*      baby_coordcube;
     int             baby_g;
     int             baby_h;
+    int             nb_of_moves = 0;
 
     for (int move = 0; move < N_MOVES; move++)
     {
-        baby_coordcube = create_baby_from_move(this->coordcube, move);
-        std::cout << "mommy move = " << this->coordcube->origin_move << std::endl;
-        std::cout << "baby move = " << baby_coordcube->origin_move << "\n\n\n";
-        baby_g = g_func(this->g);
-        baby_h = heuristic(baby_coordcube);
-        bebes[move] = new Node(baby_g, baby_h, baby_coordcube);
+        if ((move % N_BASIC_MOVES) != (this->coordcube->origin_move % N_BASIC_MOVES) )
+        {
+            baby_coordcube = create_baby_from_move(this->coordcube, move);
+            baby_g = g_func(this->g);
+            baby_h = heuristic(baby_coordcube);
+            bebes[nb_of_moves] = new Node(baby_g, baby_h, baby_coordcube);
+            nb_of_moves += 1;
+        }
     }
+    bebes.resize(nb_of_moves);
     std::sort (bebes.begin(), bebes.end(), f_sorting);
     return (bebes);
 }
