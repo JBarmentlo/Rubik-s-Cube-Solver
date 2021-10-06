@@ -19,13 +19,21 @@ Node::~Node(void)
     // delete coordcube;
 }
 
-vector<Node*>    Node::get_bebes()
+bool	f_sorting(Node *one, Node *two)
+{
+	return (one->f < two->f);
+}
+
+
+vector<Node*>    Node::get_bebes(int (*heuristic)(CoordCube*))
 {
     vector<Node*>    bebes(N_MOVES);
     for (int move = 0; move < N_MOVES; move++)
     {
         bebes[move] = new Node(this->g + 1, 0, create_baby_from_move(this->coordcube, move));
+        bebes[move]->set_h(heuristic(bebes[move]->coordcube));
     }
+    std::sort (bebes.begin(), bebes.end(), f_sorting);
     return (bebes);
 }
 

@@ -23,7 +23,7 @@ pair <int, stack<Node*>>		search(Node *current, int threshold, is_goal_function 
 		return {f, path};
 	}
 	min = 2147483647;
-	bebes = current->get_bebes();
+	bebes = current->get_bebes(heuristic);
 	if(bebes.empty() == false)
 	{
 		for(auto bebe : bebes)

@@ -3,6 +3,7 @@
 #include "CoordCube.hpp"
 #include "ida_utils.hpp"
 #include "heuristics.hpp"
+// #include <algorithm>
 
 // #include "cubiecube_utils.hpp"
 // #include "CubieCube.hpp"
@@ -13,6 +14,8 @@
 int		main(void)
 {
 	CoordCube *begin = new CoordCube();
+	vector <Node*> bebes;
+
 
 	for (int i = 0; i < 10; i++)
 	{
@@ -20,8 +23,12 @@ int		main(void)
 	}
 
 	Node *start = new Node(0, 0, begin);
+	bebes = start->get_bebes(phase_1_heuristic);
 
-	ida(start, phase_one_goal, phase_1_heuristic);
+	for(auto baby : bebes)
+	{
+		std::cout << "baby1->f = " << baby->f << std::endl;
+	}
 
 	return true;
 }
