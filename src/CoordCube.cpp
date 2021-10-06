@@ -2,8 +2,9 @@
 
 
 
-CoordCube::CoordCube(int corner_orientation_coord, int edge_orientation_coord, int UD_slice_coord)
+CoordCube::CoordCube(int origin_move, int corner_orientation_coord, int edge_orientation_coord, int UD_slice_coord)
 {
+    this->origin_move = origin_move;
     this->corner_orientation_coord = corner_orientation_coord;
     this->edge_orientation_coord = edge_orientation_coord;
     this->UD_slice_coord = UD_slice_coord;
@@ -58,6 +59,7 @@ CoordCube*    create_baby_from_move(CoordCube* mommy_cube, int move)
     static int** UD_slice_table = read_UD_move_table();
 
     CoordCube* bb_cube = new CoordCube(
+        move,
         corner_orientation_table[mommy_cube->corner_orientation_coord][move],
         edge_orientation_table[mommy_cube->edge_orientation_coord][move],
         UD_slice_table[mommy_cube->UD_slice_coord][move]

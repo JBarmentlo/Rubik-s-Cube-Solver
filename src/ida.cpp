@@ -28,9 +28,9 @@ pair <int, stack<Node*>>		search(Node *current, int threshold, is_goal_function 
 	{
 		for(auto bebe : bebes)
 		{
-			pair <int, stack<Node*>> test = search(bebe, threshold, is_goal, path, heuristic, g_func);
-			tmp = test.first;
-			path = test.second;
+			pair <int, stack<Node*>> ret = search(bebe, threshold, is_goal, path, heuristic, g_func);
+			tmp = ret.first;
+			path = ret.second;
 			if(tmp == SUCCESS)
 				return {SUCCESS, path};
 			if(tmp < min)
@@ -57,9 +57,9 @@ bool		ida(Node *start, is_goal_function is_goal, heuristic_function heuristic, g
 	{
 		std::cout << "\n\n****\niter = " << i << "\n";
 		std::cout << "threshold = " << threshold << "\n";
-		pair <int, stack<Node*>> test = search(start, threshold, is_goal, path, heuristic, g_func);
-		tmp = test.first;
-		path = test.second;
+		pair <int, stack<Node*>> ret = search(start, threshold, is_goal, path, heuristic, g_func);
+		tmp = ret.first;
+		path = ret.second;
 		if(tmp == SUCCESS)
 		{
 			std::cout << "SUCCESSO: \n";

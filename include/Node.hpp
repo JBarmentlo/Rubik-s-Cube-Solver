@@ -20,7 +20,7 @@ class Node
  
     public:
 
-        CoordCube*    coordcube;
+        CoordCube*      coordcube;
         int             g;
         int             h;
         int             f;

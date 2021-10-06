@@ -34,7 +34,6 @@ int*		create_heuristics_table(int size, reading_table_function read)
 
 
 
-
 void    make_corner_heuristics_table(void)
 {
     int* corner_h_table = create_heuristics_table(N_CORNER_ORI, read_corner_orientation_move_table);

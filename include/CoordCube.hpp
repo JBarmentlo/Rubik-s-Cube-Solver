@@ -11,12 +11,14 @@ class CoordCube
 
     public :
 
+    int origin_move;
+
     int corner_orientation_coord;
     int edge_orientation_coord;
     int UD_slice_coord;
     
     
-    CoordCube(int corner_orientation_coord = 0, int edge_orientation_coord = 0, int UD_slice_coord = 0);
+    CoordCube(int origin_move = -1, int corner_orientation_coord = 0, int edge_orientation_coord = 0, int UD_slice_coord = 0);
     ~CoordCube(void);
 
     void    print(void);
