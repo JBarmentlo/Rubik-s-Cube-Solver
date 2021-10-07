@@ -40,7 +40,10 @@ void 		make_raw_move_table(get_coord_function get_coord, set_coord_function set_
 		}
 	}
 	std::ofstream out(filename, std::ios_base::binary);
-	out.write((char*)table, sizeof(int) * (N_MOVES * (coord_max)));
+	if (out.good() == true)
+		out.write((char*)table, sizeof(int) * (N_MOVES * (coord_max)));
+	else
+		std::cout << "PATH ERROR: cannot create the following file: " << filename << std::endl;
 }
 
 int** 		read_raw_move_table(int coord_max, std::string filename)
@@ -51,6 +54,11 @@ int** 		read_raw_move_table(int coord_max, std::string filename)
 	pretty_table = (int**)malloc((coord_max) * sizeof(int*));
 
 	std::ifstream in(filename, std::ios_base::binary);
+	if (in.good() == false)
+	{
+		std::cout << "PATH ERROR: cannot read the following file: " << filename << std::endl;
+		return (nullptr);
+	}
 	in.read((char*)table, N_MOVES * (coord_max) * sizeof(int));
 
 	for (int i = 0; i < coord_max; i++)

@@ -20,14 +20,19 @@ int	phase_1_heuristic(CoordCube *coord_cube)
 	if (first)
 	{
 		std::ifstream in(CORNER_ORI_HEURISTIC_NAME, std::ios_base::binary);
-		in.read((char*)h_table_c_ori, N_CORNER_ORI * sizeof(int));
-
 		std::ifstream two(EDGE_ORI_HEURISTIC_NAME, std::ios_base::binary);
-		two.read((char*)h_table_e_ori, N_EDGE_ORI * sizeof(int));
-
 		std::ifstream thre(UD_SLICE1_HEURISTIC_NAME, std::ios_base::binary);
+
+		if (in.good() == false || two.good() == false || thre.good() == false)
+		{
+			std::cout << "ERROR while reading heuristics tables pahse1, please check the existence of the following files:\n" << CORNER_ORI_HEURISTIC_NAME << "\n" << EDGE_ORI_HEURISTIC_NAME << "\n" << UD_SLICE1_HEURISTIC_NAME << std::endl;
+			return (-1); // TODO: check ce retour
+		}
+		in.read((char*)h_table_c_ori, N_CORNER_ORI * sizeof(int));
+		two.read((char*)h_table_e_ori, N_EDGE_ORI * sizeof(int));
 		thre.read((char*)h_table_UD, N_UD * sizeof(int));
-		std::cout << "should print once" << std::endl;
+
+		std::cout << "should only print once" << std::endl;
 	}
 	first = false;
 

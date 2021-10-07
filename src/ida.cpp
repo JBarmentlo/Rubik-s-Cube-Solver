@@ -12,7 +12,6 @@ pair <int, stack<Node*>>		search(Node *current, int threshold, is_goal_function 
 	int		tmp;
 	vector <Node*> bebes;
 
-	// current->set_h(heuristic(current->coordcube));
 	f = current->f;
 	path.push(current);
 	if(is_goal(current->coordcube) == true)
@@ -23,7 +22,7 @@ pair <int, stack<Node*>>		search(Node *current, int threshold, is_goal_function 
 		return {f, path};
 	}
 	min = 2147483647;
-	bebes = current->get_bebes(g_func, heuristic);
+	bebes = current->get_bebes(g_func, heuristic); // TODO add protection si heuristic a -1 donc erreur dans lecture du fichier
 	if(bebes.empty() == false)
 	{
 		for(auto bebe : bebes)
@@ -51,7 +50,6 @@ bool		ida(Node *start, is_goal_function is_goal, heuristic_function heuristic, g
 
 	i = 0;
 	tmp = 0;
-	// start->set_h(heuristic(start->coordcube));
 	threshold = start->f;
 	while(i < MAX_ITER)
 	{
