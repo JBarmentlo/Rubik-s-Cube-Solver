@@ -38,22 +38,22 @@ static bool is_allowed_quarter_turns[6] = {true, false, false, true, false}; // 
 
 
 
-#define CORNER_ORI_NAME			"../tables/corner_ori_move"
-#define EDGE_ORI_NAME			"../tables/edge_ori_move"
-#define UD_SLICE_NAME			"../tables/UD_slice_move"
+#define CORNER_ORI_NAME			"../tables/moves/corner_ori_move"
+#define EDGE_ORI_NAME			"../tables/moves/edge_ori_move"
+#define UD_SLICE_NAME			"../tables/moves/UD_slice_move"
 
-#define UD_2_NAME	 				"../tables/ud_2_move"
-#define UD_2_THEO_NAME			    "../tables/ud_2_big_move"
-#define EDGE_PERMUTATION_2_NAME 	"../tables/edge_perm_2_move"
-#define CORNER_PERMUTATION_NAME 	"../tables/corner_perm_2_move"
+#define UD_2_NAME	 				"../tables/moves/ud_2_move"
+#define UD_2_THEO_NAME			    "../tables/moves/ud_2_big_move"
+#define EDGE_PERMUTATION_2_NAME 	"../tables/moves/edge_perm_2_move"
+#define CORNER_PERMUTATION_NAME 	"../tables/moves/corner_perm_2_move"
 
-#define CORNER_ORI_HEURISTIC_NAME 	"../tables/corner_orientation_heuristics"
-#define EDGE_ORI_HEURISTIC_NAME 	"../tables/edge_orientation_heuristics"
-#define UD_SLICE1_HEURISTIC_NAME 	"../tables/UD_slice1_heuristics"
+#define CORNER_ORI_HEURISTIC_NAME 	"../tables/heuristics/corner_orientation_heuristics"
+#define EDGE_ORI_HEURISTIC_NAME 	"../tables/heuristics/edge_orientation_heuristics"
+#define UD_SLICE1_HEURISTIC_NAME 	"../tables/heuristics/UD_slice1_heuristics"
 
-#define CORNER_PERM_HEURISTIC_NAME 	"../tables/corner_permutation_heuristics"
-#define EDGE_PERM_HEURISTIC_NAME 	"../tables/edge_permutation_heuristics"
-#define UD_SLICE2_HEURISTIC_NAME 	"../tables/UD_slice2_heuristics"
+#define CORNER_PERM_HEURISTIC_NAME 	"../tables/heuristics/corner_permutation_heuristics"
+#define EDGE_PERM_HEURISTIC_NAME 	"../tables/heuristics/edge_permutation_heuristics"
+#define UD_SLICE2_HEURISTIC_NAME 	"../tables/heuristics/UD_slice2_heuristics"
 
 
 #endif

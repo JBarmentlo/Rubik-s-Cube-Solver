@@ -26,7 +26,10 @@ int		main(void)
 
 	// Node *start = new Node(0, 0, begin);
 	// ida(start, phase_one_goal, phase_1_heuristic, g_plusone);
-	make_corner_perm_heuristics_table();
+	// make_corner_perm_heuristics_table();
+	// make_UD_2_heuristics_table();
+	make_edge_perm_heuristics_table();
+	// make_all_heuristics_tables();
 
 	// make_all_move_tables();
 	return true;

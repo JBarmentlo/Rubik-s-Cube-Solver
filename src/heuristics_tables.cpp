@@ -111,3 +111,13 @@ void    make_UD_2_heuristics_table(void)
 	
 	free(UD_2_table);
 }
+
+void	make_all_heuristics_tables(void)
+{
+	make_corner_ori_heuristics_table();
+	make_edge_ori_heuristics_table();
+	make_UD_slice1_heuristics_table();
+	make_corner_perm_heuristics_table();
+	make_edge_perm_heuristics_table(); // TODO: check for segfault!!
+	make_UD_2_heuristics_table();
+}
