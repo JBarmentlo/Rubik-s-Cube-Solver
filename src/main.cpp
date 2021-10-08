@@ -82,9 +82,7 @@ float			get_h_filling()
 
 int		main(void)
 {
-
-
-	backwards_fill_h_table(9);
+	// backwards_fill_h_table(9);
 
 	CoordCube begin(0);
 	for (int i = 0; i < 16; i++)
@@ -101,7 +99,15 @@ int		main(void)
 		std::cout << std::endl;
 		std::cout << std::endl;
 	}
-	// test_h();
+	test_h();
+	test_h();
+	test_h();
+	test_h();
+	test_h();
+	test_h();
+	test_h();
+	test_h();
+
 	// phase_one_solver(begin);
 
 	// }

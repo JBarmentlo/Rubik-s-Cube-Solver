@@ -278,7 +278,6 @@ inline bool write_smaller_split_table(int value, unsigned int index)
 			// print.lock();
 			// std::cout << "Writing: \t" << value << " at: \t" << index << std::endl;
 			// print.unlock();
-
 			return true;
 		}
 	}
@@ -501,10 +500,9 @@ void backwards_fill_h_table(int limit)
 
 	for (unsigned int i = 0; i < HSIZEONE; i++)
 	{
-		std::cout << "back: " << i << std::endl;
-		if (i % (N_EDGE_ORI / 128 * N_CORNER_ORI * N_UD) == 0)
+		if (i % (N_EDGE_ORI / 512 * N_CORNER_ORI * N_UD) == 0)
 		{
-			std::cout << "back: " <<  i / (N_EDGE_ORI / 128 * N_CORNER_ORI * N_UD) << " / 16" << std::endl;
+			std::cout << "back: " <<  i / (N_EDGE_ORI / 512 * N_CORNER_ORI * N_UD) << " / 512" << std::endl;
 		}
 		if (read_no_mutex_split_table(i) == UNFILLED)
 			my_back_walk(CoordCube(i), 0, 3, 0);
