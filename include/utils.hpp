@@ -27,7 +27,7 @@ int*	        fill_table_with_value(int* table, int value, int size);
 // void			rotate_right_edge_array();
 
 
-void print_array(int* arr, int size);
+void    print_array(int* arr, int size);
 
 
 #endif

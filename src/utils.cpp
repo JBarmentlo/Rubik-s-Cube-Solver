@@ -210,3 +210,4 @@ int*	fill_table_with_value(int* table, int value, int size)
 	}
 	return (table);
 }
+

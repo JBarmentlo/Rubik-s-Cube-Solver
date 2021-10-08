@@ -26,6 +26,8 @@ public:
 	int 	edge_ori_coord();
 	int 	edge_perm_coord();
 	int 	UD_coord();
+	int		UD2_coord();
+
 
 
 	void 	set_corner_ori_coord(int coord);
@@ -37,6 +39,8 @@ public:
 	void  	print_corners();
 	void  	print_edges();
 	void	set_solved();
+	void	print_all_coords();
+
 
 	cubiecube_t	data;
 };

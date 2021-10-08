@@ -52,7 +52,7 @@ void    CoordCube::print(void)
     std::cout << "corner_orientation coord: [" << this->corner_orientation_coord << "]\n";
     std::cout << "edge_orientation coord: [" << this->edge_orientation_coord << "]\n";
     std::cout << "UD slice1 coord: [" << this->UD_slice_coord << "]\n";
-    std::cout << "\ncorner_permutation coord: [" << this->corner_permutation_coord << "]\n";
+    std::cout << "corner_permutation coord: [" << this->corner_permutation_coord << "]\n";
     std::cout << "edge_permutation coord: [" << this->edge_permutation_coord << "]\n";
     std::cout << "UD slice2 coord: [" << this->UD_slice2_coord << "]\n";
 }

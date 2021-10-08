@@ -43,3 +43,37 @@ int	phase_1_heuristic(CoordCube *coord_cube)
 	
 	return (out);
 }
+
+int	phase_2_heuristic(CoordCube *coord_cube)
+{
+	static int h_table_c_perm[N_CORNER_PERMUTATION];
+	static int h_table_e_perm[N_EDGE_PERMUTATION_2];
+	static int h_table_UD2[N_UD_2];
+	static bool first = true;
+
+	if (first)
+	{
+		std::ifstream in(CORNER_PERM_HEURISTIC_NAME, std::ios_base::binary);
+		std::ifstream two(EDGE_PERM_HEURISTIC_NAME, std::ios_base::binary);
+		std::ifstream thre(UD_SLICE2_HEURISTIC_NAME, std::ios_base::binary);
+
+		if (in.good() == false || two.good() == false || thre.good() == false)
+		{
+			std::cout << "ERROR while reading heuristics tables pahse2, please check the existence of the following files:\n" << CORNER_ORI_HEURISTIC_NAME << "\n" << EDGE_ORI_HEURISTIC_NAME << "\n" << UD_SLICE1_HEURISTIC_NAME << std::endl;
+			return (-1); // TODO: check ce retour
+		}
+		in.read((char*)h_table_c_perm, N_CORNER_PERMUTATION * sizeof(int));
+		two.read((char*)h_table_e_perm, N_EDGE_PERMUTATION_2 * sizeof(int));
+		thre.read((char*)h_table_UD2, N_UD_2 * sizeof(int));
+
+		std::cout << "should only print once" << std::endl;
+	}
+	first = false;
+
+	int out = 0;
+
+	out = std::max(h_table_c_perm[coord_cube->corner_permutation_coord], h_table_UD2[coord_cube->UD_slice2_coord]);
+	out = std::max(out, h_table_e_perm[coord_cube->edge_permutation_coord]);
+	
+	return (out);
+}
