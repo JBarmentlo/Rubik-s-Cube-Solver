@@ -4,6 +4,8 @@
 #include "ida_utils.hpp"
 #include "heuristics.hpp"
 #include "heuristics_tables.hpp"
+#include "Node.hpp"
+
 
 
 // #include "cubiecube_utils.hpp"
@@ -12,6 +14,7 @@
 // #include "move_tables.hpp"
 #include <fstream>
 #include <string.h>
+#include <stack>
 
 #include "define.hpp"
 
@@ -31,7 +34,17 @@ int		main(void)
   test->print();
   Node *start = new Node(0, 0, test);
   
-  ida(start, phase_one_goal, phase_1_heuristic, g_plusone, create_baby_from_move_phase_one);
-
+  stack<Node*> path;
+  path = ida(start, phase_one_goal, phase_1_heuristic, g_plusone, create_baby_from_move_phase_one);
+  std::cout << "path size = " << path.size() << "\n\n";
+  Node* myresult;
+  while (path.empty() == false)
+  {
+    myresult = path.top();
+    std::cout << myresult->coordcube->origin_move << "--";
+    path.pop();
+  }
+  std::cout << "\n" << std::endl;
+  
   return 0;
 }

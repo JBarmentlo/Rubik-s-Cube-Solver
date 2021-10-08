@@ -1,6 +1,3 @@
-#include <iostream>
-#include <stack>
-
 #include "ida.hpp"
 
 using namespace std;
@@ -28,8 +25,6 @@ int		search(Node *current, int threshold, is_goal_function is_goal, stack<Node*>
 		for(auto bebe : bebes)
 		{
 			tmp = search(bebe, threshold, is_goal, path, heuristic, g_func, create_baby_from_move);
-			// tmp = ret.first;
-			// path = ret.second;
 			if(tmp == SUCCESS)
 				return (SUCCESS);
 			if(tmp < min)
@@ -41,10 +36,9 @@ int		search(Node *current, int threshold, is_goal_function is_goal, stack<Node*>
 }
 
 
-bool		ida(Node *start, is_goal_function is_goal, heuristic_function heuristic, g_function g_func, create_baby_function create_baby_from_move)
+stack<Node*>		ida(Node *start, is_goal_function is_goal, heuristic_function heuristic, g_function g_func, create_baby_function create_baby_from_move)
 {
-	stack<Node*>	mypath;
-	stack<Node*>	*path = &mypath;
+	stack<Node*>	path;
 
 	int				i;
 	int				threshold;
@@ -57,28 +51,17 @@ bool		ida(Node *start, is_goal_function is_goal, heuristic_function heuristic, g
 	{
 		std::cout << "\n\n****\niter = " << i << "\n";
 		std::cout << "threshold = " << threshold << "\n";
-		tmp = search(start, threshold, is_goal, path, heuristic, g_func, create_baby_from_move);
-		// tmp = ret.first;
-		// path = ret.second;
+		tmp = search(start, threshold, is_goal, &path, heuristic, g_func, create_baby_from_move);
 		if(tmp == SUCCESS)
 		{
 			std::cout << "\nSUCCESSO: \n";
-			std::cout << "path size = " << path->size() << "\n\n";
-			Node* myresult;
-			while (path->empty() == false)
-			{
-				myresult = path->top();
-				std::cout << myresult->coordcube->origin_move << "--";
-				path->pop();
-			}
-			std::cout << "\n" << std::endl;
-			return true;
+			return (path);
 		}
 		threshold = tmp;
 		i += 1;
 	}
-	std::cout << "FAILUUUURE\n";
-	return false;
+	std::cout << "\nFAILUUUURE\n";
+	return (path);
 }
 
 
