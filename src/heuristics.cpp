@@ -31,18 +31,31 @@ int	phase_1_heuristic(CoordCube *coord_cube)
 	return (out);
 }
 
+
 int		phase_1_perfect_heuristic(CoordCube& coord_cube)
 {
-	static unsigned char h_table[N_EDGE_ORI / 2 * N_UD * N_CORNER_ORI];
+	static char* table_1 = (char*)malloc(sizeof(char) * (HSIZEONE / 2));
+	static char* table_2 = (char*)malloc(sizeof(char) * ((HSIZEONE / 2) + 1));
 	static bool first = true;
 
 	if (first)
 	{
-		std::ifstream in(PHASE_ONE_HEURISTIC_NAME, std::ios_base::binary);
-		in.read((char*)h_table, sizeof(char) * (N_EDGE_ORI / 2 * N_UD * N_CORNER_ORI));
+		std::ifstream in("../tables/onehalf", std::ios_base::binary);
+		in.read(table_1, sizeof(char) * HSIZEONE / 2);
+		std::ifstream in2("../tables/twohalf", std::ios_base::binary);
+		in2.read((char*)table_2, sizeof(char) * ((HSIZEONE / 2) + 1));
 	}
 	first = false;
-	return (int)read_half_char_table(h_table, coord_cube.flat_coord());
+
+	int index = coord_cube.flat_coord();
+	if (index < HSIZEONE / 2)
+	{
+		return table_1[index];
+	}
+	else
+	{
+		return table_2[index - HSIZEONE / 2];
+	}
 }
 
 // unsigned char*		phase_1_perfect_heuristic_table(void)

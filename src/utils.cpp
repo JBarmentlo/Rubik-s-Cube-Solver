@@ -298,3 +298,5 @@ unsigned char 	read_half_char_table(unsigned const char *table, unsigned int idx
 	}
 }
 
+float			write_to_file(char* table, std::string filename);
+

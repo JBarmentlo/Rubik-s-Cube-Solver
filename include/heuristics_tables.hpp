@@ -14,6 +14,7 @@ void    	make_edge_heuristics_table(void);
 void    	make_UD_slice_heuristics_table(void);
 void    	make_perfect_heuristics_table(void);
 void	    make_perfect_heuristics_table_iterative(int limit);
+void 		backwards_fill_h_table(int limit);
 
 
 #endif

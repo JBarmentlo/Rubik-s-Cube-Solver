@@ -2,7 +2,7 @@
 #define UTILS_H
 
 #include "cubiecube_utils.hpp"
-
+#include <string>
 
 int 			factorial(int n);
 int 			binomial_coefficient(int n, int k);
@@ -30,6 +30,8 @@ unsigned char 	read_half_char_table(unsigned const char *table, unsigned int idx
 // void			rotate_left_edge_array();
 // void			rotate_right_edge_array();
 float			get_table_filling(unsigned char *table);
+float			write_to_file(char* table, std::string filename);
+
 
 
 void print_array(int* arr, int size);

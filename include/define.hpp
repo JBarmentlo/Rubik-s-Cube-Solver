@@ -44,6 +44,11 @@ static bool is_allowed_quarter_turns[6] = {true, false, false, true, false}; // 
 #define PHASE_ONE_HEURISTIC_NAME 	"../tables/perfect_one_heuristic"
 
 
+#define N_THREADS 	9
+#define N_MUTEX 	32
+#define UNFILLED 	15
+#define HSIZEONE	N_EDGE_ORI * N_CORNER_ORI * N_UD
+
 typedef enum {
     URF, UFL, ULB, UBR, DFR, DLF, DBL, DRB
 } corner_t;

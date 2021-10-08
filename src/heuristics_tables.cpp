@@ -2,6 +2,10 @@
 #include "CoordCube.hpp"
 #include "utils.hpp"
 
+#include <thread>
+#include <string>
+#include <mutex>
+
 
 void	walk(int coord, int steps, int** moves_table, int* heuristics_table, int size)
 {
@@ -65,7 +69,8 @@ void    make_UD_slice_heuristics_table(void)
 	free(UD_slice_h_table);
 }
 
-#define UNFILLED 15
+
+
 
 void	walk_3(CoordCube coord, unsigned char steps, unsigned char* heuristics_table, int limit, int mommy_move)
 {
@@ -148,7 +153,6 @@ int		reverse_walk(CoordCube coord, int steps, int current_min, unsigned char* he
 	return (current_min + 1);
 }
 
-
 void    make_perfect_heuristics_table(void)
 {
 	unsigned char* perfect_h_table = (unsigned char*)malloc(sizeof(char) * N_EDGE_ORI / 2 * N_CORNER_ORI * N_UD);
@@ -228,3 +232,319 @@ void    make_perfect_heuristics_table_iterative(int limit)
 
 
 
+static std::mutex mutexes[N_MUTEX] = {std::mutex(), std::mutex(), std::mutex(), std::mutex(), std::mutex(), std::mutex(), std::mutex(), std::mutex(), std::mutex(), std::mutex(), std::mutex(), std::mutex(), std::mutex(), std::mutex(), std::mutex(), std::mutex(), std::mutex(), std::mutex(), std::mutex(), std::mutex(), std::mutex(), std::mutex(), std::mutex(), std::mutex(), std::mutex(), std::mutex(), std::mutex(), std::mutex(), std::mutex(), std::mutex(), std::mutex(), std::mutex()};
+
+char* h_table_1 = (char*)malloc(sizeof(char) * (HSIZEONE / 2));
+char* h_table_2 = (char*)malloc(sizeof(char) * ((HSIZEONE / 2) + 1)); 
+std::mutex print;
+
+
+
+inline void write_split_table(int value, unsigned int index)
+{
+	mutexes[index % N_MUTEX].lock();
+	if (index < HSIZEONE / 2)
+	{
+		h_table_1[index] = value;
+	}
+	if (index >= HSIZEONE / 2)
+	{
+		h_table_2[index - (HSIZEONE / 2)] = value;
+	}
+	mutexes[index % N_MUTEX].unlock();
+}
+
+inline void write_no_mutex_split_table(int value, unsigned int index)
+{
+	if (index < HSIZEONE / 2)
+	{
+		h_table_1[index] = value;
+	}
+	else
+	{
+		h_table_2[index - (HSIZEONE / 2)] = value;
+	}
+}
+
+inline bool write_smaller_split_table(int value, unsigned int index)
+{
+	mutexes[index % N_MUTEX].lock();
+	if (index < HSIZEONE / 2)
+	{
+		if (h_table_1[index] > value)
+		{
+			h_table_1[index] = value;
+			mutexes[index % N_MUTEX].unlock();
+			// print.lock();
+			// std::cout << "Writing: \t" << value << " at: \t" << index << std::endl;
+			// print.unlock();
+
+			return true;
+		}
+	}
+	else
+	{
+		if (h_table_2[index - (HSIZEONE / 2)] > value)
+		{
+			h_table_2[index - (HSIZEONE / 2)] = value;
+			mutexes[index % N_MUTEX].unlock();
+			return true;
+		}
+	}
+	mutexes[index % N_MUTEX].unlock();
+	return false;
+}
+
+inline int 	read_write_smaller_split_table(int value, unsigned int index)
+{
+	// Writes new value if smaller than current value and returns pre-write value at index;
+	int tmp;
+	mutexes[index % N_MUTEX].lock();
+	if (index < HSIZEONE / 2)
+	{
+		tmp = h_table_1[index];
+		if (tmp > value)
+		{
+			h_table_1[index] = value;
+		}
+	}
+	else
+	{
+		tmp = h_table_2[index - (HSIZEONE / 2)];
+		if (tmp > value)
+		{
+			h_table_2[index - (HSIZEONE / 2)] = value;
+		}
+	}
+	mutexes[index % N_MUTEX].unlock();
+	return tmp;
+}
+
+inline bool write_smaller_equal_split_table(int value, unsigned int index)
+{
+	mutexes[index % N_MUTEX].lock();
+	if (index < HSIZEONE / 2)
+	{
+		if (h_table_1[index] >= value)
+		{
+			h_table_1[index] = value;
+			mutexes[index % N_MUTEX].unlock();
+			return true;
+		}
+	}
+	else
+	{
+		if (h_table_2[index - (HSIZEONE / 2)] >= value)
+		{
+			h_table_2[index - (HSIZEONE / 2)] = value;
+			mutexes[index % N_MUTEX].unlock();
+			return true;
+		}
+	}
+	mutexes[index % N_MUTEX].unlock();
+	return false;
+}
+
+inline char read_split_table(unsigned int index)
+{
+	mutexes[index % N_MUTEX].lock();
+	if (index < HSIZEONE / 2)
+	{
+		return h_table_1[index];
+	}
+	else
+	{
+		return h_table_2[index - HSIZEONE / 2];
+	}
+	mutexes[index % N_MUTEX].unlock();
+}
+
+inline char read_no_mutex_split_table(unsigned int index)
+{
+	if (index < HSIZEONE / 2)
+	{
+		return h_table_1[index];
+	}
+	else
+	{
+		return h_table_2[index - HSIZEONE / 2];
+	}
+}
+
+
+void my_walk(CoordCube cube, const int steps, const int limit, const int daddy_move)
+{
+	if (steps > limit)
+		return;
+	
+	if (not write_smaller_split_table(steps, cube.flat_coord()))
+		return;
+	
+	for (int i = 0; i < N_MOVES; i++)
+	{
+		if (i % 6 != daddy_move % 6)
+		{
+			my_walk(cube.create_baby_from_move_stack(i), steps + 1, limit, daddy_move);
+		}
+	}
+}
+
+
+void start_one_thread(CoordCube cube, int first_move, int last_move, int limit)
+{
+	print.lock();
+	std::cout << "starting thread for moves " << first_move << " - " << last_move << std::endl;
+	print.unlock();
+	for (int i = first_move; i <= last_move; i++)
+	{
+		my_walk(cube.create_baby_from_move_stack(i), 1, limit, i);
+	}
+}
+
+void start_threads_my_walk(CoordCube start, int limit)
+{
+	std::thread thread_arr[N_THREADS];
+	int			last_thread = 0;
+
+	for (int i = 0; i < N_MOVES; i++)
+	{
+		if (i % (N_MOVES / N_THREADS) == 0)
+		{
+
+			thread_arr[last_thread] = std::thread(&start_one_thread, start, last_thread * (N_MOVES / N_THREADS), (last_thread + 1) * (N_MOVES / N_THREADS) - 1, limit);
+			last_thread += 1;
+		}
+	}
+	for (int i = 0; i < N_THREADS; i++)
+	{
+		thread_arr[i].join();
+	}
+}
+
+int	my_back_walk(CoordCube cube, int steps, int limit, int daddy_move)
+{
+	int h_val;
+
+	if (steps > limit)
+	{
+		std::cout << "should never print" << std::endl;
+		return (UNFILLED);
+	}
+
+	h_val = read_split_table(cube.flat_coord());
+	if (h_val != UNFILLED)
+		return h_val + 1;
+
+	for (int i = 0; i < N_MOVES; i++)
+	{
+		if ((steps == 0) or (daddy_move % 6 != i % 6))
+			h_val = std::min(h_val, my_back_walk(cube.create_baby_from_move_stack(i), steps + 1, limit, i));
+	}
+
+	write_smaller_split_table(h_val, cube.flat_coord());
+	return (h_val + 1);
+
+}
+
+void start_one_thread_backwards(CoordCube cube, int first_move, int last_move, int limit)
+{
+	for (int i = first_move; i <= last_move; i++)
+	{
+		my_walk(cube.create_baby_from_move_stack(i), 0, limit, i);
+	}
+}
+
+void start_threads_my_backwards_walk(CoordCube start, int limit)
+{
+	std::thread thread_arr[N_THREADS];
+	int			last_thread = 0;
+
+	for (int i = 0; i < N_MOVES; i++)
+	{
+		if (i % (N_MOVES / N_THREADS) == 0)
+		{
+
+			thread_arr[last_thread] = std::thread(&start_one_thread_backwards, start, last_thread * (N_MOVES / N_THREADS), (last_thread + 1) * (N_MOVES / N_THREADS) - 1, limit);
+			last_thread += 1;
+		}
+	}
+	for (int i = 0; i < N_THREADS; i++)
+	{
+		thread_arr[i].join();
+	}
+}
+
+
+void backwards_fill_h_table(int limit)
+{
+	for (unsigned int i = 0; i < HSIZEONE; i++)
+	{
+		write_no_mutex_split_table(UNFILLED, i);
+		if (read_no_mutex_split_table(i) != UNFILLED)
+			std::cout << "/* message */" << std::endl;
+	}
+	write_no_mutex_split_table(0,0);
+	start_threads_my_walk(CoordCube(0), limit);
+
+	std::cout << "Done forward" << std::endl;
+	std::ofstream out11("tables/onehalf", std::ios_base::binary);
+	out11.write(h_table_1, sizeof(char) * HSIZEONE / 2);
+	out11.close();
+	std::ofstream out21("tables/twohalf", std::ios_base::binary);
+	out21.write(h_table_2, sizeof(char) * ((HSIZEONE / 2) + 1));
+	std::cout << "Done writing INTERMEDIATE STAGE" << std::endl;
+	out21.close();
+	// std::ifstream in("tables/onehalf", std::ios_base::binary);
+	// in.read(h_table_1, sizeof(char) * HSIZEONE / 2);
+	// std::ifstream in2("tables/twohalf", std::ios_base::binary);
+	// in2.read((char*)h_table_2, sizeof(char) * ((HSIZEONE / 2) + 1));
+
+	for (unsigned int i = 0; i < HSIZEONE; i++)
+	{
+		std::cout << "back: " << i << std::endl;
+		if (i % (N_EDGE_ORI / 128 * N_CORNER_ORI * N_UD) == 0)
+		{
+			std::cout << "back: " <<  i / (N_EDGE_ORI / 128 * N_CORNER_ORI * N_UD) << " / 16" << std::endl;
+		}
+		if (read_no_mutex_split_table(i) == UNFILLED)
+			my_back_walk(CoordCube(i), 0, 3, 0);
+	}
+	std::cout << "done back walk" << std::endl;
+
+	std::ofstream out("../tables/onehalf", std::ios_base::binary);
+	out.write(h_table_1, sizeof(char) * HSIZEONE / 2);
+	std::ofstream out2("../tables/twohalf", std::ios_base::binary);
+	out2.write(h_table_2, sizeof(char) * ((HSIZEONE / 2) + 1));
+	std::cout << "done writing" << std::endl;
+	
+	free(h_table_1);
+	free(h_table_2);
+}
+
+// void make_perfect_move_table()
+// {
+// 	std::ifstream in("tables/onehalf", std::ios_base::binary);
+// 	in.read(h_table_1, sizeof(char) * HSIZEONE / 2);
+// 	std::ofstream in2("tables/twohalf", std::ios_base::binary);
+// 	in2.read((char*)h_table_2, sizeof(char) * ((HSIZEONE / 2) + 1));
+	
+// 	int min = 123456;
+// 	int min_move = 123456;
+// 	unsigned char* perfect_move_table = (unsigned char*)malloc(sizeof(char) * N_EDGE_ORI / 2 * N_CORNER_ORI * N_UD + 1);
+
+// 	for (unsigned int i = 0; i < HSIZEONE; i++)
+// 	{
+// 		min = 123456;
+// 		for (int j = 0; j < N_MOVES; j++)
+// 		{
+// 			CoordCube cube(i);
+// 			cube.apply_move(j);
+// 			if (cube.flat_coord() < min)
+// 			{
+// 				min = cube.flat_coord();
+// 				min_move = j;
+// 			}
+// 		}
+// 		write_half_char_table(perfect_move_table, min_move)
+// 	}
+// }
