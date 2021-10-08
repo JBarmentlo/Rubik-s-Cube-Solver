@@ -4,7 +4,7 @@ project(Roobik VERSION 0.1.0)
 set(CMAKE_CPP_COMPILER g++-10)
 set(CMAKE_CXX_COMPILER g++-10)
 set(CMAKE_CXX_STANDARD 17)
-set(CMAKE_CXX_FLAGS "-O3")
+set(CMAKE_CXX_FLAGS "-O3 -pthread ")
 
 # include(CTest)
 # enable_testing()

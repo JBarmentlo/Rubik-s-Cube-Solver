@@ -25,7 +25,7 @@ class CoordCube
     int edge_permutation_coord;
     int UD_slice2_coord;
     
-    
+	CoordCube(unsigned int flat_coord_1); // create cube from flat coordinate
     CoordCube(int origin_move = NO_MOVE_APPLIED, int corner_orientation_coord = 0, int edge_orientation_coord = 0, int UD_slice_coord = 0, int corner_permutation_coord = 0, int edge_permutation_coord = 0, int UD_slice2_coord = 0);
     ~CoordCube(void);
 
@@ -37,6 +37,9 @@ class CoordCube
 
     void    apply_move_phase_one(int move);
     void    set_coords_phase_two(int corner_permutation_coord, int edge_permutation_coord, int UD_slice2_coord);
+
+	CoordCube			create_baby_from_move_stack(int move);
+	unsigned int     	flat_coord(void);
 
 };
 

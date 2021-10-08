@@ -4,8 +4,6 @@
 #include <iostream>
 #include <cstdint>
 
-#include "corners.hpp"
-#include "edges.hpp"
 #include "define.hpp"
 
 

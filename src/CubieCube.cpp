@@ -12,6 +12,10 @@ CubieCube::~CubieCube()
 {
 }
 
+unsigned int 	CubieCube::flat_coord()
+{
+	return (this->corner_ori_coord() * N_EDGE_ORI * N_UD + this->edge_ori_coord() * N_UD + this->UD_coord());
+}
 
 
 void 	CubieCube::multiply(cubiecube_t *move_cube)
@@ -128,4 +132,14 @@ void	CubieCube::print_all_coords(void)
 	std::cout << "corner perm: [" << this->corner_perm_coord() << "]" << std::endl;
 	std::cout << "edge perm: [" << this->edge_perm_coord() << "]" << std::endl;
 	std::cout << "UD slice2: [" << this->UD2_coord() << "]" << std::endl;
+	
+void CubieCube::print()
+{
+    std::cout << "corner_orientation coord:   " << this->corner_ori_coord() << "\n";
+    std::cout << "edge_orientation coord:     " << this->edge_ori_coord() << "\n";
+    std::cout << "UD slice1 coord:            " << this->UD_coord() << "\n";
+    // std::cout << "\ncorner_permutation coord:   " << this->corner_perm_coord() << "\n";
+    // std::cout << "edge_permutation coord:     " << this->edge_perm_coord() << "\n";
+    // // std::cout << "UD slice2 coord: [" << this->UD_slice2_coord() << "]\n";
+	std::cout << "flat                        " <<  this->corner_ori_coord() * N_EDGE_ORI * N_UD + this->edge_ori_coord() * N_UD + this->UD_coord() << std::endl;
 }

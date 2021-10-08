@@ -15,6 +15,12 @@ CoordCube::CoordCube(int origin_move, int corner_orientation_coord, int edge_ori
     this->UD_slice2_coord = UD_slice2_coord;
 }
 
+CoordCube::CoordCube(unsigned int flat_coord_1)
+{
+    this->corner_orientation_coord = (int)(flat_coord_1 / (N_EDGE_ORI * N_UD));
+    this->edge_orientation_coord = (int)((flat_coord_1 % N_EDGE_ORI * N_UD) / N_UD);
+    this->UD_slice_coord = (int)(flat_coord_1 % N_UD);
+}
 
 CoordCube::~CoordCube(void)
 {
@@ -46,8 +52,18 @@ void        CoordCube::set_solved(void)
     this->UD_slice2_coord = 0;
 }
 
+unsigned int     CoordCube::flat_coord(void)
+{
+    return (this->corner_orientation_coord * N_EDGE_ORI * N_UD + this->edge_orientation_coord * N_UD + this->UD_slice_coord);
+}
 
-void    CoordCube::print(void)
+// void    CoordCube::print(void)
+// {
+//     std::cout << "corner coord: [" << this->corner_orientation_coord << "]\n";
+//     std::cout << "edge coord: [" << this->edge_orientation_coord << "]\n";
+//     std::cout << "UD slice coord: [" << this->UD_slice_coord << "]\n";
+// }
+void CoordCube::print()
 {
     std::cout << "corner_orientation coord: [" << this->corner_orientation_coord << "]\n";
     std::cout << "edge_orientation coord: [" << this->edge_orientation_coord << "]\n";
@@ -106,10 +122,22 @@ CoordCube*    create_baby_from_move_phase_one(CoordCube* mommy_cube, int move)
         edge_orientation_table[mommy_cube->edge_orientation_coord][move],
         UD_slice_table[mommy_cube->UD_slice_coord][move]
     );
-
     return (bb_cube);
 }
 
+CoordCube    CoordCube::create_baby_from_move_stack(int move)
+{
+    static int** corner_orientation_table = read_corner_orientation_move_table();
+    static int** edge_orientation_table = read_edge_orientation_move_table();
+    static int** UD_slice_table = read_UD_move_table();
+
+    CoordCube bb_cube = CoordCube(
+        corner_orientation_table[this->corner_orientation_coord][move],
+        edge_orientation_table[this->edge_orientation_coord][move],
+        UD_slice_table[this->UD_slice_coord][move]
+    );
+    return (bb_cube);
+}
 
 CoordCube*    create_baby_from_move_phase_two(CoordCube* mommy_cube, int move)
 {

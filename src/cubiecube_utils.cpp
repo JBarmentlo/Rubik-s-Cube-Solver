@@ -202,7 +202,7 @@ void			set_edge_orientation_coord(int coord, cubiecube_t* cube)
 	}
 
 	parity = parity % 2;
-	cube->corner_orientations[LAST_EDGE] = 2 - parity; //TODO: CHECK IF THIS IS GOOD PARTITY
+	cube->edge_orientations[LAST_EDGE] = 2 - parity; //TODO: CHECK IF THIS IS GOOD PARTITY
 };
 
 

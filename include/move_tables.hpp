@@ -27,7 +27,7 @@ static int					phase[N_TABLES] 			= {1, 								1, 								2,									1, 						2
 
 void 		make_raw_move_table(get_coord_function get_coord, set_coord_function set_coord, int coord_max, std::string filename, int edge_corners_moves, int phase);
 
-void make_all_move_tables(void);
+void 		make_all_move_tables(void);
 
 int** 		read_raw_move_table(int coord_max, std::string filename);
 int**		read_corner_orientation_move_table();

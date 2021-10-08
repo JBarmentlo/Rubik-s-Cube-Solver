@@ -1,4 +1,5 @@
 #include "ida.hpp"
+#include "heuristics.hpp"
 
 using namespace std;
 
@@ -65,3 +66,32 @@ vector<int>		ida(Node *start, is_goal_function is_goal, heuristic_function heuri
 }
 
 
+void		phase_one_solver(CoordCube cube)
+{
+	int min = INT32_MAX;
+	int min_move;
+	int h;
+	cube.print();
+	if (cube.corner_orientation_coord == 0 and cube.edge_orientation_coord == 0 and cube.UD_slice_coord == 0)
+	{
+		return;
+	}
+
+	for (int i = 0; i < N_MOVES; i++)
+	{
+		CoordCube bb = cube.create_baby_from_move_stack(i);
+		h = phase_1_perfect_heuristic(bb);
+		std::cout << "h " << h << std::endl;
+		std::cout << min_move << std::endl;
+		std::cout << min_move << std::endl;
+		if (h < min)
+		{
+			min = h;
+			min_move = i;
+		}
+	}
+	std::cout << min_move << std::endl;
+	std::cout << min_move << std::endl;
+
+	phase_one_solver(cube.create_baby_from_move_stack(min));
+}
