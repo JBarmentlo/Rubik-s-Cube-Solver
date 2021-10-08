@@ -20,6 +20,7 @@ static cubiecube_t homecube = {{URF, UFL, ULB, UBR, DFR, DLF, DBL, DRB}, {0, 0, 
 // This struct can be used to define a cube state or a permutation.
 // (because a cube state can be defined as a permutation applied to the solved cube state)
 cubiecube_t* 	get_moves();
+int 			get_inverse_move_number(int move);
 void 			apply_move(cubiecube_t* cube, int move);
 void 			apply_move(cubiecube_t* cube, cubiecube_t* move);
 void			apply_move_edges(cubiecube_t* cube, cubiecube_t* move);

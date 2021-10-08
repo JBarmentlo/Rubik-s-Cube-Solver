@@ -16,6 +16,7 @@ void            make_edge_perm_heuristics_table(void);
 void            make_UD_2_heuristics_table(void);
 
 void        	make_all_heuristics_tables(void);
+void 			backwards_fill_h_table(int limit);
 
 
 #endif

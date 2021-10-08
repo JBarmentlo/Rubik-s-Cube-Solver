@@ -81,6 +81,8 @@ inline edge_t operator-- (edge_t &d, int) {
 #define CORNER_PERMUTATION_NAME 	"../tables/moves/corner_perm_2_move"
 #define PHASE_ONE_HEURISTIC_NAME 	"../tables/perfect_one_heuristic"
 
+#define SPLIT_ONE_NAME				"../tables/onehalf"
+#define SPLIT_TWO_NAME				"../tables/twohalf"
 
 #define CORNER_ORI_NAME				"../tables/moves/corner_ori_move"
 #define EDGE_ORI_NAME				"../tables/moves/edge_ori_move"

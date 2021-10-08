@@ -65,12 +65,14 @@ unsigned int     CoordCube::flat_coord(void)
 // }
 void CoordCube::print()
 {
-    std::cout << "corner_orientation coord: [" << this->corner_orientation_coord << "]\n";
-    std::cout << "edge_orientation coord: [" << this->edge_orientation_coord << "]\n";
-    std::cout << "UD slice1 coord: [" << this->UD_slice_coord << "]\n";
-    std::cout << "corner_permutation coord: [" << this->corner_permutation_coord << "]\n";
-    std::cout << "edge_permutation coord: [" << this->edge_permutation_coord << "]\n";
-    std::cout << "UD slice2 coord: [" << this->UD_slice2_coord << "]\n";
+    std::cout << "corner_orientation coord: " << this->corner_orientation_coord << "\n";
+    std::cout << "edge_orientation coord:   " << this->edge_orientation_coord << "\n";
+    std::cout << "UD slice1 coord:          " << this->UD_slice_coord << "\n";
+    std::cout << "corner_permutation coord: " << this->corner_permutation_coord << "\n";
+    std::cout << "edge_permutation coord:   " << this->edge_permutation_coord << "\n";
+    std::cout << "UD slice2 coord:          " << this->UD_slice2_coord << "\n";
+    std::cout << "flat coord:               " << this->flat_coord() << "\n";
+
 }
 
 bool  is_allowed_move_phase2(int move)
@@ -132,6 +134,7 @@ CoordCube    CoordCube::create_baby_from_move_stack(int move)
     static int** UD_slice_table = read_UD_move_table();
 
     CoordCube bb_cube = CoordCube(
+		move,
         corner_orientation_table[this->corner_orientation_coord][move],
         edge_orientation_table[this->edge_orientation_coord][move],
         UD_slice_table[this->UD_slice_coord][move]

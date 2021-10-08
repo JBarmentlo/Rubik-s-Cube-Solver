@@ -80,6 +80,15 @@ int	phase_2_heuristic(CoordCube *coord_cube)
 	return (out);
 }
 
+void read_split_tables_file(char* table1, char* table2)
+{
+	std::ifstream out11(SPLIT_ONE_NAME, std::ios_base::binary);
+	out11.read(table1, sizeof(char) * HSIZEONE / 2);
+	std::ifstream out21(SPLIT_TWO_NAME, std::ios_base::binary);
+	out21.read(table2, sizeof(char) * ((HSIZEONE / 2) + 1));
+}
+
+
 int		phase_1_perfect_heuristic(CoordCube& coord_cube)
 {
 	static char* table_1 = (char*)malloc(sizeof(char) * (HSIZEONE / 2));
@@ -88,10 +97,7 @@ int		phase_1_perfect_heuristic(CoordCube& coord_cube)
 
 	if (first)
 	{
-		std::ifstream in("../tables/onehalf", std::ios_base::binary);
-		in.read(table_1, sizeof(char) * HSIZEONE / 2);
-		std::ifstream in2("../tables/twohalf", std::ios_base::binary);
-		in2.read((char*)table_2, sizeof(char) * ((HSIZEONE / 2) + 1));
+		read_split_tables_file(table_1, table_2);
 	}
 	first = false;
 
