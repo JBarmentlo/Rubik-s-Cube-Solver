@@ -5,12 +5,22 @@
 #include "heuristics.hpp"
 #include "heuristics_tables.hpp"
 #include "utils.hpp"
+#include "Node.hpp"
+#include "tests.hpp"
+
 
 
 #include "cubiecube_utils.hpp"
 #include "CubieCube.hpp"
 // #include "tests.hpp"
 // #include "move_tables.hpp"
+#include <fstream>
+#include <string.h>
+#include <stack>
+#include <vector>
+
+#include "define.hpp"
+
 
 void 	print_table_depth(int d, int depth, CoordCube cub)
 {
@@ -38,30 +48,12 @@ void test_h(void)
 	for (int i; i <  N_MOVES; i++)
 	{
 		int move = rand() % 18;
-		cub.apply_move(move);
+		cub.apply_move_phase_one(move);
 		std::cout << i << ",  " << move;
 		std::cout << " h: " << phase_1_perfect_heuristic(cub) << std::endl;
 		std::cout << std::endl;
 	}
 	
-}
-
-
-inline void print_bits(unsigned char c)
-{
-	for (int i = 0; i < 8; i++)
-	{
-		if (c >> 7 != 0)
-		{
-			std::cout << 1;
-		}
-		else
-		{
-			std::cout << 0;
-		}
-		c = c << 1;
-	}
-	std::cout << std::endl;
 }
 
 float			get_h_filling()
@@ -80,36 +72,89 @@ float			get_h_filling()
 	return (float(full) / float(size));
 }
 
+// int		main(void)
+// {
+// 	// backwards_fill_h_table(9);
+
+// 	CoordCube begin(0);
+// 	for (int i = 0; i < 16; i++)
+// 	{
+// 		CoordCube begin(0);
+// 		// begin.apply_move(i);
+// 		begin = begin.create_baby_from_move_stack(i);
+// 		std::cout << i << std::endl;
+// 		for (int j = 0; j < 16; j++)
+// 		{
+// 			CoordCube bb = begin.create_baby_from_move_stack(j);
+// 			std::cout << bb.flat_coord() << " : "<< phase_1_perfect_heuristic(bb) << std::endl;
+// 		}
+// 		std::cout << std::endl;
+// 		std::cout << std::endl;
+// 	}
+// 	test_h();
+// 	test_h();
+// 	test_h();
+// 	test_h();
+// 	test_h();
+// 	test_h();
+// 	test_h();
+// 	test_h();
+
+// 	// phase_one_solver(begin);
+
+// 	// }
+// 	return true;
+// }
+
 int		main(void)
-{
-	// backwards_fill_h_table(9);
+{ 
+	CoordCube *test = new CoordCube();
+	CubieCube cubie;
+	// make_all_move_tables();
+	// make_all_heuristics_tables();
+	check_cubie_coord_the_same_phase_1();
 
-	CoordCube begin(0);
-	for (int i = 0; i < 16; i++)
+	cubie.set_solved();
+	for (size_t i = 0; i < 10; i++)
 	{
-		CoordCube begin(0);
-		// begin.apply_move(i);
-		begin = begin.create_baby_from_move_stack(i);
-		std::cout << i << std::endl;
-		for (int j = 0; j < 16; j++)
-		{
-			CoordCube bb = begin.create_baby_from_move_stack(j);
-			std::cout << bb.flat_coord() << " : "<< phase_1_perfect_heuristic(bb) << std::endl;
-		}
-		std::cout << std::endl;
-		std::cout << std::endl;
+		test->apply_move_phase_one(i);
+		apply_move(&cubie.data, i);
+
+
 	}
-	test_h();
-	test_h();
-	test_h();
-	test_h();
-	test_h();
-	test_h();
-	test_h();
-	test_h();
+	std::cout << "\n" << std::endl;
+	// test->print();
+	Node *start = new Node(0, 0, test);
 
-	// phase_one_solver(begin);
+	vector<int> path;
 
+	// path = ida(start, phase_one_goal, phase_1_heuristic, g_plusone, create_baby_from_move_phase_one);
+
+	// for (size_t i = 0; i < path.size(); i++)
+	// {
+	// 	std::cout << path[i] << "-";
 	// }
-	return true;
+
+	// std::cout << "\n" << std::endl;
+	// std::cout << "corner ori: [" << cubie.corner_ori_coord() << "]" << std::endl;
+	// std::cout << "edge ori: [" << cubie.edge_ori_coord() << "]" << std::endl;
+	// std::cout << "UD slice 1: [" << cubie.UD_coord() << "]" << std::endl;
+	// std::cout << "corner perm: [" << cubie.corner_perm_coord() << "]" << std::endl;
+	// std::cout << "edge perm: [" << cubie.edge_perm_coord() << "]" << std::endl;
+	// std::cout << "UD slice2: [" << cubie.UD_coord() << "]" << std::endl;
+
+	// for (size_t i = 1; i < path.size(); i++)
+	// {
+	// 	apply_move(&cubie.data, path[i]);
+	// }
+	// std::cout << "\n\n\n" << std::endl;
+	// std::cout << "corner ori: [" << cubie.corner_ori_coord() << "]" << std::endl;
+	// std::cout << "edge ori: [" << cubie.edge_ori_coord() << "]" << std::endl;
+	// std::cout << "UD slice 1: [" << cubie.UD_coord() << "]" << std::endl;
+	// std::cout << "corner perm: [" << cubie.corner_perm_coord() << "]" << std::endl;
+	// std::cout << "edge perm: [" << cubie.edge_perm_coord() << "]" << std::endl;
+	// std::cout << "UD slice2: [" << cubie.UD_coord() << "]" << std::endl;
+
+
+	return 0;
 }

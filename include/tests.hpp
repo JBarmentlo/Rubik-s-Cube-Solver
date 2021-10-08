@@ -4,6 +4,8 @@
 
 #include "cubiecube_utils.hpp"
 #include "CubieCube.hpp"
+#include "move_tables.hpp"
+#include "CoordCube.hpp"
 
 #include "utils.hpp"
 typedef int (*get_coord_function)(cubiecube_t*);
@@ -246,6 +248,41 @@ void check_all_coords(void)
 	{
 		std::cout << "Checking coord " << table_file_names[i] << std::endl;
 		check_set_get_coord_equivalency(coord_getters[i], coord_setters[i], coord_range[i]);
+	}
+}
+
+void check_cubie_coord_the_same_phase_1()
+{
+	CubieCube cubie;
+	int move;
+	// make_all_move_tables();
+	// make_all_heuristics_tables();
+	
+	for (int i = 0; i < 1000000; i++)
+	{
+		CoordCube *test = new CoordCube();
+		cubie.set_solved();
+		for (int j = 0; j < 20; j++)
+		{
+			int moves[20] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+			move = std::rand() % 18;
+			moves[j] = move;
+			test->apply_move_phase_one(move);
+			apply_move(&cubie.data, move);
+			if ((test->corner_orientation_coord != cubie.corner_ori_coord()) or (test->corner_orientation_coord != cubie.corner_ori_coord()) or (test->UD_slice_coord != cubie.UD_coord()))
+			{
+				std::cout << "error" << std::endl;
+				for (int k = 0; k < 20; k++)
+				{
+					std::cout << moves[k] << std::endl;
+				}
+				cubie.print();
+				std::cout << std::endl;
+				test->print();
+				std::cout << std::endl;
+				std::cout << std::endl;
+			}
+		}
 	}
 }
 #endif

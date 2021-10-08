@@ -29,7 +29,7 @@ void 		make_raw_move_table(get_coord_function get_coord, set_coord_function set_
 				}
 				else
 				{
-					table[N_MOVES * i + j + 6 * k] = i; //TODO: check if necesary
+					table[N_MOVES * i + j + 6 * k] = -1; //TODO: check if necesary
 				}
 				if (table[N_MOVES * i + j + 6 * k] >= coord_max)
 				{
@@ -40,7 +40,10 @@ void 		make_raw_move_table(get_coord_function get_coord, set_coord_function set_
 		}
 	}
 	std::ofstream out(filename, std::ios_base::binary);
-	out.write((char*)table, sizeof(int) * (N_MOVES * (coord_max)));
+	if (out.good() == true)
+		out.write((char*)table, sizeof(int) * (N_MOVES * (coord_max)));
+	else
+		std::cout << "PATH ERROR: cannot create the following file: " << filename << std::endl;
 }
 
 int** 		read_raw_move_table(int coord_max, std::string filename)
@@ -51,6 +54,11 @@ int** 		read_raw_move_table(int coord_max, std::string filename)
 	pretty_table = (int**)malloc((coord_max) * sizeof(int*));
 
 	std::ifstream in(filename, std::ios_base::binary);
+	if (in.good() == false)
+	{
+		std::cout << "PATH ERROR: cannot read the following file: " << filename << std::endl;
+		return (nullptr);
+	}
 	in.read((char*)table, N_MOVES * (coord_max) * sizeof(int));
 
 	for (int i = 0; i < coord_max; i++)
@@ -65,15 +73,34 @@ int**		read_corner_orientation_move_table()
 	return (read_raw_move_table(N_CORNER_ORI, CORNER_ORI_NAME));
 }
 
+int**		read_corner_permutation_move_table()
+{
+	return (read_raw_move_table(N_CORNER_PERMUTATION, CORNER_PERMUTATION_NAME));
+}
+
+
 int**		read_edge_orientation_move_table()
 {
 	return (read_raw_move_table(N_EDGE_ORI, EDGE_ORI_NAME));
 }
 
+int**		read_edge_permutation_move_table()
+{
+	return (read_raw_move_table(N_EDGE_PERMUTATION_2, EDGE_PERMUTATION_2_NAME));
+}
+
+
 int**		read_UD_move_table()
 {
 	return (read_raw_move_table(N_UD, UD_SLICE_NAME));
 }
+
+
+int**		read_UD2_move_table()
+{
+	return (read_raw_move_table(N_UD_2, UD_2_NAME));
+}
+
 
 int** 		read_raw_move_table_phase_2(int coord_max, std::string filename)
 {

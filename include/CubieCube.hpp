@@ -27,6 +27,7 @@ public:
 	int 	edge_perm_coord();
 	int 	UD_coord();
 	unsigned int 	flat_coord();
+	void	print();
 
 
 
