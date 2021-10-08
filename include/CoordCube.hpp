@@ -7,22 +7,26 @@
 
 class CoordCube
 {
-    private:
+	private:
 
-    public :
+	public :
+	int corner_orientation_coord;
+	int edge_orientation_coord;
+	int UD_slice_coord;
+	
+	CoordCube(unsigned int flat_coord_1); // create cube from flat coordinate
+	CoordCube(int corner_orientation_coord = 0, int edge_orientation_coord = 0, int UD_slice_coord = 0);
+	~CoordCube(void);
 
-    int corner_orientation_coord;
-    int edge_orientation_coord;
-    int UD_slice_coord;
-    
-    
-    CoordCube(int corner_orientation_coord = 0, int edge_orientation_coord = 0, int UD_slice_coord = 0);
-    ~CoordCube(void);
+	// void    print(void);
+	bool	operator==(const CoordCube &cube);
+	void	set_solved(void);
+	void	apply_move(int move);
+	void	print(void);
 
-    void    print(void);
-    bool	operator==(const CoordCube &cube);
-    void    set_solved(void);
-    void    apply_move(int move);
+	CoordCube		create_baby_from_move_stack(int move);
+	unsigned int     flat_coord(void);
+
 
 };
 

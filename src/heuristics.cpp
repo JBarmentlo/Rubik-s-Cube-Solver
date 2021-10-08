@@ -1,4 +1,6 @@
 #include "heuristics.hpp"
+#include "utils.hpp"
+
 
 int	phase_1_heuristic(CoordCube *coord_cube)
 {
@@ -28,3 +30,33 @@ int	phase_1_heuristic(CoordCube *coord_cube)
 	
 	return (out);
 }
+
+int		phase_1_perfect_heuristic(CoordCube& coord_cube)
+{
+	static unsigned char h_table[N_EDGE_ORI / 2 * N_UD * N_CORNER_ORI];
+	static bool first = true;
+
+	if (first)
+	{
+		std::ifstream in(PHASE_ONE_HEURISTIC_NAME, std::ios_base::binary);
+		in.read((char*)h_table, sizeof(char) * (N_EDGE_ORI / 2 * N_UD * N_CORNER_ORI));
+	}
+	first = false;
+	return (int)read_half_char_table(h_table, coord_cube.flat_coord());
+}
+
+// unsigned char*		phase_1_perfect_heuristic_table(void)
+// {
+// 	static unsigned char h_tableo[N_EDGE_ORI / 2 * N_UD * N_CORNER_ORI];
+// 	static bool first = true;
+
+// 	if (first)
+// 	{
+// 		std::ifstream in(PHASE_ONE_HEURISTIC_NAME, std::ios_base::binary);
+// 		in.read((char*)h_tableo, sizeof(char) * (N_EDGE_ORI / 2 * N_UD * N_CORNER_ORI));
+// 		std::cout << "should print once" << std::endl;
+// 	}
+// 	first = false;
+// 	return h_tableo;
+// }
+

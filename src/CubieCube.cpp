@@ -12,6 +12,10 @@ CubieCube::~CubieCube()
 {
 }
 
+unsigned int 	CubieCube::flat_coord()
+{
+	return (this->corner_ori_coord() * N_EDGE_ORI * N_UD + this->edge_ori_coord() * N_UD + this->UD_coord());
+}
 
 
 void 	CubieCube::multiply(cubiecube_t *move_cube)

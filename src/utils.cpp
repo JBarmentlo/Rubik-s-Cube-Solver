@@ -200,9 +200,40 @@ void 			print_array(int* arr, int size)
 	}
 	std::cout << std::endl;
 }
-	
 
-int*	fill_table_with_value(int* table, int value, int size)
+inline unsigned char write_half_char_left(unsigned char dest, unsigned char value)
+{
+	dest = dest << 4;
+	dest = dest >> 4;
+
+	dest = dest + (value << 4);
+	return dest;
+}
+
+inline unsigned char write_half_char_right(unsigned char dest, unsigned char value)
+{
+	dest = dest >> 4;
+	dest = dest << 4;
+
+	dest = dest + value;
+	return dest;
+}
+
+inline unsigned char read_half_char_left(unsigned char dest)
+{
+	dest = dest >> 4;
+	return dest;
+}
+
+inline unsigned char read_half_char_right(unsigned char dest)
+{
+	dest = dest << 4;
+	dest = dest >> 4;
+	return dest;
+}
+
+
+int*			fill_table_with_value(int* table, int value, int size)
 {
 	for (int i = 0; i < size; i++)
 	{
@@ -210,3 +241,60 @@ int*	fill_table_with_value(int* table, int value, int size)
 	}
 	return (table);
 }
+
+float			get_table_filling(unsigned char *table)
+{
+	unsigned int size =  N_EDGE_ORI * N_CORNER_ORI * N_UD;
+	unsigned int full = 0;
+
+	for (unsigned int i; i < size; i++)
+	{
+		if (read_half_char_table(table, i) != 15)
+		{
+			full = full + 1;
+		}
+	}
+	return (float(full) / float(size));
+}
+
+void 			write_half_char_table(unsigned char *table, unsigned char value, unsigned int idx)
+{
+	int new_idx = idx / 2;
+	int odd = idx % 2;
+	if (value > 15)
+		return;
+	
+	if (odd == 0)
+	{
+		table[new_idx] = write_half_char_right(table[new_idx], value);
+	}
+	else
+	{
+		table[new_idx] = write_half_char_left(table[new_idx], value);
+	}
+}
+
+void 			fill_half_char_table(unsigned char *table, unsigned char value, unsigned int max_idx)
+{
+	std::cout << "FILLING " << max_idx << std::endl;
+	for (unsigned int i = 0; i < max_idx / 2; i++)
+	{
+		table[i] = 0;
+		table[i] = write_half_char_right(table[i], value);
+		table[i] = write_half_char_left(table[i], value);
+	}
+}
+
+unsigned char 	read_half_char_table(unsigned const char *table, unsigned int idx)
+{
+	unsigned char out = table[idx / 2];
+	if (idx % 2 == 0)
+	{
+		return (read_half_char_right(out));
+	}
+	else
+	{
+		return (read_half_char_left(out));
+	}
+}
+
