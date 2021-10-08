@@ -36,7 +36,7 @@ int		search(Node *current, int threshold, is_goal_function is_goal, stack<Node*>
 }
 
 
-stack<Node*>		ida(Node *start, is_goal_function is_goal, heuristic_function heuristic, g_function g_func, create_baby_function create_baby_from_move)
+vector<int>		ida(Node *start, is_goal_function is_goal, heuristic_function heuristic, g_function g_func, create_baby_function create_baby_from_move)
 {
 	stack<Node*>	path;
 
@@ -55,13 +55,13 @@ stack<Node*>		ida(Node *start, is_goal_function is_goal, heuristic_function heur
 		if(tmp == SUCCESS)
 		{
 			std::cout << "\nSUCCESSO: \n";
-			return (path);
+			return (ordered_path(path));
 		}
 		threshold = tmp;
 		i += 1;
 	}
 	std::cout << "\nFAILUUUURE\n";
-	return (path);
+	return (ordered_path(path));
 }
 
 

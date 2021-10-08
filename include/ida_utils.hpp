@@ -2,11 +2,16 @@
 #define IDA_UTILS_HPP
 
 #include "CoordCube.hpp"
+#include "Node.hpp"
+#include <vector>
+#include <stack>
 
 typedef bool	(*is_goal_function)(CoordCube*);
 
 bool            phase_one_goal(CoordCube* coordcube);
 
 bool            corner_heuristic(CoordCube* coordcube);
+
+vector<int>		ordered_path(stack<Node*> ida_path);
 
 #endif
