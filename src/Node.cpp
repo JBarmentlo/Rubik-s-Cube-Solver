@@ -25,7 +25,7 @@ bool	f_sorting(Node *one, Node *two)
 }
 
 
-vector<Node*>    Node::get_bebes(g_function g_func, heuristic_function heuristic)
+vector<Node*>    Node::get_bebes(g_function g_func, heuristic_function heuristic, create_baby_function create_baby_from_move)
 {
     vector<Node*>   bebes(N_MOVES);
     CoordCube*      baby_coordcube;

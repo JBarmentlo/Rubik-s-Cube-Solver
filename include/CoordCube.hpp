@@ -5,30 +5,46 @@
 #include "cubiecube_utils.hpp"
 #include "move_tables.hpp"
 
+
 class CoordCube
 {
     private:
 
     public :
 
+    // Needed to check forbidden moves:
     int origin_move;
 
+    // phase1:
     int corner_orientation_coord;
     int edge_orientation_coord;
     int UD_slice_coord;
     
+    // phase2:
+    int corner_permutation_coord;
+    int edge_permutation_coord;
+    int UD_slice2_coord;
     
-    CoordCube(int origin_move = NO_MOVE_APPLIED, int corner_orientation_coord = 0, int edge_orientation_coord = 0, int UD_slice_coord = 0);
+    
+    CoordCube(int origin_move = NO_MOVE_APPLIED, int corner_orientation_coord = 0, int edge_orientation_coord = 0, int UD_slice_coord = 0, int corner_permutation_coord = 0, int edge_permutation_coord = 0, int UD_slice2_coord = 0);
     ~CoordCube(void);
 
     void    print(void);
-    bool	operator==(const CoordCube &cube);
+    // bool	operator==(const CoordCube &cube);
     void    set_solved(void);
-    void    apply_move(int move);
+    void    set_solved_phase1(void);
+    void    set_solved_phase2(void);
+
+    void    apply_move_phase_one(int move);
+    void    set_coords_phase_two(int corner_permutation_coord, int edge_permutation_coord, int UD_slice2_coord);
 
 };
 
-CoordCube*       create_baby_from_move(CoordCube *mommy_cube, int move);
+typedef CoordCube*       (*create_baby_function)(CoordCube *mommy_cube, int move);
+
+CoordCube*       create_baby_from_move_phase_one(CoordCube *mommy_cube, int move);
+CoordCube*       create_baby_from_move_phase_two(CoordCube *mommy_cube, int move);
+
 
 
 #endif

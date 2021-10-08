@@ -28,7 +28,7 @@ class Node
         Node(int g, int h, CoordCube* coordcube);
         ~Node(void);
 
-        vector<Node*>       get_bebes(g_function g_func, heuristic_function heuristic);
+        vector<Node*>       get_bebes(g_function g_func, heuristic_function heuristic, create_baby_function create_baby_from_move);
         void                print();
         void                set_h(int h);
         void                set_g(int g);

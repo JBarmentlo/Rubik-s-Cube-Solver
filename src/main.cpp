@@ -16,20 +16,22 @@
 #include "define.hpp"
 
 
+
 int		main(void)
 {
+  
   CoordCube *test = new CoordCube();
 
   test->print();
   for (size_t i = 0; i < 10; i++)
   {
-    test->apply_move(i);
+    test->apply_move_phase_one(i);
   }
   std::cout << "\n" << std::endl;
   test->print();
   Node *start = new Node(0, 0, test);
-
-  ida(start, phase_one_goal, phase_1_heuristic, g_plusone);
+  
+  ida(start, phase_one_goal, phase_1_heuristic, g_plusone, create_baby_from_move_phase_one);
 
   return 0;
 }

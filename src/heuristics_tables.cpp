@@ -86,7 +86,7 @@ void    make_UD_slice1_heuristics_table(void)
 
 void    make_corner_perm_heuristics_table(void)
 {
-    int* corner_perm_h_table = create_heuristics_table(N_CORNER_PERMUTATION, read_corner_permuation_move_table);
+    int* corner_perm_h_table = create_heuristics_table(N_CORNER_PERMUTATION, read_corner_permutation_move_table);
 
 	std::ofstream out(CORNER_PERM_HEURISTIC_NAME, std::ios_base::binary);
 	if (out.good() == true)

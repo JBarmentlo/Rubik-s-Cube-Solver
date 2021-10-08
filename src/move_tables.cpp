@@ -73,7 +73,7 @@ int**		read_corner_orientation_move_table()
 	return (read_raw_move_table(N_CORNER_ORI, CORNER_ORI_NAME));
 }
 
-int**		read_corner_permuation_move_table()
+int**		read_corner_permutation_move_table()
 {
 	return (read_raw_move_table(N_CORNER_PERMUTATION, CORNER_PERMUTATION_NAME));
 }
