@@ -6,7 +6,7 @@
 #include "heuristics_tables.hpp"
 #include "utils.hpp"
 #include "Node.hpp"
-#include "tests.hpp"
+
 
 
 
@@ -112,15 +112,19 @@ int		main(void)
 	CubieCube cubie;
 	// make_all_move_tables();
 	// make_all_heuristics_tables();
-	check_cubie_coord_the_same_phase_1();
 
 	cubie.set_solved();
 	for (size_t i = 0; i < 10; i++)
 	{
 		test->apply_move_phase_one(i);
 		apply_move(&cubie.data, i);
-
-
+		test->print();
+		std::cout << std::endl;
+		cubie.print();
+		std::cout << std::endl;
+		std::cout << std::endl;
+		std::cout << std::endl;
+		std::cout << std::endl;
 	}
 	std::cout << "\n" << std::endl;
 	// test->print();
