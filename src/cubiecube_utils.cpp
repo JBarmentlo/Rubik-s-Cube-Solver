@@ -121,6 +121,22 @@ cubiecube_t*	get_moves()
 	return moves;
 }
 
+int 	get_inverse_move_number(int move)
+{
+	if (move >= 6 and move < 12)
+	{
+		return move;
+	}
+	if (move < 6)
+	{
+		return move + 12;
+	}
+	else
+	{
+		return move - 12;
+	}
+}
+
 
 void 			apply_move(cubiecube_t* cube, int move)
 {

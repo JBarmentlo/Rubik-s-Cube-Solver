@@ -41,7 +41,6 @@ int*	create_heuristics_table(int size, reading_table_function read)
 }
 
 
-
 void    make_corner_ori_heuristics_table(void)
 {
     int* corner_h_table = create_heuristics_table(N_CORNER_ORI, read_corner_orientation_move_table);
@@ -370,13 +369,14 @@ inline char read_split_table(unsigned int index)
 	mutexes[index % N_MUTEX].lock();
 	if (index < HSIZEONE / 2)
 	{
+		mutexes[index % N_MUTEX].unlock();
 		return h_table_1[index];
 	}
 	else
 	{
+		mutexes[index % N_MUTEX].unlock();
 		return h_table_2[index - HSIZEONE / 2];
 	}
-	mutexes[index % N_MUTEX].unlock();
 }
 
 inline char read_no_mutex_split_table(unsigned int index)
@@ -392,23 +392,27 @@ inline char read_no_mutex_split_table(unsigned int index)
 }
 
 
+void thread_print(std::string str)
+{
+	print.lock();
+	std::cout << str << std::endl;
+
+	print.unlock();
+}
+
 void my_walk(CoordCube cube, const int steps, const int limit, const int daddy_move)
 {
 	if (steps > limit)
 		return;
-	
+
 	if (not write_smaller_split_table(steps, cube.flat_coord()))
 		return;
 	
 	for (int i = 0; i < N_MOVES; i++)
 	{
-		if (i % 6 != daddy_move % 6)
-		{
-			my_walk(cube.create_baby_from_move_stack(i), steps + 1, limit, daddy_move);
-		}
+		my_walk(cube.create_baby_from_move_stack(i), steps + 1, limit, daddy_move);
 	}
 }
-
 
 void start_one_thread(CoordCube cube, int first_move, int last_move, int limit)
 {
@@ -447,21 +451,22 @@ int	my_back_walk(CoordCube cube, int steps, int limit, int daddy_move)
 
 	if (steps > limit)
 	{
-		std::cout << "should never print" << std::endl;
 		return (UNFILLED);
 	}
 
+	// std::cout << "read" << std::endl;
 	h_val = read_split_table(cube.flat_coord());
+	// std::cout << "done read" << std::endl;
 	if (h_val != UNFILLED)
 		return h_val + 1;
 
 	for (int i = 0; i < N_MOVES; i++)
 	{
-		if ((steps == 0) or (daddy_move % 6 != i % 6))
-			h_val = std::min(h_val, my_back_walk(cube.create_baby_from_move_stack(i), steps + 1, limit, i));
+		h_val = std::min(h_val, my_back_walk(cube.create_baby_from_move_stack(i), steps + 1, limit, i));
 	}
-
+	// std::cout << "write" << std::endl;
 	write_smaller_split_table(h_val, cube.flat_coord());
+	// std::cout << "out write" << std::endl;
 	return (h_val + 1);
 
 }
@@ -494,6 +499,26 @@ void start_threads_my_backwards_walk(CoordCube start, int limit)
 	}
 }
 
+void write_split_tables_file()
+{
+	std::cout << "Writing split table to file" << std::endl;
+	std::ofstream out11(SPLIT_ONE_NAME, std::ios_base::binary);
+	out11.write(h_table_1, sizeof(char) * HSIZEONE / 2);
+	std::ofstream out21(SPLIT_TWO_NAME, std::ios_base::binary);
+	out21.write(h_table_2, sizeof(char) * ((HSIZEONE / 2) + 1));
+	std::cout << "Done writing " << std::endl;
+}
+
+void read_split_tables_file()
+{
+	std::cout << "reading split table to file" << std::endl;
+	std::ifstream out11(SPLIT_ONE_NAME, std::ios_base::binary);
+	out11.read(h_table_1, sizeof(char) * HSIZEONE / 2);
+	std::ifstream out21(SPLIT_TWO_NAME, std::ios_base::binary);
+	out21.read(h_table_2, sizeof(char) * ((HSIZEONE / 2) + 1));
+	std::cout << "Done reading " << std::endl;
+}
+
 
 void backwards_fill_h_table(int limit)
 {
@@ -503,38 +528,29 @@ void backwards_fill_h_table(int limit)
 		if (read_no_mutex_split_table(i) != UNFILLED)
 			std::cout << "/* message */" << std::endl;
 	}
+	// read_split_tables_file();
+
 	write_no_mutex_split_table(0,0);
 	start_threads_my_walk(CoordCube(0), limit);
 
 	std::cout << "Done forward" << std::endl;
-	std::ofstream out11("tables/onehalf", std::ios_base::binary);
-	out11.write(h_table_1, sizeof(char) * HSIZEONE / 2);
-	out11.close();
-	std::ofstream out21("tables/twohalf", std::ios_base::binary);
-	out21.write(h_table_2, sizeof(char) * ((HSIZEONE / 2) + 1));
-	std::cout << "Done writing INTERMEDIATE STAGE" << std::endl;
-	out21.close();
-	// std::ifstream in("tables/onehalf", std::ios_base::binary);
-	// in.read(h_table_1, sizeof(char) * HSIZEONE / 2);
-	// std::ifstream in2("tables/twohalf", std::ios_base::binary);
-	// in2.read((char*)h_table_2, sizeof(char) * ((HSIZEONE / 2) + 1));
+	write_split_tables_file();
 
 	for (unsigned int i = 0; i < HSIZEONE; i++)
 	{
-		if (i % (N_EDGE_ORI / 512 * N_CORNER_ORI * N_UD) == 0)
+		// std::cout << i << std::endl;
+		if (i % (N_EDGE_ORI / 1024 * N_CORNER_ORI * N_UD) == 0)
 		{
-			std::cout << "back: " <<  i / (N_EDGE_ORI / 512 * N_CORNER_ORI * N_UD) << " / 512" << std::endl;
+			std::cout << "back: " <<  i / (N_EDGE_ORI / 1024 * N_CORNER_ORI * N_UD) << " / 1024" << std::endl;
 		}
 		if (read_no_mutex_split_table(i) == UNFILLED)
-			my_back_walk(CoordCube(i), 0, 3, 0);
+		{
+			my_back_walk(CoordCube(i), 0, 12 - limit, 0);
+		}
 	}
 	std::cout << "done back walk" << std::endl;
 
-	std::ofstream out("../tables/onehalf", std::ios_base::binary);
-	out.write(h_table_1, sizeof(char) * HSIZEONE / 2);
-	std::ofstream out2("../tables/twohalf", std::ios_base::binary);
-	out2.write(h_table_2, sizeof(char) * ((HSIZEONE / 2) + 1));
-	std::cout << "done writing" << std::endl;
+	write_split_tables_file();
 	
 	free(h_table_1);
 	free(h_table_2);
@@ -542,9 +558,9 @@ void backwards_fill_h_table(int limit)
 
 // void make_perfect_move_table()
 // {
-// 	std::ifstream in("tables/onehalf", std::ios_base::binary);
+// 	std::ifstream in(SPLIT_ONE_NAME, std::ios_base::binary);
 // 	in.read(h_table_1, sizeof(char) * HSIZEONE / 2);
-// 	std::ofstream in2("tables/twohalf", std::ios_base::binary);
+// 	std::ofstream in2(SPLIT_TWO_NAME, std::ios_base::binary);
 // 	in2.read((char*)h_table_2, sizeof(char) * ((HSIZEONE / 2) + 1));
 	
 // 	int min = 123456;
@@ -583,7 +599,6 @@ void    make_corner_perm_heuristics_table(void)
 	free(corner_perm_h_table);
 }
 
-
 void    make_edge_perm_heuristics_table(void)
 {
     int* edge_perm_h_table = create_heuristics_table(N_EDGE_PERMUTATION_2, read_edge_permutation_move_table);
@@ -599,7 +614,6 @@ void    make_edge_perm_heuristics_table(void)
 
 	free(edge_perm_h_table);
 }
-
 
 void    make_UD_2_heuristics_table(void)
 {
@@ -626,3 +640,4 @@ void	make_all_heuristics_tables(void)
 	make_edge_perm_heuristics_table(); // TODO: check for segfault!!
 	make_UD_2_heuristics_table();
 }
+
