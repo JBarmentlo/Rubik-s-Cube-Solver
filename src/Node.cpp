@@ -38,10 +38,13 @@ vector<Node*>    Node::get_bebes(g_function g_func, heuristic_function heuristic
         if ((move % N_BASIC_MOVES) != (this->coordcube->origin_move % N_BASIC_MOVES))
         {
             baby_coordcube = create_baby_from_move(this->coordcube, move);
-            baby_g = g_func(this->g);
-            baby_h = heuristic(baby_coordcube);
-            bebes[nb_of_moves] = new Node(baby_g, baby_h, baby_coordcube);
-            nb_of_moves += 1;
+            if (baby_coordcube != nullptr)
+            {
+                baby_g = g_func(this->g);
+                baby_h = heuristic(baby_coordcube);
+                bebes[nb_of_moves] = new Node(baby_g, baby_h, baby_coordcube);
+                nb_of_moves += 1;
+            }
         }
     }
     bebes.resize(nb_of_moves);

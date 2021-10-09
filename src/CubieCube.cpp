@@ -126,12 +126,13 @@ void 	CubieCube::set_UD_coord(int coord)
 
 void	CubieCube::print_all_coords(void)
 {
-	std::cout << "corner ori: [" << this->corner_ori_coord() << "]" << std::endl;
-	std::cout << "edge ori: [" << this->edge_ori_coord() << "]" << std::endl;
-	std::cout << "UD slice 1: [" << this->UD_coord() << "]" << std::endl;
+	// std::cout << "corner ori: [" << this->corner_ori_coord() << "]" << std::endl;
+	// std::cout << "edge ori: [" << this->edge_ori_coord() << "]" << std::endl;
+	// std::cout << "UD slice 1: [" << this->UD_coord() << "]" << std::endl;
 	std::cout << "corner perm: [" << this->corner_perm_coord() << "]" << std::endl;
 	std::cout << "edge perm: [" << this->edge_perm_coord() << "]" << std::endl;
 	std::cout << "UD slice2: [" << this->UD2_coord() << "]" << std::endl;
+}
 	
 void CubieCube::print()
 {

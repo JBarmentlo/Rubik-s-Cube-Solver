@@ -50,7 +50,6 @@ vector<int>		ida(Node *start, is_goal_function is_goal, heuristic_function heuri
 	threshold = start->f;
 	while(i < MAX_ITER)
 	{
-		std::cout << "\n\n****\niter = " << i << "\n";
 		std::cout << "threshold = " << threshold << "\n";
 		tmp = search(start, threshold, is_goal, &path, heuristic, g_func, create_baby_from_move);
 		if(tmp == SUCCESS)

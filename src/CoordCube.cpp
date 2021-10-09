@@ -65,9 +65,9 @@ unsigned int     CoordCube::flat_coord(void)
 // }
 void CoordCube::print()
 {
-    std::cout << "corner_orientation coord: [" << this->corner_orientation_coord << "]\n";
-    std::cout << "edge_orientation coord: [" << this->edge_orientation_coord << "]\n";
-    std::cout << "UD slice1 coord: [" << this->UD_slice_coord << "]\n";
+    // std::cout << "corner_orientation coord: [" << this->corner_orientation_coord << "]\n";
+    // std::cout << "edge_orientation coord: [" << this->edge_orientation_coord << "]\n";
+    // std::cout << "UD slice1 coord: [" << this->UD_slice_coord << "]\n";
     std::cout << "corner_permutation coord: [" << this->corner_permutation_coord << "]\n";
     std::cout << "edge_permutation coord: [" << this->edge_permutation_coord << "]\n";
     std::cout << "UD slice2 coord: [" << this->UD_slice2_coord << "]\n";
@@ -90,6 +90,18 @@ void    CoordCube::apply_move_phase_one(int move)
     this->corner_orientation_coord = corner_orientation_table[this->corner_orientation_coord][move];
     this->edge_orientation_coord = edge_orientation_table[this->edge_orientation_coord][move];
     this->UD_slice_coord = UD_slice_table[this->UD_slice_coord][move];
+}
+
+
+void    CoordCube::apply_move_phase_two(int move)
+{
+    static int** corner_permutation_table = read_corner_permutation_move_table();
+    static int** edge_permutation_table = read_edge_permutation_move_table();
+    static int** UD_slice2_table = read_UD2_move_table();
+
+    this->corner_permutation_coord = corner_permutation_table[this->corner_permutation_coord][move];
+    this->edge_permutation_coord = edge_permutation_table[this->edge_permutation_coord][move];
+    this->UD_slice2_coord = UD_slice2_table[this->UD_slice2_coord][move];
 }
 
 
@@ -141,6 +153,9 @@ CoordCube    CoordCube::create_baby_from_move_stack(int move)
 
 CoordCube*    create_baby_from_move_phase_two(CoordCube* mommy_cube, int move)
 {
+    if (is_allowed_move_phase2(move) == false)
+        return (nullptr);
+
     static int** corner_permutation_table = read_corner_permutation_move_table();
     static int** edge_permutation_table = read_edge_permutation_move_table();
     static int** UD_slice2_table = read_UD2_move_table();
