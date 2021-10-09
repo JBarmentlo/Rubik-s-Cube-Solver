@@ -131,7 +131,7 @@ float			get_h_filling()
 
 int main()
 {
-	// backwards_fill_h_table(10);
+	backwards_fill_h_table(12);
 	CoordCube cub(0);
 	CoordCube start(0);
 	for (int i = 0; i < 100; i++)
@@ -171,7 +171,7 @@ int main()
 	// 	std::cout << std::endl;
 
 	// }
-	// std::cout << get_h_filling() << std::endl; 
+	std::cout << get_h_filling() << std::endl; 
 	// test_h();
 	// test_h();
 	// test_h();
