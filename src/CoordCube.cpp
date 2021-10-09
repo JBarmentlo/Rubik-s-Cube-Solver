@@ -95,6 +95,18 @@ void    CoordCube::apply_move_phase_one(int move)
 }
 
 
+void    CoordCube::apply_move_phase_two(int move)
+{
+    static int** corner_permutation_table = read_corner_permutation_move_table();
+    static int** edge_permutation_table = read_edge_permutation_move_table();
+    static int** UD_slice2_table = read_UD2_move_table();
+
+    this->corner_permutation_coord = corner_permutation_table[this->corner_permutation_coord][move];
+    this->edge_permutation_coord = edge_permutation_table[this->edge_permutation_coord][move];
+    this->UD_slice2_coord = UD_slice2_table[this->UD_slice2_coord][move];
+}
+
+
 void    CoordCube::set_coords_phase_two(int corner_permutation_coord, int edge_permutation_coord, int UD_slice2_coord)
 {
     this->corner_permutation_coord = corner_permutation_coord;
@@ -144,6 +156,9 @@ CoordCube    CoordCube::create_baby_from_move_stack(int move)
 
 CoordCube*    create_baby_from_move_phase_two(CoordCube* mommy_cube, int move)
 {
+    if (is_allowed_move_phase2(move) == false)
+        return (nullptr);
+
     static int** corner_permutation_table = read_corner_permutation_move_table();
     static int** edge_permutation_table = read_edge_permutation_move_table();
     static int** UD_slice2_table = read_UD2_move_table();

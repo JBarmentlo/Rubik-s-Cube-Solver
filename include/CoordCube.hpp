@@ -36,6 +36,8 @@ class CoordCube
     void    set_solved_phase2(void);
 
     void    apply_move_phase_one(int move);
+    void    apply_move_phase_two(int move);
+
     void    set_coords_phase_two(int corner_permutation_coord, int edge_permutation_coord, int UD_slice2_coord);
 
 	CoordCube			create_baby_from_move_stack(int move);
@@ -47,6 +49,8 @@ typedef CoordCube*       (*create_baby_function)(CoordCube *mommy_cube, int move
 
 CoordCube*       create_baby_from_move_phase_one(CoordCube *mommy_cube, int move);
 CoordCube*       create_baby_from_move_phase_two(CoordCube *mommy_cube, int move);
+
+bool  is_allowed_move_phase2(int move);
 
 
 
