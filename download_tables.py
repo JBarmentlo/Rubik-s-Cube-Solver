@@ -2,6 +2,12 @@ import boto3
 import os
 from os import path
 
+
+# ! Make environment vairables 
+# ! export ID='asdasdasdXsdfFXsdf'
+# ! export KEY='Jsdfasdasdasdasd'
+# ! export WORKDIR=$(pwd)
+
 def download_tables():
 	# client = boto3.client(
 	# 	service_name = 's3',
