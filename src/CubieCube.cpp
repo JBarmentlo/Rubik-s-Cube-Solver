@@ -60,10 +60,21 @@ int 	CubieCube::edge_perm_coord()
 }
 
 
+int		CubieCube::edge_perm_coord_2() // Use this one for phase 2
+{
+	return (edge_permutation_coordinate_2(&this->data));
+}
+
+void		CubieCube::set_edge_perm_coord_2(int coord) // Use this one for phase 2
+{
+	set_edge_permutation_coordinate_2(coord, &this->data);
+}
+
 int 	CubieCube::UD_coord()
 {
 	return (UD_slice_coordinate(&this->data));
 }
+
 
 int		CubieCube::UD2_coord()
 {
@@ -118,6 +129,16 @@ void 	CubieCube::set_edge_ori_coord(int coord)
 	set_edge_orientation_coord(coord, &this->data);
 };
 
+
+void 	CubieCube::set_corner_perm_coord(int coord)
+{
+	set_corner_permutation_coordinate(coord, &this->data);
+}
+
+void 	CubieCube::set_UD_2_coord(int coord)
+{
+	set_UD_slice_sorted_coordinate_2(coord, &this->data);
+}
 
 void 	CubieCube::set_UD_coord(int coord)
 {

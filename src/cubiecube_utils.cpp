@@ -191,7 +191,6 @@ void			set_corner_orientation_coord(int coord, cubiecube_t* cube)
 	cube->corner_orientations[DRB] = 3 - parity;
 };
 
-
 int				edge_orientation_coordinate(cubiecube_t* cube)
 {
 	// The loop iterates over all edges except the last (which is not used to compute the coordinate)
@@ -221,7 +220,6 @@ void			set_edge_orientation_coord(int coord, cubiecube_t* cube)
 	cube->edge_orientations[LAST_EDGE] = 2 - parity; //TODO: CHECK IF THIS IS GOOD PARTITY
 };
 
-
 int				corner_permutation_coordinate_old(cubiecube_t* cube)
 {
 	int out(0);
@@ -242,7 +240,6 @@ int				corner_permutation_coordinate_old(cubiecube_t* cube)
 
 	return out;
 };
-
 
 int				corner_permutation_coordinate(cubiecube_t* cube)
 {
@@ -283,20 +280,11 @@ void			set_corner_permutation_coordinate(int index, cubiecube_t* cube)
 	}
 }
 
-
 int				edge_permutation_coordinate_2(cubiecube_t* cube)
 {
 	int perm[8];
 	int out(0);
 	int	k;
-	// static bool first = true;
-
-	// if (first)
-	// {
-	// 	std::cout << "edge 2" << std::endl;
-	// }
-	// first = false;
-
 	memcpy(perm, cube->edge_positions, sizeof(perm)); // We copy all the UD edges
 	// print_edges(cube);
 	// print_array(perm, 8);
@@ -336,7 +324,6 @@ void			set_edge_permutation_coordinate_2(int index, cubiecube_t* cube)
 	}
 }
 
-
 int				edge_permutation_coordinate(cubiecube_t* cube)
 {
 	int x = 0;
@@ -356,7 +343,6 @@ int				edge_permutation_coordinate(cubiecube_t* cube)
 	}
 	return (x);
 }
-
 
 int				UD_slice_coordinate(cubiecube_t* cube)
 {
@@ -407,7 +393,6 @@ void			set_UD_slice_coord(int coord, cubiecube_t* cube)
 		}
 	}
 }
-
 
 int				UD_slice_sorted_coordinate_2(cubiecube_t* cube)
 {

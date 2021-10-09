@@ -6,6 +6,7 @@
 #include "heuristics_tables.hpp"
 #include "utils.hpp"
 #include "Node.hpp"
+#include "tests.hpp"
 
 
 #include "cubiecube_utils.hpp"
@@ -131,55 +132,24 @@ float			get_h_filling()
 
 int main()
 {
-	backwards_fill_h_table(12);
+	// backwards_fill_h_table(12);
 	CoordCube cub(0);
 	CoordCube start(0);
-	for (int i = 0; i < 100; i++)
+	CubieCube cubie = CubieCube();
+	cubie.set_solved();
+
+	for (int i = 6; i < 13; i++)
 	{
-		// std::cout << get_inverse_move_number(i) << std::endl;
-		start.apply_move_phase_one(i % 18);
+		// start.apply_move_phase_one(i % 18);
+		// set_edge_permutation_coordinate_2(i, &cubie.data);
+		cubie.multiply(&get_moves()[i % 18]);
+		// std::cout << edge_permutation_coordinate_2(&cubie.data) << std::endl;
+		std::cout << cubie.edge_perm_coord_2() << std::endl;
 	}
-	phase_one_solver(start, 0);
+	// check_all_coords();
+	// phase_one_solver(start, 0);
+	// std::cout << get_h_filling() << std::endl;
+	// size_t s = HSIZEONE * 80L;
 
-	// start.print();
-	// std::cout << std::endl;
-	// start.apply_move_phase_one(16);
-	// start.print();
-	// std::cout << std::endl;
-	// start.apply_move_phase_one(4);
-	// start.print();
-	// for (size_t i = 0; i < N_MOVES; i++)
-	// {
-	// 	std::cout << i << std::endl;
-	// 	CoordCube bb = cub.create_baby_from_move_stack(i);
-	// 	int lol = 0;
-	// 	while (lol < N_MOVES)
-	// 	{
-	// 		CoordCube bbb = bb.create_baby_from_move_stack(lol);
-	// 		std::cout << "\t" << lol << std::endl;
-	// 		int kk = 0;
-	// 		while (kk < N_MOVES)
-	// 		{
-	// 			CoordCube l = bbb.create_baby_from_move_stack(kk);
-	// 			std::cout << "\t\t" << kk << ": " << bbb.create_baby_from_move_stack(kk).flat_coord() << ": " << (int)phase_1_perfect_heuristic(l) << ", " << std::endl;
-	// 			if (phase_1_perfect_heuristic(l) == 15)
-	// 				std::cout << "/* message */" << std::endl;
-	// 			kk = kk + 1;
-	// 		}
-	// 		lol = lol + 1;
-	// 	}
-	// 	std::cout << std::endl;
-
-	// }
-	std::cout << get_h_filling() << std::endl; 
-	// test_h();
-	// test_h();
-	// test_h();
-	// test_h();
-	// test_h();
-	// test_h();
-	// test_h();
-	// test_h();
-
-
+	// free(test);
 }

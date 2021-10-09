@@ -91,3 +91,4 @@ inline edge_t operator-- (edge_t &d, int) {
 #define UD_2_NAME	 				"../tables/moves/ud_2_move"
 #define UD_2_THEO_NAME			    "../tables/moves/ud_2_big_move"
 #endif
+
