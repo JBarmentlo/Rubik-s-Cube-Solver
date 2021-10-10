@@ -21,7 +21,13 @@ def download_tables():
 	)
 	my_bucket = resource.Bucket('roobik-tables')
 	for s3_object in my_bucket.objects.all():
-		print(f"Dowloading {s3_object.key} of size \t{s3_object.size}")
+		if (s3_object.size > 1.1e9):
+			print(f"Dowloading {s3_object.key:<50} of size:  {(s3_object.size / 1000000000):6.2f} Gb")
+		elif (s3_object.size > 1.1e6):
+			print(f"Dowloading {s3_object.key:<50} of size:  {(s3_object.size / 1000000):6.2f} Mb")
+		else:
+			print(f"Dowloading {s3_object.key:<50} of size:  {(s3_object.size / 1000):6.2f} Kb")
+
 		filename = path.join(os.environ["WORKDIR"], s3_object.key)
 		my_bucket.download_file(s3_object.key, filename)
 
