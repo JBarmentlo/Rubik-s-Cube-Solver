@@ -5,6 +5,8 @@
 #include <thread>
 #include <string>
 #include <mutex>
+#include <shared_mutex>
+#include <queue>
 
 
 void	walk(int coord, int steps, int** moves_table, int* heuristics_table, int size)
@@ -26,7 +28,6 @@ void	walk(int coord, int steps, int** moves_table, int* heuristics_table, int si
 	return;
 }
 
-
 int*	create_heuristics_table(int size, reading_table_function read)
 {
 	int** moves_table = read();
@@ -39,7 +40,6 @@ int*	create_heuristics_table(int size, reading_table_function read)
 	
 	return heuristics_table;
 }
-
 
 void    make_corner_ori_heuristics_table(void)
 {
@@ -252,7 +252,7 @@ void    make_perfect_heuristics_table_iterative(int limit)
 
 
 
-static std::mutex mutexes[N_MUTEX] = {std::mutex(), std::mutex(), std::mutex(), std::mutex(), std::mutex(), std::mutex(), std::mutex(), std::mutex(), std::mutex(), std::mutex(), std::mutex(), std::mutex(), std::mutex(), std::mutex(), std::mutex(), std::mutex(), std::mutex(), std::mutex(), std::mutex(), std::mutex(), std::mutex(), std::mutex(), std::mutex(), std::mutex(), std::mutex(), std::mutex(), std::mutex(), std::mutex(), std::mutex(), std::mutex(), std::mutex(), std::mutex()};
+static std::shared_mutex mutexes[N_MUTEX] = {std::shared_mutex(), std::shared_mutex(), std::shared_mutex(), std::shared_mutex(), std::shared_mutex(), std::shared_mutex(), std::shared_mutex(), std::shared_mutex(), std::shared_mutex(), std::shared_mutex(), std::shared_mutex(), std::shared_mutex(), std::shared_mutex(), std::shared_mutex(), std::shared_mutex(), std::shared_mutex(), std::shared_mutex(), std::shared_mutex(), std::shared_mutex(), std::shared_mutex(), std::shared_mutex(), std::shared_mutex(), std::shared_mutex(), std::shared_mutex(), std::shared_mutex(), std::shared_mutex(), std::shared_mutex(), std::shared_mutex(), std::shared_mutex(), std::shared_mutex(), std::shared_mutex(), std::shared_mutex()};
 
 char* h_table_1 = (char*)malloc(sizeof(char) * (HSIZEONE / 2));
 char* h_table_2 = (char*)malloc(sizeof(char) * ((HSIZEONE / 2) + 1)); 
@@ -366,15 +366,15 @@ inline bool write_smaller_equal_split_table(int value, unsigned int index)
 
 inline char read_split_table(unsigned int index)
 {
-	mutexes[index % N_MUTEX].lock();
+	mutexes[index % N_MUTEX].lock_shared();
 	if (index < HSIZEONE / 2)
 	{
-		mutexes[index % N_MUTEX].unlock();
+		mutexes[index % N_MUTEX].unlock_shared();
 		return h_table_1[index];
 	}
 	else
 	{
-		mutexes[index % N_MUTEX].unlock();
+		mutexes[index % N_MUTEX].unlock_shared();
 		return h_table_2[index - HSIZEONE / 2];
 	}
 }
@@ -445,7 +445,7 @@ void start_threads_my_walk(CoordCube start, int limit)
 	}
 }
 
-int	my_back_walk(CoordCube cube, int steps, int limit, int daddy_move)
+int	 my_back_walk(CoordCube cube, int steps, int limit, int daddy_move)
 {
 	int h_val;
 
@@ -454,15 +454,14 @@ int	my_back_walk(CoordCube cube, int steps, int limit, int daddy_move)
 		return (UNFILLED);
 	}
 
-	// std::cout << "read" << std::endl;
 	h_val = read_split_table(cube.flat_coord());
-	// std::cout << "done read" << std::endl;
 	if (h_val != UNFILLED)
 		return h_val + 1;
 
 	for (int i = 0; i < N_MOVES; i++)
 	{
-		h_val = std::min(h_val, my_back_walk(cube.create_baby_from_move_stack(i), steps + 1, limit, i));
+		if (steps == 0 or (daddy_move % 6 != i % 6))
+			h_val = std::min(h_val, my_back_walk(cube.create_baby_from_move_stack(i), steps + 1, limit, i));
 	}
 	// std::cout << "write" << std::endl;
 	write_smaller_split_table(h_val, cube.flat_coord());
@@ -471,25 +470,33 @@ int	my_back_walk(CoordCube cube, int steps, int limit, int daddy_move)
 
 }
 
-void start_one_thread_backwards(CoordCube cube, int first_move, int last_move, int limit)
+std::mutex	min_ret_mutex;
+void start_one_thread_backwards(CoordCube cube, int first_move, int last_move, int limit, int& ret)
 {
+	int	min_val = UNFILLED;
+
 	for (int i = first_move; i <= last_move; i++)
 	{
-		my_walk(cube.create_baby_from_move_stack(i), 0, limit, i);
+		min_val = std::min(my_back_walk(cube.create_baby_from_move_stack(i), 1, limit, i), min_val);
 	}
+	min_ret_mutex.lock();
+	if (ret > min_val)
+		ret = min_val;
+	min_ret_mutex.unlock();
 }
 
 void start_threads_my_backwards_walk(CoordCube start, int limit)
 {
 	std::thread thread_arr[N_THREADS];
 	int			last_thread = 0;
+	int			min_return = UNFILLED;
 
 	for (int i = 0; i < N_MOVES; i++)
 	{
 		if (i % (N_MOVES / N_THREADS) == 0)
 		{
 
-			thread_arr[last_thread] = std::thread(&start_one_thread_backwards, start, last_thread * (N_MOVES / N_THREADS), (last_thread + 1) * (N_MOVES / N_THREADS) - 1, limit);
+			thread_arr[last_thread] = std::thread(&start_one_thread_backwards, start, last_thread * (N_MOVES / N_THREADS), (last_thread + 1) * (N_MOVES / N_THREADS) - 1, limit, std::ref(min_return));
 			last_thread += 1;
 		}
 	}
@@ -497,6 +504,7 @@ void start_threads_my_backwards_walk(CoordCube start, int limit)
 	{
 		thread_arr[i].join();
 	}
+	write_smaller_split_table(min_return, start.flat_coord());
 }
 
 void write_split_tables_file()
@@ -535,6 +543,9 @@ void backwards_fill_h_table(int limit)
 
 	std::cout << "Done forward" << std::endl;
 	write_split_tables_file();
+	std::thread thread_array[N_THREADS];
+	std::queue<std::thread>  thread_q;
+	int			back_walk_counter = 0;
 
 	for (unsigned int i = 0; i < HSIZEONE; i++)
 	{
@@ -545,7 +556,17 @@ void backwards_fill_h_table(int limit)
 		}
 		if (read_no_mutex_split_table(i) == UNFILLED)
 		{
-			my_back_walk(CoordCube(i), 0, 12 - limit, 0);
+			// start_threads_my_backwards_walk(CoordCube(i), 12 - limit);
+			if (thread_q.size() < N_THREADS)
+			{
+				thread_q.push(std::thread(my_back_walk, CoordCube(i), 0, 12 - limit, 0));
+			}
+			else
+			{
+				thread_q.front().join();
+				thread_q.pop();
+				thread_q.push(std::thread(my_back_walk, CoordCube(i), 0, 12 - limit, 0));
+			}
 		}
 	}
 	std::cout << "done back walk" << std::endl;

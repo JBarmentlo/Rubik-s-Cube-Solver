@@ -167,26 +167,26 @@ float			get_h_filling()
 
 int main()
 {
-	// backwards_fill_h_table(12);
-	CoordCube cub(0);
-	CoordCube start(0);
-	CubieCube cubie = CubieCube();
-	cubie.set_solved();
+	backwards_fill_h_table(9);
+	// CoordCube cub(0);
+	// CoordCube start(0);
+	// CubieCube cubie = CubieCube();
+	// cubie.set_solved();
 
-	for (int i = 6; i < 13; i++)
-	{
-		// start.apply_move_phase_one(i % 18);
-		// set_edge_permutation_coordinate_2(i, &cubie.data);
-		cubie.multiply(&get_moves()[i % 18]);
-		// std::cout << edge_permutation_coordinate_2(&cubie.data) << std::endl;
-		std::cout << cubie.edge_perm_coord_2() << std::endl;
-		start.apply_move_phase_one(std::rand() % 18);
+	// for (int i = 6; i < 13; i++)
+	// {
+	// 	// start.apply_move_phase_one(i % 18);
+	// 	// set_edge_permutation_coordinate_2(i, &cubie.data);
+	// 	cubie.multiply(&get_moves()[i % 18]);
+	// 	// std::cout << edge_permutation_coordinate_2(&cubie.data) << std::endl;
+	// 	std::cout << cubie.edge_perm_coord_2() << std::endl;
+	// 	start.apply_move_phase_one(std::rand() % 18);
 
-	}
-	// check_all_coords();
-	phase_one_solver(start, 0);
-	// std::cout << get_h_filling() << std::endl;
-	// size_t s = HSIZEONE * 80L;
+	// }
+	// // check_all_coords();
+	// phase_one_solver(start, 0);
+	// // std::cout << get_h_filling() << std::endl;
+	// // size_t s = HSIZEONE * 80L;
 
-	// free(test);
+	// // free(test);
 }
