@@ -1,7 +1,7 @@
 import boto3
 import os
 from os import path
-
+from tqdm import tqdm
 
 # ! Make environment vairables 
 # ! export ID='asdasdasdXsdfFXsdf'
@@ -20,6 +20,11 @@ def download_tables():
 		aws_secret_access_key = os.environ["KEY"],
 	)
 	my_bucket = resource.Bucket('roobik-tables')
+
+	total_size = 0
+	for s3_object in my_bucket.objects.all():
+		total_size += s3_object.size
+
 	for s3_object in my_bucket.objects.all():
 		if (s3_object.size > 1.1e9):
 			print(f"Dowloading {s3_object.key:<50} of size:  {(s3_object.size / 1000000000):6.2f} Gb")
@@ -29,7 +34,9 @@ def download_tables():
 			print(f"Dowloading {s3_object.key:<50} of size:  {(s3_object.size / 1000):6.2f} Kb")
 
 		filename = path.join(os.environ["WORKDIR"], s3_object.key)
-		my_bucket.download_file(s3_object.key, filename)
+		with tqdm(total=s3_object.size) as pbar:
+			my_bucket.download_file(s3_object.key, filename, Callback=lambda bytes_transferred: pbar.update(bytes_transferred))
+		print("\n")
 
 if __name__ == "__main__":
 	download_tables()

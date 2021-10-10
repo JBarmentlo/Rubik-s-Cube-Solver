@@ -167,7 +167,7 @@ float			get_h_filling()
 
 int main()
 {
-	backwards_fill_h_table(9);
+	backwards_fill_h_table(10);
 	// CoordCube cub(0);
 	// CoordCube start(0);
 	// CubieCube cubie = CubieCube();

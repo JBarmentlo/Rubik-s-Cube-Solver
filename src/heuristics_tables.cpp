@@ -2,12 +2,12 @@
 #include "CoordCube.hpp"
 #include "utils.hpp"
 
+
 #include <thread>
 #include <string>
 #include <mutex>
 #include <shared_mutex>
 #include <queue>
-
 
 void	walk(int coord, int steps, int** moves_table, int* heuristics_table, int size)
 {
@@ -568,6 +568,11 @@ void backwards_fill_h_table(int limit)
 				thread_q.push(std::thread(my_back_walk, CoordCube(i), 0, 12 - limit, 0));
 			}
 		}
+	}
+	while (not thread_q.empty())
+	{
+		thread_q.front().join();
+		thread_q.pop();
 	}
 	std::cout << "done back walk" << std::endl;
 
