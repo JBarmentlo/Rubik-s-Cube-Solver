@@ -75,11 +75,11 @@ void		phase_one_solver(CoordCube cube, int steps)
 	std::cout << "coord: " << cube.flat_coord() <<"\th: " << phase_1_perfect_heuristic_seek(cube) <<  "                     " <<std::endl;
 	if (cube.corner_orientation_coord == 0 and cube.edge_orientation_coord == 0 and cube.UD_slice_coord == 0)
 	{
+		cube.print();
 		return;
 	}
 	min_move = get_move_for_cube(cube);
-	// std::cout << "min_move: " << min_move << std::endl;
-	// std::cout << "perfect:  "<< get_perfect_move_phase_1(cube) << std::endl; 
+	std::cout << "move: " << min_move << std::endl;
 
 	std::cout << std::endl;
 	std::cout << std::endl;
