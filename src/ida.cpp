@@ -1,6 +1,7 @@
 #include "ida.hpp"
 #include "heuristics.hpp"
 
+
 using namespace std;
 
 int		search(Node *current, int threshold, is_goal_function is_goal, stack<Node*> *path, heuristic_function heuristic, g_function g_func, create_baby_function create_baby_from_move)
@@ -67,7 +68,7 @@ vector<int>		ida(Node *start, is_goal_function is_goal, heuristic_function heuri
 
 
 
-void		phase_one_solver(CoordCube cube, int steps)
+void		phase_one_solver(CoordCube cube, int steps, queue<int> *path)
 {
 	int min = 123456;
 	int min_move;
@@ -84,5 +85,6 @@ void		phase_one_solver(CoordCube cube, int steps)
 	std::cout << std::endl;
 	std::cout << std::endl;
 	CoordCube next = cube.create_baby_from_move_stack(min_move);
-	phase_one_solver(next, steps + 1);
+	path->push(min_move);
+	phase_one_solver(next, steps + 1, path);
 }

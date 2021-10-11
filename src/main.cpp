@@ -16,98 +16,74 @@
 #include <string.h>
 #include <stack>
 #include <vector>
+#include <queue>
 
 #include "define.hpp"
 
 void  deyas_part(void)
 {
-  CoordCube *test = new CoordCube(); // all coords are set to 0
-  CubieCube cubie;
-  int solution_length = 0;
+	CubieCube cubie;
+	CoordCube test(0);
 
-  cubie.set_solved(); // all coords are set to 0
+	int solution_length = 0;
+	int move = 0;
+	queue<int> path;
+
+  	cubie.set_solved(); // all coords are set to 0
 
 //   APPLYING STARTING MOVES TO CUBIECUBE AND COORDCUBE:
-//   for (size_t i = 0; i < 10; i++)
-int move = 0;
-	for (int i = 0; i < 10; i++)
-  {
-	// move = std::rand() % 18;
-	move = i % 18;
-	test->apply_move_phase_one(move);
-	apply_move(&cubie.data, move);
-  }
-  std::cout << "\n**Coordcube:**" << std::endl;
-  test->print_coords_phase1();
-  std::cout << "\n**Cubiecube:**" << std::endl;
-  cubie.print_coords_phase1();
 
-//   RESOLVING RUBIKS: //
-  Node *start = new Node(0, 0, test);
-  vector<int> path;
+	for (unsigned int i = 0; i < 100000; i++)
+	{
+		move = (std::rand()) % 18;
+		test.apply_move_phase_one(move);
+		apply_move(&cubie.data, move);
+	}
 
-  // PHASE 1:
-  std::cout << "\nStarting IDA:" << std::endl;
-  path = ida(start, phase_one_goal, phase_1_heuristic, g_plusone, create_baby_from_move_phase_one);
-  print_path(path);
-  solution_length += path.size();
-  std::cout << "\n" << std::endl;
-  //  applying phase 1 path to the cubie to get the starting coords for phase 2:
-  for (size_t i = 0; i < path.size(); i++)
-	apply_move(&cubie.data, path[i]);
-  // applying cubie coords to the cubecoord:
-  
-  std::cout << "\nCUBIE AFTER PHASE ONE:" << std::endl;
-  cubie.print_all_coords();
-  test->set_solved();
-  test->set_coords_phase_two(cubie.corner_perm_coord(), cubie.edge_perm_coord_2(), cubie.UD2_coord());
+	std::cout << "\n**Coordcube:**" << std::endl;
+	test.print_coords_phase1();
+	std::cout << "\n**Cubiecube:**" << std::endl;
+	cubie.print_coords_phase1();
+
+	
+	phase_one_solver(test, 0, &path);
+	solution_length += path.size();
+	//  applying phase 1 path to the cubie to get the starting coords for phase 2:
+	while (not path.empty())
+	{
+		std::cout << "[" << path.front() << "]";
+		// test.apply_move_phase_two(path.front());
+		apply_move(&cubie.data, path.front());
+		path.pop();
+	}
+	std::cout << "\n" << std::endl;
+	std::cout << "\nCUBIE AFTER PHASE ONE:" << std::endl;
+	cubie.print_all_coords();
+	test.set_solved();
+	test.set_coords_phase_two(cubie.corner_perm_coord(), cubie.edge_perm_coord_2(), cubie.UD2_coord());
+	std::cout << "\nCOORDCUBE AFTER PHASE ONE:" << std::endl;
+	test.print_all_coords();
 
 
 	// PHASE 2:
 	std::cout << "\n\nENTERING PHASE 2:\n";
-	start->coordcube = test;
-	start->g = 0;
-	start->h = 0;
-	path = ida(start, phase_two_goal, phase_2_heuristic, g_plusone, create_baby_from_move_phase_two);
-	print_path(path);
+	vector<int> path2;
+	Node *start = new Node(0, 0, &test);
 
-	for (size_t i = 0; i < path.size(); i++)
-		apply_move(&cubie.data, path[i]);
+
+	path2 = ida(start, phase_two_goal, phase_2_heuristic, g_plusone, create_baby_from_move_phase_two);
+	print_path(path2);
+
+	for (size_t i = 0; i < path2.size(); i++)
+		apply_move(&cubie.data, path2[i]);
 
 	// SUPPOSED RESOLVED CUBE:
 	std::cout << "\n\nCUBIE AFTER PHASE TWO:" << std::endl;
 	cubie.print_all_coords();
-	solution_length += path.size();
+	solution_length += path2.size();
 	std::cout << "\nTOTAL PATH LENGTH: " << solution_length << std::endl;
 
 }
-
-void	showing_whats_wrong()
-{
-	CoordCube *test = new CoordCube(); // all coords are set to 0
-	CubieCube cubie;
-
-	cubie.set_solved(); // all coords are set to 0
-
-	//   APPLYING STARTING MOVES TO CUBIECUBE AND COORDCUBE:
-	for (size_t i = 0; i < 18; i++)
-	{
-		test->set_solved();
-		cubie.set_solved();
-		std::cout  << std::endl;
-		if (is_allowed_move_phase2(i) == true)
-		{
-			test->apply_move_phase_one(i);
-			test->apply_move_phase_two(i);
-			apply_move(&cubie.data, i);
-			std::cout << "\nCOORDCUBE: applying move : " << i << std::endl;
-			test->print();
-			std::cout << "\nCUBIECUBE: applying move : " << i << std::endl;
-			cubie.print_all_coords();
-		}
-	}
-}
-
 
 // void 	print_table_depth(int d, int depth, CoordCube cub) // TODO: Which one did you want
 void 	print_table_depth(int d, CoordCube cub)
@@ -182,20 +158,25 @@ int main()
 {
 	// backwards_fill_h_table(10);
 	// CoordCube cub(0);
-	CoordCube start(0);
-	// // CubieCube cubie = CubieCube();
-	// // cubie.set_solved();
+	// CoordCube start(0);
+	// queue<int> path;
 
-	for (unsigned int i = 0; i < 1000000; i++)
-	{
-		start.apply_move_phase_one((std::rand()) % 18);
-	}
-
+	// for (unsigned int i = 0; i < 1000000; i++)
+	// {
+	// 	start.apply_move_phase_one((std::rand()) % 18);
+	// }
 
 
-	phase_one_solver(start, 0);
 
-	// deyas_part();
+	// phase_one_solver(start, 0, &path);
+	// for(int i = 0; i < path.size(); i++)
+	// {
+	// 	std::cout << "[" << path.front() << "]";
+	// 	path.pop();
+	// }
+	
+
+	deyas_part();
 	// backwards_fill_h_table(10);
 	// CoordCube cub(0);
 	// CoordCube start(0);

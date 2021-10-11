@@ -10,12 +10,14 @@
 
 #include <iostream>
 #include <stack>
+#include <queue>
+
 
 
 typedef bool	(*is_goal_function)(CoordCube*);
 
 
-void			phase_one_solver(CoordCube start, int steps);
+void			phase_one_solver(CoordCube start, int steps, queue<int> *path);
 vector<int>		ida(Node *start, is_goal_function is_goal, heuristic_function heuristic, g_function g_func, create_baby_function create_baby_from_move);
 
 
