@@ -1,6 +1,8 @@
 #include "heuristics.hpp"
 #include "utils.hpp"
 
+#include <stdio.h>
+#include <string>
 
 int	g_zero(int g)
 {
@@ -80,50 +82,108 @@ int	phase_2_heuristic(CoordCube *coord_cube)
 	return (out);
 }
 
-void read_split_tables_file(char* table1, char* table2)
+void read_tables_file(char* table1, char* table2)
 {
 	std::ifstream out11(SPLIT_ONE_NAME, std::ios_base::binary);
-	out11.read(table1, sizeof(char) * HSIZEONE / 2);
-	std::ifstream out21(SPLIT_TWO_NAME, std::ios_base::binary);
-	out21.read(table2, sizeof(char) * ((HSIZEONE / 2) + 1));
+	out11.read(table1, sizeof(char) * (HSIZEONE / 2));
+	std::ifstream out12(SPLIT_TWO_NAME, std::ios_base::binary);
+	out12.read(table2, sizeof(char) * ((HSIZEONE / 2) + 1));
 }
 
 
-int		phase_1_perfect_heuristic(CoordCube& coord_cube)
+int	phase_1_perfect_heuristic_seek(CoordCube& coord_cube)
 {
-	static char* table_1 = (char*)malloc(sizeof(char) * (HSIZEONE / 2));
-	static char* table_2 = (char*)malloc(sizeof(char) * ((HSIZEONE / 2) + 1));
+	// static char* table_1 = (char*)malloc(sizeof(char) * (HSIZEONE));
+	std::ifstream t1(SPLIT_ONE_NAME, std::ios_base::binary);
+	std::ifstream t2(SPLIT_TWO_NAME, std::ios_base::binary);
+
+	char out[2];
+	long long index = coord_cube.flat_coord();
+	// fseeko64(f, cube.flat_coord(), SEEK_SET);
+	// char t[5] = fgets(out, 1, f);
+	// std::cout << "t " << t << std::endl;
+
+	if (index < (HSIZEONE / 2))
+	{
+		t1.seekg(index, std::ios::beg);
+		t1.read(out, 1);
+	}
+	else
+	{
+		t2.seekg(index - (HSIZEONE / 2), std::ios::beg);
+		t2.read(out, 1);
+	}
+	return out[0];
+}
+
+int	phase_1_perfect_heuristic(CoordCube& coord_cube)
+{
+	// static char* table_1 = (char*)malloc(sizeof(char) * (HSIZEONE));
+	static char* table1 = (char*)malloc(sizeof(char) * (HSIZEONE / 2));
+	static char* table2 = (char*)malloc(sizeof(char) * ((HSIZEONE / 2) + 1));
 	static bool first = true;
 
 	if (first)
 	{
-		read_split_tables_file(table_1, table_2);
+		read_tables_file(table1, table2);
 	}
 	first = false;
 
-	int index = coord_cube.flat_coord();
-	if (index < HSIZEONE / 2)
+	unsigned int index = coord_cube.flat_coord();
+	if (index < (HSIZEONE / 2))
 	{
-		return table_1[index];
+		return table1[index];
 	}
 	else
 	{
-		return table_2[index - HSIZEONE / 2];
+		return table2[index - (HSIZEONE / 2)];
 	}
 }
 
-// unsigned char*		phase_1_perfect_heuristic_table(void)
-// {
-// 	static unsigned char h_tableo[N_EDGE_ORI / 2 * N_UD * N_CORNER_ORI];
-// 	static bool first = true;
+int get_move_for_cube(CoordCube cube)
+{
+	int min = 123456;
+	int min_move;
+	int h;
+	for (int i = 0; i < N_MOVES; i++)
+	{
+		CoordCube bb = cube.create_baby_from_move_stack(i);
+		h = phase_1_perfect_heuristic_seek(bb);
+		if (h < min)
+		{
+			min = h;
+			min_move = i;
+		}
+	}
+	return (min_move);
+}
 
-// 	if (first)
-// 	{
-// 		std::ifstream in(PHASE_ONE_HEURISTIC_NAME, std::ios_base::binary);
-// 		in.read((char*)h_tableo, sizeof(char) * (N_EDGE_ORI / 2 * N_UD * N_CORNER_ORI));
-// 		std::cout << "should print once" << std::endl;
-// 	}
-// 	first = false;
-// 	return h_tableo;
-// }
+int get_perfect_move_phase_1(CoordCube cube)
+{
+	// static FILE* f = fopen(PHASE_ONE_HEURISTIC_NAME, "rb");
+	static std::ifstream in(PHASE_ONE_HEURISTIC_NAME, std::ios_base::binary);
+	char out[2];
+	long long index = cube.flat_coord();
+	in.seekg(index, std::ios::beg);
+	// fseeko64(f, cube.flat_coord(), SEEK_SET);
+	// char t[5] = fgets(out, 1, f);
+	// std::cout << "t " << t << std::endl;
+	in.read(out, 1);
+	// in.seekg(-1 * (index + 1), std::ios::cur);
+	// in.clear();
+	return out[0];
+}
 
+void make_move_table()
+{
+	char* table = (char*)malloc(sizeof(char) * HSIZEONE);
+	for (unsigned int i = 0; i < HSIZEONE; i++)
+	{
+		if (i % (HSIZEONE / 1024) == 0)
+		{
+			std::cout << "back: " <<  i / (HSIZEONE / 1024) << " / 1024" << std::endl;
+		}
+		table[i] = get_move_for_cube(CoordCube(i));
+	}
+	write_to_file(table, PHASE_ONE_HEURISTIC_NAME, HSIZEONE);
+}

@@ -22,15 +22,13 @@ void			rotate_right(edge_t* arr, int l, int r);
 void			rotate_right(corner_t* arr, int l, int r);
 int*	        fill_table_with_value(int* table, int value, int size);
 
-void 			write_half_char_table(unsigned char *table, unsigned char value, unsigned int idx);
-void 			fill_half_char_table(unsigned char *table, unsigned char value, unsigned int max_idx);
-unsigned char 	read_half_char_table(unsigned const char *table, unsigned int idx);
+
 // void			rotate_left_corner_array();
 // void			rotate_right_corner_array();
 // void			rotate_left_edge_array();
 // void			rotate_right_edge_array();
 float			get_table_filling(unsigned char *table);
-float			write_to_file(char* table, std::string filename);
+void			write_to_file(char* table, std::string filename, unsigned int size);
 
 
 

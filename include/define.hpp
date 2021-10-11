@@ -79,7 +79,7 @@ inline edge_t operator-- (edge_t &d, int) {
 
 #define EDGE_PERMUTATION_2_NAME 	"../tables/moves/edge_perm_2_move"
 #define CORNER_PERMUTATION_NAME 	"../tables/moves/corner_perm_2_move"
-#define PHASE_ONE_HEURISTIC_NAME 	"../tables/perfect_one_heuristic"
+#define PHASE_ONE_HEURISTIC_NAME 	"../tables/heuristics/phase_1_h_table"
 
 #define SPLIT_ONE_NAME				"../tables/heuristics/onehalf12"
 #define SPLIT_TWO_NAME				"../tables/heuristics/twohalf12"

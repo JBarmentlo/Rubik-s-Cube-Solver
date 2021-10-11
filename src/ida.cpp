@@ -65,29 +65,22 @@ vector<int>		ida(Node *start, is_goal_function is_goal, heuristic_function heuri
 }
 
 
+
+
 void		phase_one_solver(CoordCube cube, int steps)
 {
 	int min = 123456;
 	int min_move;
 	int h;
-	std::cout << "coord: " << cube.flat_coord() <<"\th: " << phase_1_perfect_heuristic(cube) <<  "                     " <<std::endl;
+	std::cout << "coord: " << cube.flat_coord() <<"\th: " << phase_1_perfect_heuristic_seek(cube) <<  "                     " <<std::endl;
 	if (cube.corner_orientation_coord == 0 and cube.edge_orientation_coord == 0 and cube.UD_slice_coord == 0)
 	{
 		return;
 	}
+	min_move = get_move_for_cube(cube);
+	// std::cout << "min_move: " << min_move << std::endl;
+	// std::cout << "perfect:  "<< get_perfect_move_phase_1(cube) << std::endl; 
 
-	for (int i = 0; i < N_MOVES; i++)
-	{
-		CoordCube bb = cube.create_baby_from_move_stack(i);
-		h = phase_1_perfect_heuristic(bb);
-		std::cout << "move:  " << i << "\tcoord: " << bb.flat_coord() <<"\th: " << h <<std::endl;
-		if (h < min)
-		{
-			min = h;
-			min_move = i;
-		}
-	}
-	std::cout << "min_move: " << min_move << std::endl;
 	std::cout << std::endl;
 	std::cout << std::endl;
 	CoordCube next = cube.create_baby_from_move_stack(min_move);
