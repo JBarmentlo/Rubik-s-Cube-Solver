@@ -29,7 +29,10 @@ class CoordCube
     CoordCube(int origin_move = NO_MOVE_APPLIED, int corner_orientation_coord = 0, int edge_orientation_coord = 0, int UD_slice_coord = 0, int corner_permutation_coord = 0, int edge_permutation_coord = 0, int UD_slice2_coord = 0);
     ~CoordCube(void);
 
-    void    print(void);
+    void    print_coords_phase1();
+    void    print_coords_phase2();
+    void    print();
+    void    print_all_coords(void);
     // bool	operator==(const CoordCube &cube);
     void    set_solved(void);
     void    set_solved_phase1(void);

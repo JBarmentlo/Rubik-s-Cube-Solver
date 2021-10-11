@@ -50,7 +50,7 @@ vector<int>		ida(Node *start, is_goal_function is_goal, heuristic_function heuri
 	threshold = start->f;
 	while(i < MAX_ITER)
 	{
-		std::cout << "threshold = " << threshold << "\n";
+		// std::cout << "threshold = " << threshold << "\n";
 		tmp = search(start, threshold, is_goal, &path, heuristic, g_func, create_baby_from_move);
 		if(tmp == SUCCESS)
 		{
@@ -70,7 +70,8 @@ void		phase_one_solver(CoordCube cube, int steps)
 	int min = 123456;
 	int min_move;
 	int h;
-	std::cout << "coord: " << cube.flat_coord() <<"\th: " << phase_1_perfect_heuristic(cube) <<  "                     " <<std::endl;
+
+	std::cout << "coord: " << cube.flat_coord() << "\th: " << phase_1_perfect_heuristic(cube) <<  "                     " <<std::endl;
 	if (cube.corner_orientation_coord == 0 and cube.edge_orientation_coord == 0 and cube.UD_slice_coord == 0)
 	{
 		return;

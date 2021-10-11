@@ -46,6 +46,8 @@ public:
 	void  			print_corners();
 	void  			print_edges();
 	void			set_solved();
+	void			print_coords_phase1();
+	void			print_coords_phase2();
 	void			print_all_coords();
 
 

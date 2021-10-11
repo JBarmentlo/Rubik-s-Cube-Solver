@@ -34,7 +34,7 @@ int	phase_1_heuristic(CoordCube *coord_cube)
 		two.read((char*)h_table_e_ori, N_EDGE_ORI * sizeof(int));
 		thre.read((char*)h_table_UD, N_UD * sizeof(int));
 
-		std::cout << "should only print once" << std::endl;
+		// std::cout << "should only print once" << std::endl;
 	}
 	first = false;
 
@@ -68,7 +68,7 @@ int	phase_2_heuristic(CoordCube *coord_cube)
 		two.read((char*)h_table_e_perm, N_EDGE_PERMUTATION_2 * sizeof(int));
 		thre.read((char*)h_table_UD2, N_UD_2 * sizeof(int));
 
-		std::cout << "should only print once" << std::endl;
+		// std::cout << "should only print once" << std::endl;
 	}
 	first = false;
 
@@ -100,7 +100,6 @@ int		phase_1_perfect_heuristic(CoordCube& coord_cube)
 		read_split_tables_file(table_1, table_2);
 	}
 	first = false;
-
 	int index = coord_cube.flat_coord();
 	if (index < HSIZEONE / 2)
 	{

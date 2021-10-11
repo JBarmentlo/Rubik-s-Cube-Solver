@@ -145,14 +145,29 @@ void 	CubieCube::set_UD_coord(int coord)
 	set_UD_slice_coord(coord, &this->data);
 }
 
+void	CubieCube::print_coords_phase1(void)
+{
+	std::cout << "corner_orientation coord: [" << this->corner_ori_coord() << "]" << std::endl;
+	std::cout << "edge_orientation coord:   [" << this->edge_ori_coord() << "]" << std::endl;
+	std::cout << "UD slice1 coord:          [" << this->UD_coord() << "]" << std::endl;
+}
+
+void	CubieCube::print_coords_phase2(void)
+{
+	std::cout << "corner_permutation coord: [" << this->corner_perm_coord() << "]" << std::endl;
+	std::cout << "edge_permutation coord:   [" << this->edge_perm_coord_2() << "]" << std::endl;
+	std::cout << "UD slice2 coords:         [" << this->UD2_coord() << "]" << std::endl;
+}
+
 void	CubieCube::print_all_coords(void)
 {
-	// std::cout << "corner ori: [" << this->corner_ori_coord() << "]" << std::endl;
-	// std::cout << "edge ori: [" << this->edge_ori_coord() << "]" << std::endl;
-	// std::cout << "UD slice 1: [" << this->UD_coord() << "]" << std::endl;
-	std::cout << "corner perm: [" << this->corner_perm_coord() << "]" << std::endl;
-	std::cout << "edge perm: [" << this->edge_perm_coord() << "]" << std::endl;
-	std::cout << "UD slice2: [" << this->UD2_coord() << "]" << std::endl;
+	std::cout << "corner_orientation coord: [" << this->corner_ori_coord() << "]" << std::endl;
+	std::cout << "edge_orientation coord:   [" << this->edge_ori_coord() << "]" << std::endl;
+	std::cout << "UD slice1 coord:          [" << this->UD_coord() << "]" << std::endl;
+	std::cout << "corner_permutation coord: [" << this->corner_perm_coord() << "]" << std::endl;
+	std::cout << "edge_permutation coord:   [" << this->edge_perm_coord_2() << "]" << std::endl;
+	std::cout << "UD slice2 coords:         [" << this->UD2_coord() << "]" << std::endl;
+	std::cout << "Flat coord:               [" << this->corner_ori_coord() * N_EDGE_ORI * N_UD + this->edge_ori_coord() * N_UD + this->UD_coord() << "]" << std::endl;
 }
 void CubieCube::print()
 {
