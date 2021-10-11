@@ -30,9 +30,10 @@ void  deyas_part(void)
 //   APPLYING STARTING MOVES TO CUBIECUBE AND COORDCUBE:
 //   for (size_t i = 0; i < 10; i++)
 int move = 0;
-	for (int i = 0; i < 18; i++)
+	for (int i = 0; i < 10; i++)
   {
-	move = std::rand() % 18;
+	// move = std::rand() % 18;
+	move = i % 18;
 	test->apply_move_phase_one(move);
 	apply_move(&cubie.data, move);
   }
