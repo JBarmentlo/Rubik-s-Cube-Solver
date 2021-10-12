@@ -1,6 +1,12 @@
 #include "CoordCube.hpp"
 
 
+CoordCube::CoordCube(int corner_orientation_coord_1, int edge_orientation_coord_1, int UD_slice_coord_1)
+{
+    this->corner_orientation_coord_1 = corner_orientation_coord_1;
+    this->edge_orientation_coord_1 = edge_orientation_coord_1;
+    this->UD_slice_coord_1 = UD_slice_coord_1;
+}
 
 // CoordCube::CoordCube(int origin_move, int corner_orientation_coord_1, int edge_orientation_coord_1, int UD_slice_coord_1, int corner_permutation_coord, int edge_permutation_coord, int UD_slice2_coord)
 // {
@@ -52,10 +58,10 @@ CoordCube::~CoordCube(void)
 //     this->UD_slice2_coord = 0;
 // }
 
-// unsigned int     CoordCube::flat_coord(void)
-// {
-//     return (this->corner_orientation_coord_1 * N_EDGE_ORI * N_UD + this->edge_orientation_coord_1 * N_UD + this->UD_slice_coord_1);
-// }
+unsigned int     CoordCube::flat_coord(void)
+{
+    return (this->corner_orientation_coord_1 * N_EDGE_ORI_1 * N_UD_1 + this->edge_orientation_coord_1 * N_UD_1 + this->UD_slice_coord_1);
+}
 
 
 void CoordCube::print_coords_phase1()
@@ -163,20 +169,19 @@ void    CoordCube::apply_move_phase_one(int move)
 //     return (bb_cube);
 // }
 
-// CoordCube    CoordCube::create_baby_from_move_stack(int move)
-// {
-//     static int** corner_orientation_table = read_corner_orientation_move_table();
-//     static int** edge_orientation_table = read_edge_orientation_move_table();
-//     static int** UD_slice_table = read_UD_move_table();
+CoordCube    CoordCube::create_baby_from_move_phase1(int move)
+{
+    static int** corner_orientation_table_1 = read_corner_orientation_move_table_1();
+    static int** edge_orientation_table_1 = read_edge_orientation_move_table_1();
+    static int** UD_slice_table_1 = read_UD_move_table_1();
 
-//     CoordCube bb_cube = CoordCube(
-// 		move,
-//         corner_orientation_table[this->corner_orientation_coord_1][move],
-//         edge_orientation_table[this->edge_orientation_coord_1][move],
-//         UD_slice_table[this->UD_slice_coord_1][move]
-//     );
-//     return (bb_cube);
-// }
+    CoordCube bb_cube = CoordCube(
+        corner_orientation_table_1[this->corner_orientation_coord_1][move],
+        edge_orientation_table_1[this->edge_orientation_coord_1][move],
+        UD_slice_table_1[this->UD_slice_coord_1][move]
+    ); // TODO: check if not calling other constructor
+    return (bb_cube);
+}
 
 // CoordCube*    create_baby_from_move_phase_two(CoordCube* mommy_cube, int move)
 // {

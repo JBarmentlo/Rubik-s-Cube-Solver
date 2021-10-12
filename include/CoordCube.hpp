@@ -28,6 +28,7 @@ class CoordCube
     
 
 	CoordCube(unsigned int flat_coord_1); // create cube from flat coordinate
+    CoordCube(int corner_orientation_coord_1, int edge_orientation_coord_1, int UD_slice_coord_1);
     // CoordCube(int origin_move = NO_MOVE_APPLIED, int corner_orientation_coord = 0, int edge_orientation_coord = 0, int UD_slice_coord = 0, int corner_permutation_coord = 0, int edge_permutation_coord = 0, int UD_slice2_coord = 0);
     ~CoordCube(void);
 
@@ -45,8 +46,8 @@ class CoordCube
 
     // void    set_coords_phase_two(int corner_permutation_coord, int edge_permutation_coord, int UD_slice2_coord);
 
-	// CoordCube			create_baby_from_move_stack(int move);
-	// unsigned int     	flat_coord(void);
+	CoordCube			create_baby_from_move_phase1(int move); // ancienne fonction "from stack"
+	unsigned int     	flat_coord(void);
 
 };
 

@@ -29,12 +29,13 @@ static bool is_allowed_quarter_turns[6] = {true, false, false, true, false}; // 
 #define MAX_ITER				10000
 #define SUCCESS					-1
 #define NO_MOVE_APPLIED 		-1
+#define MAX_INT					2147483647
 
 
 #define N_THREADS 	9
 #define N_MUTEX 	32
 #define UNFILLED 	15
-#define HSIZEONE	N_EDGE_ORI * N_CORNER_ORI * N_UD
+#define HSIZEONE	N_EDGE_ORI_1 * N_CORNER_ORI_1 * N_UD_1
 
 typedef enum {
     URF, UFL, ULB, UBR, DFR, DLF, DBL, DRB
