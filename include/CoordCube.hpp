@@ -2,7 +2,7 @@
 #define COORDCUBE_HPP
 
 // #include "utils.hpp"
-// #include "cubiecube_utils.hpp"
+#include "cubiecube_utils.hpp"
 #include "move_tables.hpp"
 // #include <iostream>
 
@@ -22,18 +22,20 @@ class CoordCube
     int UD_slice_coord_1;
     
     // // phase2:
-    // int corner_permutation_coord;
-    // int edge_permutation_coord;
-    // int UD_slice2_coord;
+    int corner_permutation_coord_2;
+    int edge_permutation_coord_2;
+    int UD_slice_coord_2;
     
 
 	CoordCube(unsigned int flat_coord_1); // create cube from flat coordinate
     CoordCube(int corner_orientation_coord_1, int edge_orientation_coord_1, int UD_slice_coord_1);
+	CoordCube(cubiecube_t cubie);
+
     // CoordCube(int origin_move = NO_MOVE_APPLIED, int corner_orientation_coord = 0, int edge_orientation_coord = 0, int UD_slice_coord = 0, int corner_permutation_coord = 0, int edge_permutation_coord = 0, int UD_slice2_coord = 0);
     ~CoordCube(void);
 
     void    print_coords_phase1();
-    // void    print_coords_phase2();
+    void    print_coords_phase2();
     // void    print();
     // void    print_all_coords(void);
     // // bool	operator==(const CoordCube &cube);

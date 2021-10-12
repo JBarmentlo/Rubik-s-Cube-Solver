@@ -8,6 +8,13 @@ CoordCube::CoordCube(int corner_orientation_coord_1, int edge_orientation_coord_
     this->UD_slice_coord_1 = UD_slice_coord_1;
 }
 
+CoordCube::CoordCube(cubiecube_t cubie)
+{
+    this->corner_permutation_coord_2 = corner_permutation_coordinate_2(&cubie);
+    this->edge_permutation_coord_2 = edge_permutation_coordinate_2(&cubie);
+    this->UD_slice_coord_2 = UD_slice_sorted_coordinate_2(&cubie);
+}
+
 // CoordCube::CoordCube(int origin_move, int corner_orientation_coord_1, int edge_orientation_coord_1, int UD_slice_coord_1, int corner_permutation_coord, int edge_permutation_coord, int UD_slice2_coord)
 // {
 //     this->origin_move = origin_move;
@@ -72,12 +79,12 @@ void CoordCube::print_coords_phase1()
 }
 
 
-// void CoordCube::print_coords_phase2()
-// {
-//     std::cout << "corner_permutation coord: [" << this->corner_permutation_coord << "]\n";
-//     std::cout << "edge_permutation coord:   [" << this->edge_permutation_coord << "]\n";
-//     std::cout << "UD slice2 coord:          [" << this->UD_slice2_coord << "]\n";
-// }
+void CoordCube::print_coords_phase2()
+{
+    std::cout << "corner_permutation_coord_2:  [" << this->corner_permutation_coord_2 << "]\n";
+    std::cout << "edge_permutation_coord_2:    [" << this->edge_permutation_coord_2 << "]\n";
+    std::cout << "UD_slice_coord_2:            [" << this->UD_slice_coord_2 << "]\n";
+}
 
 
 

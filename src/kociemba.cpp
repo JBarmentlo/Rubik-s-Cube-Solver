@@ -33,10 +33,7 @@ void    get_path_to_phase_two(std::vector<int> shuffle, std::queue<int> path_to_
         apply_move(&cubie, path_to_phase_one.front());
         path_to_phase_one.pop();
     }
-
-    std::cout << "\n\ncorner perm2 = " << corner_permutation_coordinate_2(&cubie) << std::endl;
-    std::cout << "edge perm2 = " << edge_permutation_coordinate_2(&cubie) << std::endl;
-    std::cout << "UD2 = " << UD_slice_sorted_coordinate_2(&cubie) << std::endl;
+    CoordCube start(cubie);
 
 }
 
