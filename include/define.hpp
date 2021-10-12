@@ -7,11 +7,11 @@
 #define FIRST_EDGE 				UR
 #define LAST_EDGE 				BR
 
-#define N_UD 					(unsigned int)495 // Max values for coordinates
-#define N_CORNER_ORI 			(unsigned int)2187
-#define N_EDGE_ORI 				(unsigned int)2048
-#define N_CORNER_PERMUTATION 	(unsigned int)40320
+#define N_UD_1 					(unsigned int)495 // Max values for coordinates
+#define N_CORNER_ORI_1 			(unsigned int)2187
+#define N_EDGE_ORI_1			(unsigned int)2048
 
+#define N_CORNER_PERMUTATION 	(unsigned int)40320
 #define N_UD_2	 				24
 #define N_UD_2_THEO				11880
 #define N_EDGE_PERMUTATION_2 	40320
@@ -68,6 +68,7 @@ inline edge_t operator-- (edge_t &d, int) {
     d = static_cast<edge_t>((static_cast<int>(d) - 1));
 	return tmp;
 }
+
 #define CORNER_ORI_HEURISTIC_NAME 	"../tables/heuristics/corner_orientation_heuristics"
 #define EDGE_ORI_HEURISTIC_NAME 	"../tables/heuristics/edge_orientation_heuristics"
 #define UD_SLICE1_HEURISTIC_NAME 	"../tables/heuristics/UD_slice1_heuristics"

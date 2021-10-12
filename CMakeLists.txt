@@ -11,17 +11,9 @@ set(CMAKE_CXX_FLAGS "-O3 -pthread -mcmodel=large")
 
 set(SOURCES
     src/main.cpp
-    src/cubiecube_utils.cpp
-    src/utils.cpp
-    src/Node.cpp
-    src/ida.cpp
-    src/ida_utils.cpp
-    src/CubieCube.cpp
-    src/move_tables.cpp
+    src/kociemba.cpp
     src/CoordCube.cpp
-    src/heuristics_tables.cpp
-    src/heuristics.cpp
-
+    src/move_tables.cpp
 )
 
 add_executable(Roobik ${SOURCES})
