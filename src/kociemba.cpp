@@ -22,24 +22,21 @@ std::queue<int>     get_path_to_phase_one(std::vector<int> shuffle)
 
 void    get_path_to_phase_two(std::vector<int> shuffle, std::queue<int> path_to_phase_one)
 {
-    // cubiecube_t cubie;
-    // set_solved_cubiecube(&cubie);
-    CubieCube cubie;
-
-    cubie.set_solved();
+    cubiecube_t cubie;
+    set_solved_cubiecube(&cubie);
 
     for(int move : shuffle)
-        apply_move(&cubie.data, move);
+        apply_move(&cubie, move);
 
-    std::cout << "\n\ncorner ori = " << corner_orientation_coordinate_1(&cubie.data) << std::endl;
-    std::cout << "edge ori = " << edge_orientation_coordinate_1(&cubie.data) << std::endl;
-    std::cout << "UD1 = " << UD_slice_coordinate_1(&cubie.data) << std::endl;
+    while (not path_to_phase_one.empty())
+    {
+        apply_move(&cubie, path_to_phase_one.front());
+        path_to_phase_one.pop();
+    }
 
-    // while (not path_to_phase_one.empty())
-    // {
-    //     apply_move(&cubie, path_to_phase_one.front());
-    //     path_to_phase_one.pop();
-    // }
+    std::cout << "\n\ncorner perm2 = " << corner_permutation_coordinate_2(&cubie) << std::endl;
+    std::cout << "edge perm2 = " << edge_permutation_coordinate_2(&cubie) << std::endl;
+    std::cout << "UD2 = " << UD_slice_sorted_coordinate_2(&cubie) << std::endl;
 
 }
 

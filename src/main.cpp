@@ -73,7 +73,7 @@ int main()
 {
 	// parse_args;
 	// result = kociemba (args.shuffle);
-	std::vector<int> shuffle{4, 8, 9, 5, 18, 6, 7, 8, 2, 17, 3};
+	std::vector<int> shuffle{4, 8, 9, 5, 17, 6, 7, 8, 2, 17, 3};
 	kociemba(shuffle);
 	// display_retulst;
 }
