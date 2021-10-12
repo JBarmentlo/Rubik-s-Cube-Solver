@@ -64,7 +64,7 @@ void    make_edge_ori_heuristics_table(void)
 	if (out.good() == true)
 	{
 		out.write((char*)edge_h_table, sizeof(int) * (N_EDGE_ORI));
-		std::cout << "heuristic table created in: " << EDGE_ORI_HEURISTIC_NAME << " of size : " << N_EDGE_ORI << std::endl;
+		std::cout << "heuristic table created in: " << EDGE_ORI_HEURISTIC_NAME << " of size : " << N_EDGE_ORI_1<< std::endl;
 	}
 	else
 		std::cout << "PATH ERROR: can't create the following file" << EDGE_ORI_HEURISTIC_NAME << std::endl;
@@ -80,7 +80,7 @@ void    make_UD_slice1_heuristics_table(void)
 	if (out.good() == true)
 	{
 		out.write((char*)UD_slice_h_table, sizeof(int) * (N_UD));
-		std::cout << "heuristic table created in: " << UD_SLICE1_HEURISTIC_NAME << " of size : " << N_UD << std::endl;
+		std::cout << "heuristic table created in: " << UD_SLICE1_HEURISTIC_NAME << " of size : " << N_UD_1<< std::endl;
 	}
 	else
 		std::cout << "PATH ERROR: can't create the following file" << UD_SLICE1_HEURISTIC_NAME << std::endl;
@@ -382,9 +382,9 @@ void backwards_fill_h_table(int limit)
 	for (unsigned int i = 0; i < HSIZEONE; i++)
 	{
 		// std::cout << i << std::endl;
-		if (i % (N_EDGE_ORI / 1024 * N_CORNER_ORI * N_UD) == 0)
+		if (i % (N_EDGE_ORI_1/ 1024 * N_CORNER_ORI * N_UD) == 0)
 		{
-			std::cout << "back: " <<  i / (N_EDGE_ORI / 1024 * N_CORNER_ORI * N_UD) << " / 1024" << std::endl;
+			std::cout << "back: " <<  i / (N_EDGE_ORI_1/ 1024 * N_CORNER_ORI * N_UD) << " / 1024" << std::endl;
 		}
 		if (read_no_mutex_split_table(i) == UNFILLED)
 		{
@@ -423,7 +423,7 @@ void backwards_fill_h_table(int limit)
 	
 // 	int min = 123456;
 // 	int min_move = 123456;
-// 	unsigned char* perfect_move_table = (unsigned char*)malloc(sizeof(char) * N_EDGE_ORI / 2 * N_CORNER_ORI * N_UD + 1);
+// 	unsigned char* perfect_move_table = (unsigned char*)malloc(sizeof(char) * N_EDGE_ORI_1/ 2 * N_CORNER_ORI * N_UD_1+ 1);
 
 // 	for (unsigned int i = 0; i < HSIZEONE; i++)
 // 	{

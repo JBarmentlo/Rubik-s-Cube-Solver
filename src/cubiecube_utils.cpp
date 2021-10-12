@@ -1,7 +1,4 @@
 #include "cubiecube_utils.hpp"
-#include "utils.hpp"
-
-#include <cstring>
 
 void			apply_move(cubiecube_t* cube, cubiecube_t* move)
 {
@@ -121,21 +118,23 @@ cubiecube_t*	get_moves()
 	return moves;
 }
 
-int 	get_inverse_move_number(int move)
-{
-	if (move >= 6 and move < 12)
-	{
-		return move;
-	}
-	if (move < 6)
-	{
-		return move + 12;
-	}
-	else
-	{
-		return move - 12;
-	}
-}
+// int 	get_inverse_move_number(int move)
+// {
+// 	if (move >= 6 and move < 12)
+// 	{
+// 		return move;
+// 	}
+// 	if (move < 6)
+// 	{
+// 		return move + 12;
+// 	}
+// 	else
+// 	{
+// 		return move - 12;
+// 	}
+// }
+
+#include <iostream>
 
 
 void 			apply_move(cubiecube_t* cube, int move)
@@ -159,7 +158,7 @@ void 			apply_move(cubiecube_t* cube, int move)
 
 
 
-int				corner_orientation_coordinate(cubiecube_t* cube)
+int				corner_orientation_coordinate_1(cubiecube_t* cube)
 {
 	// The loop iterates over all corners except the last (which is not used to compute the coordinate)
 	// cf  http://kociemba.org/cube.htm Coordinate level
@@ -173,7 +172,7 @@ int				corner_orientation_coordinate(cubiecube_t* cube)
 	return out;
 };
 
-void			set_corner_orientation_coord(int coord, cubiecube_t* cube)	
+void			set_corner_orientation_coord_1(int coord, cubiecube_t* cube)	
 {
 	int parity = 0;
 	int corner;
@@ -191,7 +190,7 @@ void			set_corner_orientation_coord(int coord, cubiecube_t* cube)
 	cube->corner_orientations[DRB] = 3 - parity;
 };
 
-int				edge_orientation_coordinate(cubiecube_t* cube)
+int				edge_orientation_coordinate_1(cubiecube_t* cube)
 {
 	// The loop iterates over all edges except the last (which is not used to compute the coordinate)
 	// cf  http://kociemba.org/cube.htm Coordinate level
@@ -205,7 +204,7 @@ int				edge_orientation_coordinate(cubiecube_t* cube)
 	return out;
 }
 
-void			set_edge_orientation_coord(int coord, cubiecube_t* cube)
+void			set_edge_orientation_coord_1(int coord, cubiecube_t* cube)
 {
 	int parity = 0;
 
@@ -220,28 +219,28 @@ void			set_edge_orientation_coord(int coord, cubiecube_t* cube)
 	cube->edge_orientations[LAST_EDGE] = 2 - parity; //TODO: CHECK IF THIS IS GOOD PARTITY
 };
 
-int				corner_permutation_coordinate_old(cubiecube_t* cube)
-{
-	int out(0);
-	int left;
+// int				corner_permutation_coordinate_old(cubiecube_t* cube)
+// {
+// 	int out(0);
+// 	int left;
 
-	for (int i = FIRST_CORNER; i <= LAST_CORNER; i++)
-	{
-		left = 0;
-		for (int j = 0; j < i; j++)
-		{
-			if (cube->corner_positions[j] > cube->corner_positions[i])
-			{
-				left = left + 1;
-			}
-		}
-		out = out + (left * factorial(i));
-	}
+// 	for (int i = FIRST_CORNER; i <= LAST_CORNER; i++)
+// 	{
+// 		left = 0;
+// 		for (int j = 0; j < i; j++)
+// 		{
+// 			if (cube->corner_positions[j] > cube->corner_positions[i])
+// 			{
+// 				left = left + 1;
+// 			}
+// 		}
+// 		out = out + (left * factorial(i));
+// 	}
 
-	return out;
-};
+// 	return out;
+// };
 
-int				corner_permutation_coordinate(cubiecube_t* cube)
+int				corner_permutation_coordinate_2(cubiecube_t* cube)
 {
 	int out(0);
 	int cp[8];
@@ -261,7 +260,7 @@ int				corner_permutation_coordinate(cubiecube_t* cube)
 	return out;
 };
 
-void			set_corner_permutation_coordinate(int index, cubiecube_t* cube)
+void			set_corner_permutation_coordinate_2(int index, cubiecube_t* cube)
 {
 	int out(0);
 	int perm[8];
@@ -324,27 +323,27 @@ void			set_edge_permutation_coordinate_2(int index, cubiecube_t* cube)
 	}
 }
 
-int				edge_permutation_coordinate(cubiecube_t* cube)
-{
-	int x = 0;
-	int s;
-	for (int i = LAST_EDGE; i >= FIRST_EDGE; i--)
-	{
-		s = 0;
-		for (int j = i - 1; j >= UR; j--)
-		{
-			s = 0;
-			if (cube->edge_positions[j] > cube->edge_positions[i])
-			{
-				s = s + 1;
-			}
-		}
-		x = (x + s) * i;
-	}
-	return (x);
-}
+// int				edge_permutation_coordinate(cubiecube_t* cube)
+// {
+// 	int x = 0;
+// 	int s;
+// 	for (int i = LAST_EDGE; i >= FIRST_EDGE; i--)
+// 	{
+// 		s = 0;
+// 		for (int j = i - 1; j >= UR; j--)
+// 		{
+// 			s = 0;
+// 			if (cube->edge_positions[j] > cube->edge_positions[i])
+// 			{
+// 				s = s + 1;
+// 			}
+// 		}
+// 		x = (x + s) * i;
+// 	}
+// 	return (x);
+// }
 
-int				UD_slice_coordinate(cubiecube_t* cube)
+int				UD_slice_coordinate_1(cubiecube_t* cube)
 {
 	int		occupied[12] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 	int		x(0);
@@ -361,38 +360,38 @@ int				UD_slice_coordinate(cubiecube_t* cube)
 	return (out);
 };
 
-void			set_UD_slice_coord(int coord, cubiecube_t* cube)
-{
-	int x = 4;
-	// int a = coord;
+// void			set_UD_slice_coord(int coord, cubiecube_t* cube)
+// {
+// 	int x = 4;
+// 	// int a = coord;
 
-	bool filled[EDGE_NUM] = {false, false, false, false, false, false, false, false, false, false, false, false};
-	int cnk;
-	edge_t slice_edge[4] = {FR, FL, BL, BR};
-	edge_t other_edge[8] = {UR, UF, UL, UB, DR, DF, DL, DB};
+// 	bool filled[EDGE_NUM] = {false, false, false, false, false, false, false, false, false, false, false, false};
+// 	int cnk;
+// 	edge_t slice_edge[4] = {FR, FL, BL, BR};
+// 	edge_t other_edge[8] = {UR, UF, UL, UB, DR, DF, DL, DB};
 
-	for (int j = FIRST_EDGE; j <= LAST_EDGE; j++)
-	{
-		cnk = binomial_coefficient(11 - j, x);
-		if (coord - cnk >= 0)
-		{
-			cube->edge_positions[j] = slice_edge[4 - x];
-			filled[j] = true;
-			coord = coord - cnk;
-			x = x - 1;
-		}
-	}
+// 	for (int j = FIRST_EDGE; j <= LAST_EDGE; j++)
+// 	{
+// 		cnk = binomial_coefficient(11 - j, x);
+// 		if (coord - cnk >= 0)
+// 		{
+// 			cube->edge_positions[j] = slice_edge[4 - x];
+// 			filled[j] = true;
+// 			coord = coord - cnk;
+// 			x = x - 1;
+// 		}
+// 	}
 
-	x = 0;
-	for (int j = FIRST_EDGE; j <= LAST_EDGE; j++)
-	{
-		if (not filled[j])
-		{
-			cube->edge_positions[j] = other_edge[x];
-			x = x + 1;
-		}
-	}
-}
+// 	x = 0;
+// 	for (int j = FIRST_EDGE; j <= LAST_EDGE; j++)
+// 	{
+// 		if (not filled[j])
+// 		{
+// 			cube->edge_positions[j] = other_edge[x];
+// 			x = x + 1;
+// 		}
+// 	}
+// }
 
 int				UD_slice_sorted_coordinate_2(cubiecube_t* cube)
 {
@@ -480,129 +479,134 @@ void			set_UD_slice_sorted_coordinate_2(int index, cubiecube_t* cube)
 
 
 
-cubiecube_t		create_cubie_with_corner_orientation_coord(int coord)	
+// cubiecube_t		create_cubie_with_corner_orientation_coord(int coord)	
+// {
+// 	int parity = 0;
+// 	cubiecube_t cube;
+// 	int corner;
+
+// 	corner = DBL;
+// 	memcpy(&cube, &homecube, sizeof(cube));
+// 	while (corner >= URF)
+// 	{
+// 		parity = parity + (coord % 3);
+// 		cube.corner_orientations[corner] = coord % 3;
+// 		coord = coord / 3;
+// 		corner = (corner - 1);
+// 	}
+
+// 	parity = parity % 3;
+// 	cube.corner_orientations[DRB] = 3 - parity;
+// 	return (cube);
+// };
+
+// cubiecube_t		create_cubie_with_edge_orientation_coord(int coord)
+// {
+// 	int parity = 0;
+// 	cubiecube_t cube;
+
+// 	memcpy(&cube, &homecube, sizeof(cube));
+// 	for (int e = LAST_EDGE - 1; e >= FIRST_EDGE; e--)
+// 	{
+// 		parity = parity + (coord % 2);
+// 		cube.edge_orientations[e] = coord % 2;
+// 		coord = coord / 2;
+// 	}
+
+// 	parity = parity % 2;
+// 	cube.corner_orientations[LAST_EDGE] = 2 - parity;
+// 	return (cube);
+// };
+
+// cubiecube_t		create_cubie_with_UD_slice_coord(int coord)
+// {
+// 	cubiecube_t cube;
+// 	memcpy(&cube, &homecube, sizeof(cube));
+
+
+// 	int x = 4;
+// 	// int a = coord;
+
+// 	bool filled[EDGE_NUM];
+// 	int leftest_ud_edge = 12;
+// 	int cnk;
+// 	edge_t slice_edge[4] = {FR, FL, BL, BR};
+// 	edge_t other_edge[8] = {UR, UF, UL, UB, DR, DF, DL, DB};
+
+// 	for (int j = FIRST_EDGE; j <= LAST_EDGE; j++)
+// 	{
+// 		filled[j] = false;
+// 		cube.edge_positions[j] = UR;
+
+// 	}
+// 	for (int a = 0; a < 4; a++)
+// 	{
+// 		for (int j = FIRST_EDGE; j < leftest_ud_edge; j++)
+// 		{
+// 			cnk = sum_cnk(j + 1, leftest_ud_edge - 1, x - 1);
+// 			// std::cout << j << " coord: " << coord << " sum_C("<< j + 1 << ", " << leftest_ud_edge - 1 << ", "<< x - 1 << ") " << cnk << std::endl;
+
+// 			if (coord - cnk >= 0)
+// 			{
+// 				cube.edge_positions[j] = slice_edge[4 - x];
+// 				coord = coord - cnk;
+// 				x = x - 1;
+// 				filled[j] = true;
+// 				leftest_ud_edge = j;
+// 				// std::cout << "Placed " << j << std::endl;
+
+// 			}
+// 			// UD_slice_coordinate(&cube);
+// 		}
+// 	}
+
+// 	x = 0;
+// 	for (int j = FIRST_EDGE; j <= LAST_EDGE; j++)
+// 	{
+// 		if (!filled[j])
+// 		{
+// 			cube.edge_positions[j] = other_edge[x];
+// 			x = x + 1;
+// 		}
+// 	}
+// 	return (cube);
+// }
+
+
+
+// void 			print_corners(cubiecube_t* cube)
+// {
+// 	for (int i = 0; i < CORNER_NUM; i++)
+// 	{
+// 		std::cout << corner_position_to_string(cube->corner_positions[i]) << "\t";
+// 	}
+// 	std::cout << std::endl;
+// 	for (int i = 0; i < CORNER_NUM; i++)
+// 	{
+// 		std::cout << (int)cube->corner_orientations[i] << "  \t";
+// 	}
+// 	std::cout << std::endl;
+// }
+
+// void 			print_edges(cubiecube_t* cube)
+// {
+// 	for (int i = 0; i < EDGE_NUM; i++)
+// 	{
+// 		std::cout << edge_position_to_string(cube->edge_positions[i]) << "\t";
+// 	}
+// 	std::cout << std::endl;
+// 	for (int i = 0; i < EDGE_NUM; i++)
+// 	{
+// 		std::cout << (int)cube->edge_orientations[i] << "  \t";
+// 	}
+// 	std::cout << std::endl;
+// }
+
+
+void	set_solved_cubiecube(cubiecube_t *cube)
 {
-	int parity = 0;
-	cubiecube_t cube;
-	int corner;
-
-	corner = DBL;
-	memcpy(&cube, &homecube, sizeof(cube));
-	while (corner >= URF)
-	{
-		parity = parity + (coord % 3);
-		cube.corner_orientations[corner] = coord % 3;
-		coord = coord / 3;
-		corner = (corner - 1);
-	}
-
-	parity = parity % 3;
-	cube.corner_orientations[DRB] = 3 - parity;
-	return (cube);
-};
-
-cubiecube_t		create_cubie_with_edge_orientation_coord(int coord)
-{
-	int parity = 0;
-	cubiecube_t cube;
-
-	memcpy(&cube, &homecube, sizeof(cube));
-	for (int e = LAST_EDGE - 1; e >= FIRST_EDGE; e--)
-	{
-		parity = parity + (coord % 2);
-		cube.edge_orientations[e] = coord % 2;
-		coord = coord / 2;
-	}
-
-	parity = parity % 2;
-	cube.corner_orientations[LAST_EDGE] = 2 - parity;
-	return (cube);
-};
-
-cubiecube_t		create_cubie_with_UD_slice_coord(int coord)
-{
-	cubiecube_t cube;
-	memcpy(&cube, &homecube, sizeof(cube));
-
-
-	int x = 4;
-	// int a = coord;
-
-	bool filled[EDGE_NUM];
-	int leftest_ud_edge = 12;
-	int cnk;
-	edge_t slice_edge[4] = {FR, FL, BL, BR};
-	edge_t other_edge[8] = {UR, UF, UL, UB, DR, DF, DL, DB};
-
-	for (int j = FIRST_EDGE; j <= LAST_EDGE; j++)
-	{
-		filled[j] = false;
-		cube.edge_positions[j] = UR;
-
-	}
-	for (int a = 0; a < 4; a++)
-	{
-		for (int j = FIRST_EDGE; j < leftest_ud_edge; j++)
-		{
-			cnk = sum_cnk(j + 1, leftest_ud_edge - 1, x - 1);
-			// std::cout << j << " coord: " << coord << " sum_C("<< j + 1 << ", " << leftest_ud_edge - 1 << ", "<< x - 1 << ") " << cnk << std::endl;
-
-			if (coord - cnk >= 0)
-			{
-				cube.edge_positions[j] = slice_edge[4 - x];
-				coord = coord - cnk;
-				x = x - 1;
-				filled[j] = true;
-				leftest_ud_edge = j;
-				// std::cout << "Placed " << j << std::endl;
-
-			}
-			// UD_slice_coordinate(&cube);
-		}
-	}
-
-	x = 0;
-	for (int j = FIRST_EDGE; j <= LAST_EDGE; j++)
-	{
-		if (!filled[j])
-		{
-			cube.edge_positions[j] = other_edge[x];
-			x = x + 1;
-		}
-	}
-	return (cube);
+	memcpy(cube, &homecube, sizeof(*cube));
 }
-
-
-
-void 			print_corners(cubiecube_t* cube)
-{
-	for (int i = 0; i < CORNER_NUM; i++)
-	{
-		std::cout << corner_position_to_string(cube->corner_positions[i]) << "\t";
-	}
-	std::cout << std::endl;
-	for (int i = 0; i < CORNER_NUM; i++)
-	{
-		std::cout << (int)cube->corner_orientations[i] << "  \t";
-	}
-	std::cout << std::endl;
-}
-
-void 			print_edges(cubiecube_t* cube)
-{
-	for (int i = 0; i < EDGE_NUM; i++)
-	{
-		std::cout << edge_position_to_string(cube->edge_positions[i]) << "\t";
-	}
-	std::cout << std::endl;
-	for (int i = 0; i < EDGE_NUM; i++)
-	{
-		std::cout << (int)cube->edge_orientations[i] << "  \t";
-	}
-	std::cout << std::endl;
-}
-
 
 
 

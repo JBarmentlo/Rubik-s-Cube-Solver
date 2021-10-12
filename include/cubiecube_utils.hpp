@@ -2,9 +2,10 @@
 #define CUBUIECUBE_H
 
 #include <iostream>
-#include <cstdint>
-
 #include "define.hpp"
+#include <cstring>
+
+#include "utils.hpp"
 
 
 typedef struct 	cubiecube_s {
@@ -20,31 +21,32 @@ static cubiecube_t homecube = {{URF, UFL, ULB, UBR, DFR, DLF, DBL, DRB}, {0, 0, 
 // This struct can be used to define a cube state or a permutation.
 // (because a cube state can be defined as a permutation applied to the solved cube state)
 cubiecube_t* 	get_moves();
-int 			get_inverse_move_number(int move);
+// int 			get_inverse_move_number(int move);
 void 			apply_move(cubiecube_t* cube, int move);
+void			set_solved_cubiecube(cubiecube_t* cube); // TODO : to be created
 void 			apply_move(cubiecube_t* cube, cubiecube_t* move);
 void			apply_move_edges(cubiecube_t* cube, cubiecube_t* move);
 void			apply_move_corners(cubiecube_t* cube, cubiecube_t* move);
 
-cubiecube_t		create_cubie_with_corner_orientation_coord(int coord);
-cubiecube_t		create_cubie_with_edge_orientation_coord(int coord);
-cubiecube_t		create_cubie_with_UD_slice_coord(int coord);
+// cubiecube_t		create_cubie_with_corner_orientation_coord(int coord);
+// cubiecube_t		create_cubie_with_edge_orientation_coord(int coord);
+// cubiecube_t		create_cubie_with_UD_slice_coord(int coord);
 
-// void			display(cubiecube_t* cube);
+// // void			display(cubiecube_t* cube);
 
-int				corner_orientation_coordinate(cubiecube_t* cube);
-void			set_corner_orientation_coord(int coord, cubiecube_t* cube);
+int				corner_orientation_coordinate_1(cubiecube_t* cube);
+void			set_corner_orientation_coord_1(int coord, cubiecube_t* cube);
 
-int				edge_orientation_coordinate(cubiecube_t* cube);
-void			set_edge_orientation_coord(int coord, cubiecube_t* cube);
+int				edge_orientation_coordinate_1(cubiecube_t* cube);
+void			set_edge_orientation_coord_1(int coord, cubiecube_t* cube);
 
-int				corner_permutation_coordinate(cubiecube_t* cube);
-void			set_corner_permutation_coordinate(int index, cubiecube_t* cube);
+// int				edge_permutation_coordinate(cubiecube_t* cube);
 
-int				edge_permutation_coordinate(cubiecube_t* cube);
+int				UD_slice_coordinate_1(cubiecube_t* cube);
+void			set_UD_slice_coord_1(int coord, cubiecube_t* cube);
 
-int				UD_slice_coordinate(cubiecube_t* cube);
-void			set_UD_slice_coord(int coord, cubiecube_t* cube);
+int				corner_permutation_coordinate_2(cubiecube_t* cube);
+void			set_corner_permutation_coordinate_2(int index, cubiecube_t* cube);
 
 int				edge_permutation_coordinate_2(cubiecube_t* cube);
 void			set_edge_permutation_coordinate_2(int index, cubiecube_t* cube);
@@ -54,13 +56,13 @@ void			set_UD_slice_sorted_coordinate_2(int index,cubiecube_t* cube);
 
 
 
-std::string 	corner_position_to_string(corner_t c);
+// std::string 	corner_position_to_string(corner_t c);
 
 
 
-void 			print_corners(cubiecube_t* cude);
-void 			print_edges(cubiecube_t* cude);
-int				factorial(int n);
+// void 			print_corners(cubiecube_t* cude);
+// void 			print_edges(cubiecube_t* cude);
+// int				factorial(int n);
 
 
 // int verify(cubiecube_t* cubiecube)

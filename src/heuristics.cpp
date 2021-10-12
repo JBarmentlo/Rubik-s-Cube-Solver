@@ -33,8 +33,8 @@
 // 			return (-1); // TODO: check ce retour
 // 		}
 // 		in.read((char*)h_table_c_ori, N_CORNER_ORI * sizeof(int));
-// 		two.read((char*)h_table_e_ori, N_EDGE_ORI * sizeof(int));
-// 		thre.read((char*)h_table_UD, N_UD * sizeof(int));
+// 		two.read((char*)h_table_e_ori, N_EDGE_ORI_1* sizeof(int));
+// 		thre.read((char*)h_table_UD, N_UD_1* sizeof(int));
 
 // 		// std::cout << "should only print once" << std::endl;
 // 	}

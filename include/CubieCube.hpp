@@ -5,8 +5,7 @@
 
 #include "cubiecube_utils.hpp"
 #include "utils.hpp"
-
-
+#include <iostream>
 
 
 class CubieCube
@@ -37,7 +36,7 @@ public:
 
 	void 			set_corner_ori_coord(int coord);
 	void 			set_edge_ori_coord(int coord);
-	void 			set_UD_coord(int coord);
+	// void 			set_UD_coord(int coord);
 
 	void			set_edge_perm_coord_2(int coord);
 	void 			set_corner_perm_coord(int coord);
