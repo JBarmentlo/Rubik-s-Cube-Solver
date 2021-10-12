@@ -72,21 +72,11 @@ int**		read_corner_orientation_move_table_1()
 	return (read_raw_move_table(N_CORNER_ORI_1, CORNER_ORI_NAME));
 }
 
-// int**		read_corner_permutation_move_table()
-// {
-// 	return (read_raw_move_table(N_CORNER_PERMUTATION, CORNER_PERMUTATION_NAME));
-// }
-
-
 int**		read_edge_orientation_move_table_1()
 {
 	return (read_raw_move_table(N_EDGE_ORI_1, EDGE_ORI_NAME));
 }
 
-// int**		read_edge_permutation_move_table()
-// {
-// 	return (read_raw_move_table(N_EDGE_PERMUTATION_2, EDGE_PERMUTATION_2_NAME));
-// }
 
 
 int**		read_UD_move_table_1()
@@ -95,10 +85,22 @@ int**		read_UD_move_table_1()
 }
 
 
-// int**		read_UD2_move_table()
-// {
-// 	return (read_raw_move_table(N_UD_2, UD_2_NAME));
-// }
+int**		read_corner_permutation_move_table_2()
+{
+	return (read_raw_move_table(N_CORNER_PERMUTATION_2, CORNER_PERMUTATION_NAME));
+}
+
+
+int**		read_edge_permutation_move_table_2()
+{
+	return (read_raw_move_table(N_EDGE_PERMUTATION_2, EDGE_PERMUTATION_2_NAME));
+}
+
+
+int**		read_UD2_move_table_2()
+{
+	return (read_raw_move_table(N_UD_2, UD_2_NAME));
+}
 
 
 // int** 		read_raw_move_table_phase_2(int coord_max, std::string filename)

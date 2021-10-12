@@ -11,7 +11,7 @@
 #define N_CORNER_ORI_1 			(unsigned int)2187
 #define N_EDGE_ORI_1			(unsigned int)2048
 
-#define N_CORNER_PERMUTATION 	(unsigned int)40320
+#define N_CORNER_PERMUTATION_2 	(unsigned int)40320
 #define N_UD_2	 				24
 #define N_UD_2_THEO				11880
 #define N_EDGE_PERMUTATION_2 	40320

@@ -14,7 +14,10 @@ class CoordCube
     public :
 
     // // Needed to check forbidden moves:
-    // int origin_move;
+    int origin_move;
+    int g;
+    int h;
+    int f;
 
     // // phase1:
     int corner_orientation_coord_1;
@@ -30,6 +33,9 @@ class CoordCube
 	CoordCube(unsigned int flat_coord_1); // create cube from flat coordinate
     CoordCube(int corner_orientation_coord_1, int edge_orientation_coord_1, int UD_slice_coord_1);
 	CoordCube(cubiecube_t cubie);
+	CoordCube(int move, int corner_2, int edge_2, int UD_2);
+    CoordCube();
+
 
     // CoordCube(int origin_move = NO_MOVE_APPLIED, int corner_orientation_coord = 0, int edge_orientation_coord = 0, int UD_slice_coord = 0, int corner_permutation_coord = 0, int edge_permutation_coord = 0, int UD_slice2_coord = 0);
     ~CoordCube(void);
@@ -57,6 +63,8 @@ class CoordCube
 
 // CoordCube*       create_baby_from_move_phase_one(CoordCube *mommy_cube, int move);
 // CoordCube*       create_baby_from_move_phase_two(CoordCube *mommy_cube, int move);
+CoordCube			create_baby_from_move_phase2(CoordCube mommy_cube, int move);
+
 
 // bool  is_allowed_move_phase2(int move);
 

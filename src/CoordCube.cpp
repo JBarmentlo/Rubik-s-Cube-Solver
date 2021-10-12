@@ -8,11 +8,24 @@ CoordCube::CoordCube(int corner_orientation_coord_1, int edge_orientation_coord_
     this->UD_slice_coord_1 = UD_slice_coord_1;
 }
 
+CoordCube::CoordCube(int move, int corner_2, int edge_2, int UD_2)
+{
+    this->origin_move = move;
+    this->corner_permutation_coord_2 = corner_2;
+    this->edge_permutation_coord_2 = edge_2;
+    this->UD_slice_coord_2 = UD_2;
+}
+
 CoordCube::CoordCube(cubiecube_t cubie)
 {
     this->corner_permutation_coord_2 = corner_permutation_coordinate_2(&cubie);
     this->edge_permutation_coord_2 = edge_permutation_coordinate_2(&cubie);
     this->UD_slice_coord_2 = UD_slice_sorted_coordinate_2(&cubie);
+}
+
+CoordCube::CoordCube(void)
+{
+
 }
 
 // CoordCube::CoordCube(int origin_move, int corner_orientation_coord_1, int edge_orientation_coord_1, int UD_slice_coord_1, int corner_permutation_coord, int edge_permutation_coord, int UD_slice2_coord)
@@ -190,25 +203,21 @@ CoordCube    CoordCube::create_baby_from_move_phase1(int move)
     return (bb_cube);
 }
 
-// CoordCube*    create_baby_from_move_phase_two(CoordCube* mommy_cube, int move)
-// {
-//     if (is_allowed_move_phase2(move) == false)
-//         return (nullptr);
 
-//     static int** corner_permutation_table = read_corner_permutation_move_table();
-//     static int** edge_permutation_table = read_edge_permutation_move_table();
-//     static int** UD_slice2_table = read_UD2_move_table();
 
-//     CoordCube* bb_cube = new CoordCube(
-//         move,
-//         0,
-//         0,
-//         0,
-//         corner_permutation_table[mommy_cube->corner_permutation_coord][move],
-//         edge_permutation_table[mommy_cube->edge_permutation_coord][move],
-//         UD_slice2_table[mommy_cube->UD_slice2_coord][move]
-//     );
+CoordCube    create_baby_from_move_phase2(CoordCube mommy_cube, int move)
+{
+    static int** corner_permutation_table_2 = read_corner_permutation_move_table_2();
+    static int** edge_permutation_table_2 = read_edge_permutation_move_table_2();
+    static int** UD_slice2_table_2 = read_UD2_move_table_2();
 
-//     return (bb_cube);
-// }
+    CoordCube bb_cube(
+        move,
+        corner_permutation_table_2[mommy_cube.corner_permutation_coord_2][move],
+        corner_permutation_table_2[mommy_cube.edge_permutation_coord_2][move],
+        corner_permutation_table_2[mommy_cube.UD_slice_coord_2][move]
+    );
+
+    return (bb_cube);
+}
 

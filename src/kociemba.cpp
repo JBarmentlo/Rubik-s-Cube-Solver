@@ -34,6 +34,16 @@ void    get_path_to_phase_two(std::vector<int> shuffle, std::queue<int> path_to_
         path_to_phase_one.pop();
     }
     CoordCube start(cubie);
+    std::queue<int> path;
+
+    std::cout << "ENTERRING PHASE 2 SOLVER" << std::endl;
+
+    phase_two_solver(start, 0, &path);
+    while (not path.empty())
+    {
+        std::cout << "[" << path.front() << "]";
+        path.pop();
+    }
 
 }
 

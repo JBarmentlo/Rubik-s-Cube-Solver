@@ -6,8 +6,8 @@
 #include "cubiecube_utils.hpp"
 #include <algorithm>
 
-typedef int (*heuristic_function)(CoordCube*);
-typedef int (*g_function)(int g);
+// typedef int (*heuristic_function)(CoordCube*);
+// typedef int (*g_function)(int g);
 
 
 
