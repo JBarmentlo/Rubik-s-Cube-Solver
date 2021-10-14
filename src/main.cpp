@@ -86,6 +86,15 @@ bool  is_allowed_move(int move)
     return true;
 }
 
+void	init_values(CoordCube *cube)
+{
+	cube->g = 0;
+	cube->h = 0;
+	cube->f = 0;
+	cube->origin_move = NO_MOVE_APPLIED;
+}
+
+
 void		test()
 {
 	cubiecube_t cubie;
@@ -93,21 +102,35 @@ void		test()
 	set_solved_cubiecube(&cubie);
 
 	std::cout << "APPLYING MOVES:" << std::endl;
-	for (int i = 0; i < 18; i++)
-	{
-		if (is_allowed_move(i))
-		{
-			std::cout << "[" << i << "]";
-	        apply_move(&cubie, i);
-		}
-	}
+	int i = 3;
+	std::cout << "[" << i << "]";
+	apply_move(&cubie, i);
 	std::cout  << std::endl;
 	CoordCube start(cubie);
 
 	std::cout << "CUBIE:" << std::endl;
 	print_cubiecube(cubie);
+	
 	std::cout << "\nCOORDCUBE:" << std::endl;
 	start.print_coords_phase2();
+
+	CoordCube baby;
+	baby = create_baby_from_move_phase2(start, 15);
+	std::cout << "COORDCUBE BB:" << std::endl;
+	baby.print_coords_phase2();
+
+
+	// init_values(&start);
+	// std::vector<CoordCube> bebes = get_babies(start, g_plusone, phase_2_heuristic);
+	// for(auto bebe : bebes)
+	// {
+	// 	if (bebe.origin_move == 15)
+	// 	{
+	// 		std::cout << "baby from move 15:" << std::endl;
+	// 		bebe.print_coords_phase2();
+	// 	}
+	// }
+
 
 }
 
@@ -115,9 +138,7 @@ void		test()
 int main()
 {
 
-	// std::vector<int> shuffle{4, 8, 9, 5, 17, 6, 7, 8, 2, 17, 3};
-	std::vector<int> shuffle{1, 5, 6};
-	test();
+	std::vector<int> shuffle{4, 8, 9, 5, 17, 6, 7, 8, 2, 17, 3};
 
-	// kociemba(shuffle);
+	kociemba(shuffle);
 }

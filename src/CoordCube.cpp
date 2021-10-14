@@ -214,8 +214,8 @@ CoordCube    create_baby_from_move_phase2(CoordCube mommy_cube, int move)
     CoordCube bb_cube(
         move,
         corner_permutation_table_2[mommy_cube.corner_permutation_coord_2][move],
-        corner_permutation_table_2[mommy_cube.edge_permutation_coord_2][move],
-        corner_permutation_table_2[mommy_cube.UD_slice_coord_2][move]
+        edge_permutation_table_2[mommy_cube.edge_permutation_coord_2][move],
+        UD_slice2_table_2[mommy_cube.UD_slice_coord_2][move]
     );
 
     return (bb_cube);
