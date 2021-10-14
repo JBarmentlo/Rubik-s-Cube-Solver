@@ -221,3 +221,13 @@ CoordCube    create_baby_from_move_phase2(CoordCube mommy_cube, int move)
     return (bb_cube);
 }
 
+void    CoordCube::print_phase_2()
+{
+    std::cout << "origin move =                " << this->origin_move << std::endl;
+    std::cout << "corner_permutation_coord_2 = " << this->corner_permutation_coord_2 << std::endl;
+    std::cout << "edge_permutation_coord_2 =   " << this->edge_permutation_coord_2 << std::endl;
+    std::cout << "UD_slice_coord_2 =           " << this->UD_slice_coord_2 << std::endl;
+    std::cout << "g =  " << this->g << "   h = " << this->h << std::endl;
+}
+
+

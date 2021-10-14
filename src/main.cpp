@@ -68,12 +68,56 @@
 
 // }
 
+void	print_cubiecube(cubiecube_t cubie)
+{
+	std::cout << "corner ori 1 = [" << corner_orientation_coordinate_1(&cubie) << "]"  << std::endl;
+	std::cout << "edge ori 1 =   [" << edge_orientation_coordinate_1(&cubie) << "]"  << std::endl;
+	std::cout << "UD slice 1 =   [" << UD_slice_coordinate_1(&cubie) << "]"  << std::endl;
+	std::cout << "corner perm 1 =[" << corner_permutation_coordinate_2(&cubie) << "]"  << std::endl;
+	std::cout << "edge perm 1 =  [" << edge_permutation_coordinate_2(&cubie) << "]"  << std::endl;
+	std::cout << "UD slice 2 =   [" << UD_slice_sorted_coordinate_2(&cubie) << "]"  << std::endl;
+}
+
+bool  is_allowed_move(int move)
+{
+  if (is_allowed_quarter_turns[move % N_BASIC_MOVES] == false &&
+      move != ((move % N_BASIC_MOVES) + N_BASIC_MOVES))
+      return false;
+    return true;
+}
+
+void		test()
+{
+	cubiecube_t cubie;
+
+	set_solved_cubiecube(&cubie);
+
+	std::cout << "APPLYING MOVES:" << std::endl;
+	for (int i = 0; i < 18; i++)
+	{
+		if (is_allowed_move(i))
+		{
+			std::cout << "[" << i << "]";
+	        apply_move(&cubie, i);
+		}
+	}
+	std::cout  << std::endl;
+	CoordCube start(cubie);
+
+	std::cout << "CUBIE:" << std::endl;
+	print_cubiecube(cubie);
+	std::cout << "\nCOORDCUBE:" << std::endl;
+	start.print_coords_phase2();
+
+}
+
 
 int main()
 {
-	// parse_args;
-	// result = kociemba (args.shuffle);
-	std::vector<int> shuffle{4, 8, 9, 5, 17, 6, 7, 8, 2, 17, 3};
-	kociemba(shuffle);
-	// display_retulst;
+
+	// std::vector<int> shuffle{4, 8, 9, 5, 17, 6, 7, 8, 2, 17, 3};
+	std::vector<int> shuffle{1, 5, 6};
+	test();
+
+	// kociemba(shuffle);
 }

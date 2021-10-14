@@ -42,6 +42,8 @@ class CoordCube
 
     void    print_coords_phase1();
     void    print_coords_phase2();
+    void    print_phase_2();
+
     // void    print();
     // void    print_all_coords(void);
     // // bool	operator==(const CoordCube &cube);

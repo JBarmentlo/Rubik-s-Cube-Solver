@@ -99,7 +99,7 @@ std::vector<CoordCube>    get_babies(CoordCube mommy_cube, g_function g_func, he
 
     for (int move = 0; move < N_MOVES; move++)
     {
-        if ((move % N_BASIC_MOVES) != (mommy_cube.origin_move % N_BASIC_MOVES) && is_allowed_move_phase2(move))
+        if (((mommy_cube.origin_move == NO_MOVE_APPLIED) or (move % N_BASIC_MOVES) != (mommy_cube.origin_move % N_BASIC_MOVES)) && is_allowed_move_phase2(move))
         {
             baby_coordcube = create_baby_from_move_phase2(mommy_cube, move);
 			baby_coordcube.g = g_func(mommy_cube.g);
@@ -134,6 +134,7 @@ int		search_2(CoordCube cube, int threshold, g_function g_func, heuristic_functi
 	{
 		for(auto bebe : bebes)
 		{
+			bebe.print_phase_2();
 			tmp = search_2(bebe, threshold, g_func, heuristic, is_goal, path);
 			if(tmp == SUCCESS)
 				return (SUCCESS);
@@ -155,10 +156,11 @@ void	phase_two_solver(CoordCube cube, int threshold, std::queue<int> *path)
 	cube.h = 0;
 	cube.f = 0;
 	cube.origin_move = NO_MOVE_APPLIED;
-	while (i < MAX_ITER)
+	while (i < 2)
 	{
 		std::cout << "threshold = " << threshold << std::endl;
 		tmp = search_2(cube, threshold, g_plusone, phase_2_heuristic, phase_two_goal, path);
+		
 		if(tmp == SUCCESS)
 		{
 			std::cout << "\nSUCCESSO: \n";
