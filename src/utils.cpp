@@ -218,3 +218,13 @@ void			rotate_right(corner_t* arr, int l, int r)
 // 	std::cout << "Done writing " << std::endl;
 // }
 
+
+bool  is_allowed_move_phase2(int move)
+{
+  if (is_allowed_quarter_turns[move % N_BASIC_MOVES] == false &&
+      move != ((move % N_BASIC_MOVES) + N_BASIC_MOVES))
+      return false;
+    return true;
+}
+
+

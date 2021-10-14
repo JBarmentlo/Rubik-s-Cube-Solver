@@ -4,6 +4,10 @@
 // #include "utils.hpp"
 #include "cubiecube_utils.hpp"
 #include "move_tables.hpp"
+
+#include <vector>
+#include <algorithm>
+
 // #include <iostream>
 
 
@@ -55,9 +59,14 @@ class CoordCube
     // void    apply_move_phase_two(int move);
 
     // void    set_coords_phase_two(int corner_permutation_coord, int edge_permutation_coord, int UD_slice2_coord);
+	typedef int (*heuristic_function)(CoordCube);
+	typedef int (*g_function)(int g);
 
-	CoordCube			create_baby_from_move_phase1(int move); // ancienne fonction "from stack"
-	unsigned int     	flat_coord(void);
+	CoordCube				create_baby_from_move_phase1(int move); // ancienne fonction "from stack"
+	CoordCube				create_baby_from_move_phase2(int move);
+	std::vector<CoordCube>	get_babies_phase2(g_function g_func, heuristic_function heuristic);
+	void					solver_init(void);
+	unsigned int     		flat_coord(void);
 
 };
 
@@ -65,10 +74,11 @@ class CoordCube
 
 // CoordCube*       create_baby_from_move_phase_one(CoordCube *mommy_cube, int move);
 // CoordCube*       create_baby_from_move_phase_two(CoordCube *mommy_cube, int move);
-CoordCube			create_baby_from_move_phase2(CoordCube mommy_cube, int move);
 
 
 // bool  is_allowed_move_phase2(int move);
+bool	f_sorting(CoordCube one, CoordCube two);
+
 
 
 

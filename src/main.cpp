@@ -68,71 +68,6 @@
 
 // }
 
-void	print_cubiecube(cubiecube_t cubie)
-{
-	std::cout << "corner ori 1 = [" << corner_orientation_coordinate_1(&cubie) << "]"  << std::endl;
-	std::cout << "edge ori 1 =   [" << edge_orientation_coordinate_1(&cubie) << "]"  << std::endl;
-	std::cout << "UD slice 1 =   [" << UD_slice_coordinate_1(&cubie) << "]"  << std::endl;
-	std::cout << "corner perm 2 =[" << corner_permutation_coordinate_2(&cubie) << "]"  << std::endl;
-	std::cout << "edge perm 2 =  [" << edge_permutation_coordinate_2(&cubie) << "]"  << std::endl;
-	std::cout << "UD slice 2 =   [" << UD_slice_sorted_coordinate_2(&cubie) << "]"  << std::endl;
-}
-
-bool  is_allowed_move(int move)
-{
-  if (is_allowed_quarter_turns[move % N_BASIC_MOVES] == false &&
-      move != ((move % N_BASIC_MOVES) + N_BASIC_MOVES))
-      return false;
-    return true;
-}
-
-void	init_values(CoordCube *cube)
-{
-	cube->g = 0;
-	cube->h = 0;
-	cube->f = 0;
-	cube->origin_move = NO_MOVE_APPLIED;
-}
-
-
-void		test()
-{
-	cubiecube_t cubie;
-
-	set_solved_cubiecube(&cubie);
-
-	std::cout << "APPLYING MOVES:" << std::endl;
-	int i = 3;
-	std::cout << "[" << i << "]";
-	apply_move(&cubie, i);
-	std::cout  << std::endl;
-	CoordCube start(cubie);
-
-	std::cout << "CUBIE:" << std::endl;
-	print_cubiecube(cubie);
-	
-	std::cout << "\nCOORDCUBE:" << std::endl;
-	start.print_coords_phase2();
-
-	CoordCube baby;
-	baby = create_baby_from_move_phase2(start, 15);
-	std::cout << "COORDCUBE BB:" << std::endl;
-	baby.print_coords_phase2();
-
-
-	// init_values(&start);
-	// std::vector<CoordCube> bebes = get_babies(start, g_plusone, phase_2_heuristic);
-	// for(auto bebe : bebes)
-	// {
-	// 	if (bebe.origin_move == 15)
-	// 	{
-	// 		std::cout << "baby from move 15:" << std::endl;
-	// 		bebe.print_coords_phase2();
-	// 	}
-	// }
-
-
-}
 
 
 int main()
@@ -140,10 +75,10 @@ int main()
 	std::vector<int> shuffle;
 	int move;
 
-	for (size_t i = 0; i < 18; i++)
+	for (size_t i = 0; i < 50; i++)
 	{
-		// move = (std::rand()) % 18;
-		move = i;
+		move = (std::rand()) % 18;
+		// move = i % 18;
 		shuffle.push_back(move);
 		std::cout << "[" << shuffle[i] << "]";
 	}

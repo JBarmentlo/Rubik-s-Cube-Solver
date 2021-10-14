@@ -25,11 +25,12 @@
 
 static bool is_allowed_quarter_turns[6] = {true, false, false, true, false}; // Some faces are only allowed 180 turns in phase two
 
-//  IDA DEFINES
+//  SOLVER DEFINES
 #define MAX_ITER				10000
 #define SUCCESS					-1
 #define NO_MOVE_APPLIED 		-1
 #define MAX_INT					2147483647
+#define THRESHOLD_INIT			0
 
 
 #define N_THREADS 	9

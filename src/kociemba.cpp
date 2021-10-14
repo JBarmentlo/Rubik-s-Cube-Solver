@@ -36,9 +36,9 @@ std::queue<int>    get_path_to_phase_two(std::vector<int> shuffle, std::queue<in
     CoordCube start(cubie);
     std::queue<int> path_to_phase_two;
 
-    std::cout << "ENTERRING PHASE 2 SOLVER" << std::endl;
+    std::cout << "\nENTERRING PHASE TWO SOLVER" << std::endl;
 
-    phase_two_solver(start, 0, &path_to_phase_two);
+    phase_two_solver(start, &path_to_phase_two);
 	return (path_to_phase_two);
 }
 
@@ -47,7 +47,7 @@ void                kociemba(std::vector<int> shuffle)
 {
     int total_path_length = 0;
 
-    std::cout << "\nINPUT SHUFFLE:" << std::endl;
+    std::cout << "\n\nINPUT SHUFFLE:" << std::endl;
     for(auto move : shuffle)
     {
         std::cout << "[" << move << "]";

@@ -199,13 +199,13 @@ CoordCube    CoordCube::create_baby_from_move_phase1(int move)
         corner_orientation_table_1[this->corner_orientation_coord_1][move],
         edge_orientation_table_1[this->edge_orientation_coord_1][move],
         UD_slice_table_1[this->UD_slice_coord_1][move]
-    ); // TODO: check if not calling other constructor
+    );
     return (bb_cube);
 }
 
 
 
-CoordCube    create_baby_from_move_phase2(CoordCube mommy_cube, int move)
+CoordCube    CoordCube::create_baby_from_move_phase2(int move)
 {
     static int** corner_permutation_table_2 = read_corner_permutation_move_table_2();
     static int** edge_permutation_table_2 = read_edge_permutation_move_table_2();
@@ -213,13 +213,38 @@ CoordCube    create_baby_from_move_phase2(CoordCube mommy_cube, int move)
 
     CoordCube bb_cube(
         move,
-        corner_permutation_table_2[mommy_cube.corner_permutation_coord_2][move],
-        edge_permutation_table_2[mommy_cube.edge_permutation_coord_2][move],
-        UD_slice2_table_2[mommy_cube.UD_slice_coord_2][move]
+        corner_permutation_table_2[this->corner_permutation_coord_2][move],
+        edge_permutation_table_2[this->edge_permutation_coord_2][move],
+        UD_slice2_table_2[this->UD_slice_coord_2][move]
     );
 
     return (bb_cube);
 }
+
+
+std::vector<CoordCube>    CoordCube::get_babies_phase2(g_function g_func, heuristic_function heuristic)
+{
+    std::vector<CoordCube>	bebes(N_MOVES);
+    CoordCube      			baby_coordcube;
+    int             		nb_of_moves = 0;
+
+    for (int move = 0; move < N_MOVES; move++)
+    {
+        if (((this->origin_move == NO_MOVE_APPLIED) or (move % N_BASIC_MOVES) != (this->origin_move % N_BASIC_MOVES)) && is_allowed_move_phase2(move))
+        {
+            baby_coordcube = this->create_baby_from_move_phase2(move);
+			baby_coordcube.g = g_func(this->g);
+			baby_coordcube.h = heuristic(baby_coordcube);
+			baby_coordcube.f = baby_coordcube.g + baby_coordcube.h;
+			bebes[nb_of_moves] = baby_coordcube;
+			nb_of_moves += 1;
+        }
+    }
+    bebes.resize(nb_of_moves);
+    std::sort (bebes.begin(), bebes.end(), f_sorting);
+    return (bebes);
+}
+
 
 void    CoordCube::print_phase_2()
 {
@@ -231,3 +256,15 @@ void    CoordCube::print_phase_2()
 }
 
 
+void	CoordCube::solver_init(void)
+{
+	this->g = 0;
+	this->h = 0;
+	this->f = 0;
+	this->origin_move = NO_MOVE_APPLIED;
+}
+
+bool	f_sorting(CoordCube one, CoordCube two)
+{
+	return (one.f < two.f);
+}

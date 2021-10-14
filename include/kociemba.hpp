@@ -3,7 +3,7 @@
 
 #include "CoordCube.hpp"
 #include "cubiecube_utils.hpp"
-#include "ida.hpp"
+#include "solver.hpp"
 
 #include <vector>
 #include <queue>

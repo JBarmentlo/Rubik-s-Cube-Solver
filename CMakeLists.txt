@@ -15,7 +15,7 @@ set(SOURCES
     src/CoordCube.cpp
     src/move_tables.cpp
     src/heuristics.cpp
-    src/ida.cpp
+    src/solver.cpp
     src/cubiecube_utils.cpp
     src/utils.cpp
 )
