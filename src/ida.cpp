@@ -134,7 +134,6 @@ int		search_2(CoordCube cube, int threshold, g_function g_func, heuristic_functi
 	{
 		for(auto bebe : bebes)
 		{
-			bebe.print_phase_2();
 			tmp = search_2(bebe, threshold, g_func, heuristic, is_goal, path);
 			if(tmp == SUCCESS)
 				return (SUCCESS);
@@ -156,7 +155,7 @@ void	phase_two_solver(CoordCube cube, int threshold, std::queue<int> *path)
 	cube.h = 0;
 	cube.f = 0;
 	cube.origin_move = NO_MOVE_APPLIED;
-	while (i < 2)
+	while (i < MAX_ITER)
 	{
 		std::cout << "threshold = " << threshold << std::endl;
 		tmp = search_2(cube, threshold, g_plusone, phase_2_heuristic, phase_two_goal, path);

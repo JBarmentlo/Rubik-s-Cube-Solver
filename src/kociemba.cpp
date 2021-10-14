@@ -20,7 +20,7 @@ std::queue<int>     get_path_to_phase_one(std::vector<int> shuffle)
     return(path);
 }
 
-void    get_path_to_phase_two(std::vector<int> shuffle, std::queue<int> path_to_phase_one)
+std::queue<int>    get_path_to_phase_two(std::vector<int> shuffle, std::queue<int> path_to_phase_one)
 {
     cubiecube_t cubie;
     set_solved_cubiecube(&cubie);
@@ -34,17 +34,12 @@ void    get_path_to_phase_two(std::vector<int> shuffle, std::queue<int> path_to_
         path_to_phase_one.pop();
     }
     CoordCube start(cubie);
-    std::queue<int> path;
+    std::queue<int> path_to_phase_two;
 
     std::cout << "ENTERRING PHASE 2 SOLVER" << std::endl;
 
-    phase_two_solver(start, 0, &path);
-    // while (not path.empty())
-    // {
-    //     std::cout << "[" << path.front() << "]";
-    //     path.pop();
-    // }
-
+    phase_two_solver(start, 0, &path_to_phase_two);
+	return (path_to_phase_two);
 }
 
 
@@ -62,7 +57,10 @@ void                kociemba(std::vector<int> shuffle)
 
     total_path_length += path_to_phase_one.size();
 
-    get_path_to_phase_two(shuffle, path_to_phase_one);
+    std::queue<int> path_to_phase_two = get_path_to_phase_two(shuffle, path_to_phase_one);
+
+    total_path_length += path_to_phase_two.size();
+
 
     std::cout << "\nMOVES TO APPLY TO GET TO PHASE ONE" << std::endl;
     while(not path_to_phase_one.empty())
@@ -70,6 +68,14 @@ void                kociemba(std::vector<int> shuffle)
         std::cout << "[" << path_to_phase_one.front() << "]";
         path_to_phase_one.pop();
     }
+
+    std::cout << "\n\nMOVES TO APPLY TO GET TO PHASE TWO" << std::endl;
+	while(not path_to_phase_two.empty())
+    {
+        std::cout << "[" << path_to_phase_two.front() << "]";
+        path_to_phase_two.pop();
+    }
+
     std::cout << "\n\nTOTAL PATH LENGTH: " << total_path_length << "\n\n";
 
 

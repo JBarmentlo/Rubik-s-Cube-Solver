@@ -137,8 +137,17 @@ void		test()
 
 int main()
 {
+	std::vector<int> shuffle;
+	int move;
 
-	std::vector<int> shuffle{4, 8, 9, 5, 17, 6, 7, 8, 2, 17, 3};
+	for (size_t i = 0; i < 18; i++)
+	{
+		// move = (std::rand()) % 18;
+		move = i;
+		shuffle.push_back(move);
+		std::cout << "[" << shuffle[i] << "]";
+	}
+	// std::vector<int> shuffle{4, 8, 9, 5, 17, 6, 7, 8, 2, 17, 3};
 
 	kociemba(shuffle);
 }
