@@ -73,8 +73,8 @@ void	print_cubiecube(cubiecube_t cubie)
 	std::cout << "corner ori 1 = [" << corner_orientation_coordinate_1(&cubie) << "]"  << std::endl;
 	std::cout << "edge ori 1 =   [" << edge_orientation_coordinate_1(&cubie) << "]"  << std::endl;
 	std::cout << "UD slice 1 =   [" << UD_slice_coordinate_1(&cubie) << "]"  << std::endl;
-	std::cout << "corner perm 1 =[" << corner_permutation_coordinate_2(&cubie) << "]"  << std::endl;
-	std::cout << "edge perm 1 =  [" << edge_permutation_coordinate_2(&cubie) << "]"  << std::endl;
+	std::cout << "corner perm 2 =[" << corner_permutation_coordinate_2(&cubie) << "]"  << std::endl;
+	std::cout << "edge perm 2 =  [" << edge_permutation_coordinate_2(&cubie) << "]"  << std::endl;
 	std::cout << "UD slice 2 =   [" << UD_slice_sorted_coordinate_2(&cubie) << "]"  << std::endl;
 }
 
