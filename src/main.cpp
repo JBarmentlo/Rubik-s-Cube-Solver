@@ -10,9 +10,11 @@ int main()
 		// move = (std::rand()) % 18;
 		move = i % 18;
 		shuffle.push_back(move);
-		std::cout << "[" << shuffle[i] << "]";
+		// std::cout << "[" << shuffle[i] << "]";
+		std::cout << "[" << moves_strings[shuffle[i]] << "]";
 	}
 	// std::vector<int> shuffle{4, 8, 9, 5, 17, 6, 7, 8, 2, 17, 3};
+
 
 	kociemba(shuffle);
 }

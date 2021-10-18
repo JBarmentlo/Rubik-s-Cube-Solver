@@ -1,6 +1,14 @@
 #ifndef DEFINE_HPP
 #define DEFINE_HPP
 
+#include <map>
+#include <iostream>
+#include <string>
+
+static std::map<int, std::string> moves_strings = {
+	{0, "F",}, {1, "R"}, {2, "U"}, {3, "B"}, {4, "L"}, {5, "D"},
+	{6, "F2"}, {7, "R2"}, {8, "U2"}, {9, "B2"}, {10, "L2"}, {11, "D2"},
+	{12, "F'"}, {13, "R'"}, {14, "U'"}, {15, "B'"}, {16, "L'"}, {17, "D'"}};
 
 #define FIRST_CORNER 			URF
 #define LAST_CORNER 			DRB

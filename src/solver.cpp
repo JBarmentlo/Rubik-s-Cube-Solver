@@ -107,6 +107,7 @@ void	phase_two_solver_thread(CoordCube cube, std::queue<int> *path)
 		min = MAX_INT;
 		std::vector<CoordCube> bebes = cube.get_babies_phase2(g_plusone, phase_2_heuristic);
 		std::cout << "Size of first babies: " << bebes.size() << std::endl;
+		// TODO : path is still missing the first value
 		if(bebes.empty() == false)
 		{
 			std::thread t1 = std::thread(&phase_two_multithread_function, 0, 3, std::ref(min), std::ref(tmp), bebes, threshold, g_plusone, phase_2_heuristic, phase_two_goal, path);
