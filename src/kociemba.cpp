@@ -49,7 +49,7 @@ void                kociemba(std::vector<int> shuffle)
 {
     int total_path_length = 0;
 
-    std::cout << "\n\nINPUT SHUFFLE:" << std::endl;
+	std::cout << "\n\nINPUT SHUFFLE:" << std::endl;
     for(auto move : shuffle)
     {
         std::cout << "[" << move << "]";
@@ -67,14 +67,16 @@ void                kociemba(std::vector<int> shuffle)
     std::cout << "\nMOVES TO APPLY TO GET TO PHASE ONE" << std::endl;
     while(not path_to_phase_one.empty())
     {
-        std::cout << "[" << path_to_phase_one.front() << "]";
+        // std::cout << "[" << path_to_phase_one.front() << "]";
+        std::cout << "[" << moves_strings[path_to_phase_one.front()] << "]";
         path_to_phase_one.pop();
     }
 
     std::cout << "\n\nMOVES TO APPLY TO GET TO PHASE TWO" << std::endl;
 	while(not path_to_phase_two.empty())
     {
-        std::cout << "[" << path_to_phase_two.front() << "]";
+        // std::cout << "[" << path_to_phase_two.front() << "]";
+        std::cout << "[" << moves_strings[path_to_phase_two.front()] << "]";
         path_to_phase_two.pop();
     }
 

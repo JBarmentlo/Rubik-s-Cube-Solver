@@ -2,19 +2,20 @@
 
 int main()
 {
-	std::vector<int> shuffle;
+	// std::vector<int> shuffle;
 	int move;
 
-	for (size_t i = 0; i < 50; i++)
+	std::vector<int> shuffle{4, 6, 8, 9};
+
+	// for (size_t i = 0; i < 50; i++)
+	for(size_t i = 0; i < shuffle.size(); i++)
 	{
 		// move = (std::rand()) % 18;
-		move = i % 18;
-		shuffle.push_back(move);
+		// move = i % 18;
+		// shuffle.push_back(move);
 		// std::cout << "[" << shuffle[i] << "]";
 		std::cout << "[" << moves_strings[shuffle[i]] << "]";
 	}
-	// std::vector<int> shuffle{4, 8, 9, 5, 17, 6, 7, 8, 2, 17, 3};
-
 
 	kociemba(shuffle);
 }
