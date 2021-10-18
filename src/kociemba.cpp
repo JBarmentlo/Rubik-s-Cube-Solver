@@ -35,13 +35,13 @@ std::queue<int>    get_path_to_phase_two(std::vector<int> shuffle, std::queue<in
         path_to_phase_one.pop();
     }
     CoordCube start(cubie);
-    std::queue<int> path_to_phase_two;
+    std::queue<int> *path_to_phase_two = new std::queue<int>;
 
     std::cout << "\nENTERRING PHASE TWO SOLVER" << std::endl;
 
     // phase_two_solver(start, &path_to_phase_two);
-	phase_two_solver_thread(start, &path_to_phase_two);
-	return (path_to_phase_two);
+	phase_two_solver_thread(start, path_to_phase_two);
+	return (*path_to_phase_two);
 }
 
 

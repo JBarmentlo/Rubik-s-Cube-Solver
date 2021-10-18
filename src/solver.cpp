@@ -1,4 +1,7 @@
 #include "solver.hpp"
+#include <thread>
+#include <mutex>
+#include <iostream>
 
 typedef bool	(*is_goal_function)(CoordCube);
 
@@ -46,17 +49,37 @@ int		phase_2_search(CoordCube cube, int threshold, g_function g_func, heuristic_
 	return (min);
 }
 
-bool	phase_two_multithread_function(int start, int end, int *min, int *tmp, std::vector<CoordCube> bebes, int threshold, g_function g_func, heuristic_function heuristic, is_goal_function is_goal, std::queue<int> *path)
+std::mutex lock;
+void	phase_two_multithread_function(int start, int end, int &min, int &tmp, std::vector<CoordCube> bebes, int threshold, g_function g_func, heuristic_function heuristic, is_goal_function is_goal, std::queue<int> *path)
+{
+	std::lock_guard guard(lock);
+	if (tmp == SUCCESS)
+		return;
+	for (int i = start; i < end; i++)
+	{
+		tmp = phase_2_search(bebes[i], threshold, g_func, heuristic, is_goal, path);
+		if(tmp == SUCCESS)
+		{
+			std::cout << "SUCCESS *****" << std::endl;
+			return; // SUCCESS
+		}
+		if(tmp < min)
+			min = tmp;
+	}
+	return;
+}
+
+void	phase_two_multithread_function1(int start, int end, int *min, int *tmp, std::vector<CoordCube> bebes, int threshold, g_function g_func, heuristic_function heuristic, is_goal_function is_goal, std::queue<int> *path)
 {
 	for (int i = start; i < end; i++)
 	{
 		*tmp = phase_2_search(bebes[i], threshold, g_func, heuristic, is_goal, path);
 		if(*tmp == SUCCESS)
-			return (true); // SUCCESS
+			return; // SUCCESS
 		if(*tmp < *min)
 			*min = *tmp;
 	}
-	return (false);
+	return;
 }
 
 
@@ -86,12 +109,27 @@ void	phase_two_solver_thread(CoordCube cube, std::queue<int> *path)
 		std::cout << "Size of first babies: " << bebes.size() << std::endl;
 		if(bebes.empty() == false)
 		{
-			if (phase_two_multithread_function(0, 3, &min, &tmp, bebes, threshold, g_plusone, phase_2_heuristic, phase_two_goal, path) == true)
+			std::thread t1 = std::thread(&phase_two_multithread_function, 0, 3, std::ref(min), std::ref(tmp), bebes, threshold, g_plusone, phase_2_heuristic, phase_two_goal, path);
+			if (tmp == SUCCESS)
 				return;
-			if (phase_two_multithread_function(3, 7, &min, &tmp, bebes, threshold, g_plusone, phase_2_heuristic, phase_two_goal, path) == true)
+			std::thread t2 = std::thread(&phase_two_multithread_function, 3, 7, std::ref(min), std::ref(tmp), bebes, threshold, g_plusone, phase_2_heuristic, phase_two_goal, path);
+			if (tmp == SUCCESS)
 				return;
-			if (phase_two_multithread_function(7, 10, &min, &tmp, bebes, threshold, g_plusone, phase_2_heuristic, phase_two_goal, path) == true)
+			std::thread t3 = std::thread(&phase_two_multithread_function, 3, 7, std::ref(min), std::ref(tmp), bebes, threshold, g_plusone, phase_2_heuristic, phase_two_goal, path);
+			if (tmp == SUCCESS)
 				return;
+			t1.join();
+			t2.join();
+			t3.join();
+			// phase_two_multithread_function1(0, 3, &min, &tmp, bebes, threshold, g_plusone, phase_2_heuristic, phase_two_goal, path);
+			// if (tmp == SUCCESS)
+			// 	return;
+			// phase_two_multithread_function1(3, 7, &min, &tmp, bebes, threshold, g_plusone, phase_2_heuristic, phase_two_goal, path);
+			// if (tmp == SUCCESS)
+			// 	return;
+			// phase_two_multithread_function1(7, 10, &min, &tmp, bebes, threshold, g_plusone, phase_2_heuristic, phase_two_goal, path);
+			// if (tmp == SUCCESS)
+			// 	return;
 		}
 		path->pop();
 		if(tmp == SUCCESS)
