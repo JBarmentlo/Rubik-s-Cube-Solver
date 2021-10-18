@@ -46,6 +46,65 @@ int		phase_2_search(CoordCube cube, int threshold, g_function g_func, heuristic_
 	return (min);
 }
 
+bool	phase_two_multithread_function(int start, int end, int *min, int *tmp, std::vector<CoordCube> bebes, int threshold, g_function g_func, heuristic_function heuristic, is_goal_function is_goal, std::queue<int> *path)
+{
+	for (int i = start; i < end; i++)
+	{
+		*tmp = phase_2_search(bebes[i], threshold, g_func, heuristic, is_goal, path);
+		if(*tmp == SUCCESS)
+			return (true); // SUCCESS
+		if(*tmp < *min)
+			*min = *tmp;
+	}
+	return (false);
+}
+
+
+void	phase_two_solver_thread(CoordCube cube, std::queue<int> *path)
+{
+	int		i = 0;
+	int		threshold = THRESHOLD_INIT;
+
+	cube.solver_init();
+	while (i < MAX_ITER)
+	{
+		// std::cout << "threshold = " << threshold << std::endl;
+		int		min;
+		int		tmp = 0;
+
+		int f = cube.f;
+		path->push(cube.origin_move);
+		if(phase_two_goal(cube) == true)
+			return; // SUCCESS
+		if(f > threshold)
+		{
+			path->pop();
+			return; // return f
+		}
+		min = MAX_INT;
+		std::vector<CoordCube> bebes = cube.get_babies_phase2(g_plusone, phase_2_heuristic);
+		std::cout << "Size of first babies: " << bebes.size() << std::endl;
+		if(bebes.empty() == false)
+		{
+			if (phase_two_multithread_function(0, 3, &min, &tmp, bebes, threshold, g_plusone, phase_2_heuristic, phase_two_goal, path) == true)
+				return;
+			if (phase_two_multithread_function(3, 7, &min, &tmp, bebes, threshold, g_plusone, phase_2_heuristic, phase_two_goal, path) == true)
+				return;
+			if (phase_two_multithread_function(7, 10, &min, &tmp, bebes, threshold, g_plusone, phase_2_heuristic, phase_two_goal, path) == true)
+				return;
+		}
+		path->pop();
+		if(tmp == SUCCESS)
+		{
+			std::cout << "\nSUCCESS FOR PHASE TWO\n";
+			return;
+		}
+		threshold = tmp;
+		i += 1;
+	}
+	std::cout << "\nFAILUUUURE\n";
+}
+
 
 void	phase_two_solver(CoordCube cube, std::queue<int> *path)
 {

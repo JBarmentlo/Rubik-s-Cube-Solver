@@ -8,6 +8,7 @@ CoordCube::CoordCube(int corner_orientation_coord_1, int edge_orientation_coord_
     this->UD_slice_coord_1 = UD_slice_coord_1;
 }
 
+
 CoordCube::CoordCube(int move, int corner_2, int edge_2, int UD_2)
 {
     this->origin_move = move;
@@ -16,12 +17,14 @@ CoordCube::CoordCube(int move, int corner_2, int edge_2, int UD_2)
     this->UD_slice_coord_2 = UD_2;
 }
 
+
 CoordCube::CoordCube(cubiecube_t cubie)
 {
     this->corner_permutation_coord_2 = corner_permutation_coordinate_2(&cubie);
     this->edge_permutation_coord_2 = edge_permutation_coordinate_2(&cubie);
     this->UD_slice_coord_2 = UD_slice_sorted_coordinate_2(&cubie);
 }
+
 
 CoordCube::CoordCube(void)
 {
@@ -134,6 +137,7 @@ void					CoordCube::solver_init(void)
 	this->origin_move = NO_MOVE_APPLIED;
 }
 
+
 bool					f_sorting(CoordCube one, CoordCube two)
 {
 	return (one.f < two.f);
@@ -154,7 +158,6 @@ void					CoordCube::print_coords_phase2()
     std::cout << "edge_permutation_coord_2:    [" << this->edge_permutation_coord_2 << "]\n";
     std::cout << "UD_slice_coord_2:            [" << this->UD_slice_coord_2 << "]\n";
 }
-
 
 
 void					CoordCube::print_all_coords()
