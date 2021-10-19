@@ -228,3 +228,17 @@ bool  is_allowed_move_phase2(int move)
 }
 
 
+std::vector<int>	create_random_shuffle(int moves)
+{
+	std::vector<int> shuffle(moves);
+	int move;
+
+	for (int i = 0; i < moves; i++)
+	{
+		move = std::rand() % N_MOVES;
+		shuffle[i] = move;
+	}
+	return (shuffle);
+}
+
+

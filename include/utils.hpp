@@ -4,6 +4,8 @@
 #include "cubiecube_utils.hpp"
 #include "define.hpp"
 #include <string>
+#include <vector>
+
 
 int 			factorial(int n);
 int 			binomial_coefficient(int n, int k);
@@ -34,7 +36,8 @@ void			rotate_right(corner_t* arr, int l, int r);
 
 
 // void    print_array(int* arr, int size);
-bool		is_allowed_move_phase2(int move);
+bool				is_allowed_move_phase2(int move);
+std::vector<int>	create_random_shuffle(int moves);
 
 
 
