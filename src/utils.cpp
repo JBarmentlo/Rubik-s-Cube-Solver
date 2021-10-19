@@ -2,6 +2,7 @@
 #include <cstring>
 
 #include <fstream>
+#include <ctime>
 #include "utils.hpp"
 
 int				factorial(int n)
@@ -232,6 +233,7 @@ std::vector<int>	create_random_shuffle(int moves)
 {
 	std::vector<int> shuffle(moves);
 	int move;
+	std::srand((unsigned) time(0));
 
 	for (int i = 0; i < moves; i++)
 	{
@@ -239,6 +241,19 @@ std::vector<int>	create_random_shuffle(int moves)
 		shuffle[i] = move;
 	}
 	return (shuffle);
+}
+
+std::vector<char*>		ft_strsplit(char *string, const char delimiter)
+{
+	std::vector<char*> v;
+	char* chars_array = strtok(string, " ");
+
+	while(chars_array)
+	{
+		v.push_back(chars_array);
+		chars_array = strtok(NULL, " ");
+	}
+	return(v);
 }
 
 

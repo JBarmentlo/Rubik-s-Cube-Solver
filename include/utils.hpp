@@ -38,6 +38,8 @@ void			rotate_right(corner_t* arr, int l, int r);
 // void    print_array(int* arr, int size);
 bool				is_allowed_move_phase2(int move);
 std::vector<int>	create_random_shuffle(int moves);
+std::vector<char*>		ft_strsplit(char *string, const char delimiter);
+
 
 
 
