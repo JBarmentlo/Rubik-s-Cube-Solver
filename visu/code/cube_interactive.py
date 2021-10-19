@@ -294,8 +294,8 @@ class InteractiveCube(plt.Axes):
 		self._btn_reset.on_clicked(self._reset_view)
 
 		self._ax_solve = self.figure.add_axes([0.55, 0.05, 0.2, 0.075])
-		self._btn_solve = widgets.Button(self._ax_solve, 'Solve Cube')
-		self._btn_solve.on_clicked(self._solve_cube)
+		self._btn_solve = widgets.Button(self._ax_solve, 'Reset Cube')
+		self._btn_solve.on_clicked(self._reset_cube)
 
 	def _project(self, pts):
 		return project_points(pts, self._current_rot, self._view, [0, 1, 0])
@@ -355,11 +355,24 @@ class InteractiveCube(plt.Axes):
 		self._current_rot = self._start_rot
 		self._draw_cube()
 
-	def _solve_cube(self, *args):
+	def _reset_cube(self, *args):
 		move_list = self.cube._move_list[:]
 		for (face, n, layer) in move_list[::-1]:
 			self.rotate_face(face, -n, layer, steps=3)
 		self.cube._move_list = []
+	
+
+	def _do_moves(self, move):
+		if move.endswith("'"):
+			direction = -1
+		elif move.endswith("2"):
+			direction = 2
+		else:
+			direction = 1
+		move = move[0]
+		self.rotate_face(move, direction)
+		plt.pause(0.3)
+
 
 
 	def shuffles(self, event):
@@ -367,16 +380,12 @@ class InteractiveCube(plt.Axes):
 		if event.key == "1":
 			print("FIRST SHUFFLE")
 			for move in self.first_shuffle:
-				if move.endswith("'"):
-					direction = -1
-				elif move.endswith("2"):
-					direction = 2
-				else:
-					direction = 1
-				move = move[0]
-				print(f"Doing move: {move}, direction = {direction}")
-				self.rotate_face(move, direction)
-				plt.pause(0.5)
+				self._do_moves(move)
+		if event.key == "2":
+			print("RESOLUTION SHUFFLE")
+			for move in self.resolution_shuffle:
+				self._do_moves(move)
+
 
 		if event.key == 'shift':
 			self._shift = True

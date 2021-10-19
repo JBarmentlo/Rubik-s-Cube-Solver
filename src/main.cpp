@@ -1,21 +1,22 @@
-#include "kociemba.hpp"
+// #include "kociemba.hpp"
+#include "define.hpp"
 
-int main()
+bool	parse_arguments(int argc, char **argv)
 {
-	// std::vector<int> shuffle;
-	int move;
-
-	std::vector<int> shuffle{4, 6, 8, 9};
-
-	// for (size_t i = 0; i < 50; i++)
-	for(size_t i = 0; i < shuffle.size(); i++)
+	if (argc <= 1)
 	{
-		// move = (std::rand()) % 18;
-		// move = i % 18;
-		// shuffle.push_back(move);
-		// std::cout << "[" << shuffle[i] << "]";
-		std::cout << "[" << moves_strings[shuffle[i]] << "]";
+		std::cout << USAGE;
+		return (false);
 	}
+	return (true);
+}
 
-	kociemba(shuffle);
+int main(int argc, char **argv)
+{
+	if (parse_arguments(argc, argv) == false)
+		return (false);
+
+
+	// kociemba(shuffle);
+	return (true);
 }

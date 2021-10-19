@@ -6,9 +6,16 @@
 #include <string>
 
 static std::map<int, std::string> moves_strings = {
-	{0, "F",}, {1, "R"}, {2, "U"}, {3, "B"}, {4, "L"}, {5, "D"},
+	{0, "F"}, {1, "R"}, {2, "U"}, {3, "B"}, {4, "L"}, {5, "D"},
 	{6, "F2"}, {7, "R2"}, {8, "U2"}, {9, "B2"}, {10, "L2"}, {11, "D2"},
 	{12, "F'"}, {13, "R'"}, {14, "U'"}, {15, "B'"}, {16, "L'"}, {17, "D'"}};
+
+
+static std::map<std::string, int> moves_numbers = {
+	{"F", 0}, {"R", 1}, {"U", 2}, {"B", 3}, {"L", 4}, {"D", 5},
+	{"F2", 6}, {"R2", 7}, {"U2", 8}, {"B2", 9}, {"L2", 10}, {"D2", 11},
+	{"F'", 12}, {"R'", 13}, {"U'", 14}, {"B'", 15}, {"L'", 16}, {"D'", 17}};
+
 
 #define FIRST_CORNER 			URF
 #define LAST_CORNER 			DRB
@@ -101,5 +108,10 @@ inline edge_t operator-- (edge_t &d, int) {
 
 #define UD_2_NAME	 				"../tables/moves/ud_2_move"
 #define UD_2_THEO_NAME			    "../tables/moves/ud_2_big_move"
+
+
+
+#define USAGE						"Usage:\n./Roobik <shuffle_string>\nOr\n./Roobik <number_of_shuffles>\n\n1- <shuffle_string> : letters separated by a space that correspond to an accepted move\nExample: ./Roobik \"F U R2 D' L2\"\n\n2- <number_of_shuffles> : an integer that correspons to how many random shuffles you want to start your rubiks cube solver with\nExample: ./Roobik 3\n"							
+
 #endif
 
