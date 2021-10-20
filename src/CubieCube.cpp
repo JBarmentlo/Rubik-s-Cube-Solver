@@ -167,6 +167,8 @@ void	CubieCube::print_all_coords(void)
 	std::cout << "UD slice2 coords:         [" << this->UD2_coord() << "]" << std::endl;
 	std::cout << "Flat coord:               [" << this->corner_ori_coord() * N_EDGE_ORI_1* N_UD_1+ this->edge_ori_coord() * N_UD_1+ this->UD_coord() << "]" << std::endl;
 }
+
+
 void CubieCube::print()
 {
     std::cout << "corner_orientation coord:   " << this->corner_ori_coord() << "\n";

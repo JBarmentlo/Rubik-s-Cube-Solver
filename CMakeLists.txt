@@ -18,6 +18,7 @@ set(SOURCES
     src/solver.cpp
     src/cubiecube_utils.cpp
     src/utils.cpp
+	src/heuristics_tables.cpp
 )
 
 add_executable(Roobik ${SOURCES})

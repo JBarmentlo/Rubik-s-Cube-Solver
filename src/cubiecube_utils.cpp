@@ -1,44 +1,5 @@
 #include "cubiecube_utils.hpp"
 
-void			apply_move(cubiecube_t* cube, cubiecube_t* move)
-{
-	cubiecube_t			tmp;
-	memcpy(&tmp, cube, sizeof(tmp));
-	for (int i = 0; i < CORNER_NUM; i++)
-	{
-		cube->corner_positions[i] = tmp.corner_positions[move->corner_positions[i]];
-		cube->corner_orientations[i] = (tmp.corner_orientations[move->corner_positions[i]] + move->corner_orientations[i]) % 3;
-	}
-	for (int i = 0; i < EDGE_NUM; i++)
-	{
-		cube->edge_positions[i] = tmp.edge_positions[move->edge_positions[i]];
-		cube->edge_orientations[i] = (tmp.edge_orientations[move->edge_positions[i]] + move->edge_orientations[i]) % 2;
-	}
-}
-
-// void			apply_move_corners(cubiecube_t* cube, cubiecube_t* move)
-// {
-// 	cubiecube_t			tmp;
-// 	memcpy(&tmp, cube, sizeof(tmp));
-// 	for (int i = 0; i < CORNER_NUM; i++)
-// 	{
-// 		cube->corner_positions[i] = tmp.corner_positions[move->corner_positions[i]];
-// 		cube->corner_orientations[i] = (tmp.corner_orientations[move->corner_positions[i]] + move->corner_orientations[i]) % 3;
-// 	}
-// }
-
-// void			apply_move_edges(cubiecube_t* cube, cubiecube_t* move)
-// {
-// 	cubiecube_t			tmp;
-// 	memcpy(&tmp, cube, sizeof(tmp));
-// 	for (int i = 0; i < EDGE_NUM; i++)
-// 	{
-// 		cube->edge_positions[i] = tmp.edge_positions[move->edge_positions[i]];
-// 		cube->edge_orientations[i] = (tmp.edge_orientations[move->edge_positions[i]] + move->edge_orientations[i]) % 2;
-// 	}
-// }
-
-
 cubiecube_t*	get_moves()
 {
 	static  cubiecube_t	moves[18];
@@ -116,25 +77,13 @@ cubiecube_t*	get_moves()
 
 	first = false;
 	return moves;
-}
+};
 
-// int 	get_inverse_move_number(int move)
-// {
-// 	if (move >= 6 and move < 12)
-// 	{
-// 		return move;
-// 	}
-// 	if (move < 6)
-// 	{
-// 		return move + 12;
-// 	}
-// 	else
-// 	{
-// 		return move - 12;
-// 	}
-// }
 
-#include <iostream>
+void	set_solved_cubiecube(cubiecube_t *cube)
+{
+	memcpy(cube, &homecube, sizeof(*cube));
+};
 
 
 void 			apply_move(cubiecube_t* cube, int move)
@@ -154,8 +103,46 @@ void 			apply_move(cubiecube_t* cube, int move)
 		cube->edge_positions[i] = tmp.edge_positions[move_cube.edge_positions[i]];
 		cube->edge_orientations[i] = (tmp.edge_orientations[move_cube.edge_positions[i]] + move_cube.edge_orientations[i]) % 2;
 	}
-}
+};
 
+
+void			apply_move(cubiecube_t* cube, cubiecube_t* move)
+{
+	cubiecube_t			tmp;
+	memcpy(&tmp, cube, sizeof(tmp));
+	for (int i = 0; i < CORNER_NUM; i++)
+	{
+		cube->corner_positions[i] = tmp.corner_positions[move->corner_positions[i]];
+		cube->corner_orientations[i] = (tmp.corner_orientations[move->corner_positions[i]] + move->corner_orientations[i]) % 3;
+	}
+	for (int i = 0; i < EDGE_NUM; i++)
+	{
+		cube->edge_positions[i] = tmp.edge_positions[move->edge_positions[i]];
+		cube->edge_orientations[i] = (tmp.edge_orientations[move->edge_positions[i]] + move->edge_orientations[i]) % 2;
+	}
+};
+
+void			apply_move_corners(cubiecube_t* cube, cubiecube_t* move)
+{
+	cubiecube_t			tmp;
+	memcpy(&tmp, cube, sizeof(tmp));
+	for (int i = 0; i < CORNER_NUM; i++)
+	{
+		cube->corner_positions[i] = tmp.corner_positions[move->corner_positions[i]];
+		cube->corner_orientations[i] = (tmp.corner_orientations[move->corner_positions[i]] + move->corner_orientations[i]) % 3;
+	}
+};
+
+void			apply_move_edges(cubiecube_t* cube, cubiecube_t* move)
+{
+	cubiecube_t			tmp;
+	memcpy(&tmp, cube, sizeof(tmp));
+	for (int i = 0; i < EDGE_NUM; i++)
+	{
+		cube->edge_positions[i] = tmp.edge_positions[move->edge_positions[i]];
+		cube->edge_orientations[i] = (tmp.edge_orientations[move->edge_positions[i]] + move->edge_orientations[i]) % 2;
+	}
+};
 
 
 int				corner_orientation_coordinate_1(cubiecube_t* cube)
@@ -190,6 +177,7 @@ void			set_corner_orientation_coord_1(int coord, cubiecube_t* cube)
 	cube->corner_orientations[DRB] = 3 - parity;
 };
 
+
 int				edge_orientation_coordinate_1(cubiecube_t* cube)
 {
 	// The loop iterates over all edges except the last (which is not used to compute the coordinate)
@@ -202,7 +190,8 @@ int				edge_orientation_coordinate_1(cubiecube_t* cube)
 	}
 
 	return out;
-}
+};
+
 
 void			set_edge_orientation_coord_1(int coord, cubiecube_t* cube)
 {
@@ -219,129 +208,6 @@ void			set_edge_orientation_coord_1(int coord, cubiecube_t* cube)
 	cube->edge_orientations[LAST_EDGE] = 2 - parity; //TODO: CHECK IF THIS IS GOOD PARTITY
 };
 
-int				corner_permutation_coordinate_old(cubiecube_t* cube)
-{
-	int out(0);
-	int left;
-
-	for (int i = FIRST_CORNER; i <= LAST_CORNER; i++)
-	{
-		left = 0;
-		for (int j = 0; j < i; j++)
-		{
-			if (cube->corner_positions[j] > cube->corner_positions[i])
-			{
-				left = left + 1;
-			}
-		}
-		out = out + (left * factorial(i));
-	}
-
-	return out;
-};
-
-int				corner_permutation_coordinate_2(cubiecube_t* cube)
-{
-	int out(0);
-	int cp[8];
-	int k;
-
-	memcpy(cp, cube->corner_positions, sizeof(cp));
-	for (int i = LAST_CORNER; i > FIRST_CORNER; i--)
-	{
-		k = 0;
-		while(cp[i] != i)
-		{
-			rotate_left(cp, 0, i);
-			k = k + 1;
-		}
-		out = (i + 1) * out + k;
-	}
-	return out;
-};
-
-void			set_corner_permutation_coordinate_2(int index, cubiecube_t* cube)
-{
-	int out(0);
-	int perm[8];
-	int k;
-
-	memcpy(cube->corner_positions, homecube.corner_positions, sizeof(cube->corner_positions));
-	for (int i = FIRST_CORNER; i <= LAST_CORNER; i++)
-	{
-		k = index % (i + 1);
-		index = index / (i + 1);
-		while (k > 0)
-		{
-			rotate_right((int*)cube->corner_positions, 0, i);
-			k = k - 1;
-		}
-	}
-}
-
-int				edge_permutation_coordinate_2(cubiecube_t* cube)
-{
-	int perm[8];
-	int out(0);
-	int	k;
-	memcpy(perm, cube->edge_positions, sizeof(perm)); // We copy all the UD edges
-	// print_edges(cube);
-	// print_array(perm, 8);
-	// print_array((int*)cube->edge_positions, 12);
-
-	for (int i = DB; i > UR; i--)
-	{
-		k = 0;
-		while (perm[i] != i)
-		{
-			rotate_left(perm, 0, i);
-			k = k + 1;
-		}
-		out = out * (i + 1) + k;
-	}
-
-	return (out);
-}
-
-void			set_edge_permutation_coordinate_2(int index, cubiecube_t* cube)
-{
-	int k;
-
-	for (int i = FIRST_EDGE; i < 8; i++)
-	{
-		cube->edge_positions[i] = (edge_t)i;
-	}
-	for (int i = FIRST_EDGE; i < 8; i++)
-	{
-		k = index % (i + 1);
-		index = index / (i + 1);
-		while (k > 0)
-		{
-			rotate_right((int*)cube->edge_positions, 0, i);
-			k = k - 1;
-		}
-	}
-}
-
-// int				edge_permutation_coordinate(cubiecube_t* cube)
-// {
-// 	int x = 0;
-// 	int s;
-// 	for (int i = LAST_EDGE; i >= FIRST_EDGE; i--)
-// 	{
-// 		s = 0;
-// 		for (int j = i - 1; j >= UR; j--)
-// 		{
-// 			s = 0;
-// 			if (cube->edge_positions[j] > cube->edge_positions[i])
-// 			{
-// 				s = s + 1;
-// 			}
-// 		}
-// 		x = (x + s) * i;
-// 	}
-// 	return (x);
-// }
 
 int				UD_slice_coordinate_1(cubiecube_t* cube)
 {
@@ -359,6 +225,7 @@ int				UD_slice_coordinate_1(cubiecube_t* cube)
 	}
 	return (out);
 };
+
 
 void			set_UD_slice_coord_1(int coord, cubiecube_t* cube)
 {
@@ -391,7 +258,95 @@ void			set_UD_slice_coord_1(int coord, cubiecube_t* cube)
 			x = x + 1;
 		}
 	}
-}
+};
+
+
+int				corner_permutation_coordinate_2(cubiecube_t* cube)
+{
+	int out(0);
+	int cp[8];
+	int k;
+
+	memcpy(cp, cube->corner_positions, sizeof(cp));
+	for (int i = LAST_CORNER; i > FIRST_CORNER; i--)
+	{
+		k = 0;
+		while(cp[i] != i)
+		{
+			rotate_left(cp, 0, i);
+			k = k + 1;
+		}
+		out = (i + 1) * out + k;
+	}
+	return out;
+};
+
+
+void			set_corner_permutation_coordinate_2(int index, cubiecube_t* cube)
+{
+	int out(0);
+	int perm[8];
+	int k;
+
+	memcpy(cube->corner_positions, homecube.corner_positions, sizeof(cube->corner_positions));
+	for (int i = FIRST_CORNER; i <= LAST_CORNER; i++)
+	{
+		k = index % (i + 1);
+		index = index / (i + 1);
+		while (k > 0)
+		{
+			rotate_right((int*)cube->corner_positions, 0, i);
+			k = k - 1;
+		}
+	}
+};
+
+
+int				edge_permutation_coordinate_2(cubiecube_t* cube)
+{
+	int perm[8];
+	int out(0);
+	int	k;
+	memcpy(perm, cube->edge_positions, sizeof(perm)); // We copy all the UD edges
+	// print_edges(cube);
+	// print_array(perm, 8);
+	// print_array((int*)cube->edge_positions, 12);
+
+	for (int i = DB; i > UR; i--)
+	{
+		k = 0;
+		while (perm[i] != i)
+		{
+			rotate_left(perm, 0, i);
+			k = k + 1;
+		}
+		out = out * (i + 1) + k;
+	}
+
+	return (out);
+};
+
+
+void			set_edge_permutation_coordinate_2(int index, cubiecube_t* cube)
+{
+	int k;
+
+	for (int i = FIRST_EDGE; i < 8; i++)
+	{
+		cube->edge_positions[i] = (edge_t)i;
+	}
+	for (int i = FIRST_EDGE; i < 8; i++)
+	{
+		k = index % (i + 1);
+		index = index / (i + 1);
+		while (k > 0)
+		{
+			rotate_right((int*)cube->edge_positions, 0, i);
+			k = k - 1;
+		}
+	}
+};
+
 
 int				UD_slice_sorted_coordinate_2(cubiecube_t* cube)
 {
@@ -422,7 +377,8 @@ int				UD_slice_sorted_coordinate_2(cubiecube_t* cube)
 		b = b * (i + 1) + k;
 	}
 	return (24 * a + b);
-}
+};
+
 
 void			set_UD_slice_sorted_coordinate_2(int index, cubiecube_t* cube)
 {
@@ -474,7 +430,69 @@ void			set_UD_slice_sorted_coordinate_2(int index, cubiecube_t* cube)
 		}
 		j = j + 1;
 	}
-}
+};
+
+
+
+// int 	get_inverse_move_number(int move)
+// {
+// 	if (move >= 6 and move < 12)
+// 	{
+// 		return move;
+// 	}
+// 	if (move < 6)
+// 	{
+// 		return move + 12;
+// 	}
+// 	else
+// 	{
+// 		return move - 12;
+// 	}
+// }
+
+
+// int				corner_permutation_coordinate_old(cubiecube_t* cube)
+// {
+// 	int out(0);
+// 	int left;
+
+// 	for (int i = FIRST_CORNER; i <= LAST_CORNER; i++)
+// 	{
+// 		left = 0;
+// 		for (int j = 0; j < i; j++)
+// 		{
+// 			if (cube->corner_positions[j] > cube->corner_positions[i])
+// 			{
+// 				left = left + 1;
+// 			}
+// 		}
+// 		out = out + (left * factorial(i));
+// 	}
+
+// 	return out;
+// };
+
+
+// int				edge_permutation_coordinate(cubiecube_t* cube)
+// {
+// 	int x = 0;
+// 	int s;
+// 	for (int i = LAST_EDGE; i >= FIRST_EDGE; i--)
+// 	{
+// 		s = 0;
+// 		for (int j = i - 1; j >= UR; j--)
+// 		{
+// 			s = 0;
+// 			if (cube->edge_positions[j] > cube->edge_positions[i])
+// 			{
+// 				s = s + 1;
+// 			}
+// 		}
+// 		x = (x + s) * i;
+// 	}
+// 	return (x);
+// }
+
 
 
 
@@ -601,13 +619,6 @@ void			set_UD_slice_sorted_coordinate_2(int index, cubiecube_t* cube)
 // 	}
 // 	std::cout << std::endl;
 // }
-
-
-void	set_solved_cubiecube(cubiecube_t *cube)
-{
-	memcpy(cube, &homecube, sizeof(*cube));
-}
-
 
 
 // int				edge_permutation_coordinate_2(cubiecube_t* cube)

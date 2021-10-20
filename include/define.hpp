@@ -90,9 +90,9 @@ inline edge_t operator-- (edge_t &d, int) {
 #define EDGE_ORI_HEURISTIC_NAME 	"../tables/heuristics/edge_orientation_heuristics"
 #define UD_SLICE1_HEURISTIC_NAME 	"../tables/heuristics/UD_slice1_heuristics"
 
-#define CORNER_PERM_HEURISTIC_NAME 	"../tables/heuristics/corner_permutation_heuristics"
-#define EDGE_PERM_HEURISTIC_NAME 	"../tables/heuristics/edge_permutation_heuristics"
-#define UD_SLICE2_HEURISTIC_NAME 	"../tables/heuristics/UD_slice2_heuristics"
+#define CORNER_PERM_2_HEURISTIC_NAME 	"../tables/heuristics/corner_permutation_heuristics"
+#define EDGE_PERM_2_HEURISTIC_NAME 	"../tables/heuristics/edge_permutation_heuristics"
+#define UD_SLICE_2_HEURISTIC_NAME 	"../tables/heuristics/UD_slice2_heuristics"
 
 
 #define EDGE_PERMUTATION_2_NAME 	"../tables/moves/edge_perm_2_move"

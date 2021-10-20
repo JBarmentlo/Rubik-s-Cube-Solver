@@ -1,14 +1,11 @@
 #ifndef COORDCUBE_HPP
 #define COORDCUBE_HPP
 
-// #include "utils.hpp"
 #include "cubiecube_utils.hpp"
 #include "move_tables.hpp"
 
 #include <vector>
 #include <algorithm>
-
-// #include <iostream>
 
 
 class CoordCube
@@ -59,7 +56,7 @@ class CoordCube
 
 };
 
-bool	f_sorting(CoordCube one, CoordCube two);
+bool						f_sorting(CoordCube one, CoordCube two);
 
 
 #endif

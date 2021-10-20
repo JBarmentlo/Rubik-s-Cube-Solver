@@ -256,7 +256,7 @@ void check_cubie_coord_the_same_phase_1()
 	CubieCube cubie;
 	int move;
 	// make_all_move_tables();
-	// make_all_heuristics_tables();
+	// make_heuristics_tables_phase2();
 	
 	for (int i = 0; i < 1000000; i++)
 	{

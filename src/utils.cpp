@@ -1,8 +1,3 @@
-#include <string>
-#include <cstring>
-
-#include <fstream>
-#include <ctime>
 #include "utils.hpp"
 
 int				factorial(int n)
@@ -10,6 +5,7 @@ int				factorial(int n)
 	static int factorials[13] = {1, 1, 2, 6, 24, 120, 720, 5040, 40320, 362880, 3628800, 39916800, 479001600}; // FOR SPEED
   	return factorials[n];
 };
+
 
 int				binomial_coefficient(int n, int k)
 {
@@ -36,17 +32,6 @@ int				binomial_coefficient(int n, int k)
 	return (factorial(n) / (factorial(k) * factorial(n - k)));
 };
 
-// int				power_three(int n)
-// {
-// 	static int powers[10] = {1, 3, 9, 27, 81, 243, 729, 2187, 6561, 19683}; // FOR SPEED
-//   	return powers[n];
-// };
-
-// int				power_two(int n)
-// {
-// 	static int powers[15] = {1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 2048, 4096, 8192, 16384}; // FOR SPEED
-//   	return powers[n];
-// };
 
 std::string 	corner_position_to_string(corner_t c)
 {
@@ -55,11 +40,176 @@ std::string 	corner_position_to_string(corner_t c)
 	return names[c];
 };
 
+
 std::string 	edge_position_to_string(edge_t e)
 {
 	std::string names[12] = {"UR", "UF", "UL", "UB", "DR", "DF", "DL", "DB", "FR", "FL", "BL", "BR"};
 	return names[e];
 };
+
+
+bool 			is_ud_slice_edge(edge_t e)
+{
+	return (e >=  FR);
+};
+
+void			rotate_left(int* arr, int l, int r)
+{
+	int tmp = arr[l];
+
+	for (int i = l; i < r; i++)
+	{
+		arr[i] = arr[i + 1];
+	}
+	arr[r] = tmp;
+};
+
+void			rotate_right(int* arr, int l, int r)
+{
+	int tmp = arr[r];
+
+	for (int i = r; i > l; i--)
+	{
+		arr[i] = arr[i - 1];
+	}
+	arr[l] = tmp;
+};
+
+void			rotate_left(edge_t* arr, int l, int r)
+{
+	edge_t tmp = arr[l];
+
+	for (int i = l; i < r; i++)
+	{
+		arr[i] = arr[i + 1];
+	}
+	arr[r] = tmp;
+};
+
+void			rotate_right(edge_t* arr, int l, int r)
+{
+	edge_t tmp = arr[r];
+
+	for (int i = r; i > l; i--)
+	{
+		arr[i] = arr[i - 1];
+	}
+	arr[l] = tmp;
+};
+
+void			rotate_left(corner_t* arr, int l, int r)
+{
+	corner_t tmp = arr[l];
+
+	for (int i = l; i < r; i++)
+	{
+		arr[i] = arr[i + 1];
+	}
+	arr[r] = tmp;
+};
+
+void			rotate_right(corner_t* arr, int l, int r)
+{
+	corner_t tmp = arr[r];
+
+	for (int i = r; i > l; i--)
+	{
+		arr[i] = arr[i - 1];
+	}
+	arr[l] = tmp;
+};
+
+
+int*			fill_table_with_value(int* table, int value, int size)
+{
+	for (int i = 0; i < size; i++)
+	{
+		table[i] = value;
+	}
+	return (table);
+};
+
+
+bool  is_allowed_move_phase2(int move)
+{
+  if (is_allowed_quarter_turns[move % N_BASIC_MOVES] == false &&
+      move != ((move % N_BASIC_MOVES) + N_BASIC_MOVES))
+      return false;
+    return true;
+};
+
+
+std::vector<int>	create_random_shuffle(int moves)
+{
+	std::vector<int> shuffle(moves);
+	int move;
+	std::srand((unsigned) time(0));
+
+	for (int i = 0; i < moves; i++)
+	{
+		move = std::rand() % N_MOVES;
+		shuffle[i] = move;
+	}
+	return (shuffle);
+};
+
+
+std::vector<char*>		ft_strsplit(char *string, const char delimiter)
+{
+	std::vector<char*> v;
+	char* chars_array = strtok(string, " ");
+
+	while(chars_array)
+	{
+		v.push_back(chars_array);
+		chars_array = strtok(NULL, " ");
+	}
+	return(v);
+};
+
+
+bool	parse_arguments(int argc, char **argv, std::vector<int> *shuffle)
+{
+	if (argc <= 1 or argc > 2)
+	{
+		std::cout << USAGE;
+		return (false);
+	}
+	if (argc == 2)
+	{
+		int moves = atoi(argv[1]);
+
+		if (moves == 0 and argv[1][0] != '0')
+		{
+			std::vector<char*> v = ft_strsplit(argv[1], ' ');
+			for(auto word : v)
+			{
+				if (moves_numbers.find(word) == moves_numbers.end())
+				{
+					std::cout << USAGE;
+					return (false);
+				}
+				shuffle->push_back(moves_numbers[word]);
+			}
+			return (true);
+		}
+		int i = 0;
+		while (argv[1][i] != '\0')
+		{
+			if (isdigit(argv[1][i]) == false)
+			{
+				std::cout << USAGE;
+				return (false);
+			}
+			i++;
+		}
+		*shuffle = create_random_shuffle(moves);
+	}
+	return (true);
+};
+
+
+
 
 // int				get_corner_orientation_parity(cubiecube_t *cube) // THIS SHOULD RETURN 0 IF THE CUBE IS VALID (SOLVABLE)
 // {
@@ -71,10 +221,6 @@ std::string 	edge_position_to_string(edge_t e)
 // 	return (out);
 // }
 
-bool 			is_ud_slice_edge(edge_t e)
-{
-	return (e >=  FR);
-}
 
 // int				sum_cnk(int n0, int n1, int k)
 // {
@@ -126,71 +272,6 @@ bool 			is_ud_slice_edge(edge_t e)
 // }
 
 // Rotate array to the lesft left between l and r. r is included.
-void			rotate_left(int* arr, int l, int r)
-{
-	int tmp = arr[l];
-
-	for (int i = l; i < r; i++)
-	{
-		arr[i] = arr[i + 1];
-	}
-	arr[r] = tmp;
-}
-
-void			rotate_right(int* arr, int l, int r)
-{
-	int tmp = arr[r];
-
-	for (int i = r; i > l; i--)
-	{
-		arr[i] = arr[i - 1];
-	}
-	arr[l] = tmp;
-}
-
-void			rotate_left(edge_t* arr, int l, int r)
-{
-	edge_t tmp = arr[l];
-
-	for (int i = l; i < r; i++)
-	{
-		arr[i] = arr[i + 1];
-	}
-	arr[r] = tmp;
-}
-
-void			rotate_right(edge_t* arr, int l, int r)
-{
-	edge_t tmp = arr[r];
-
-	for (int i = r; i > l; i--)
-	{
-		arr[i] = arr[i - 1];
-	}
-	arr[l] = tmp;
-}
-
-void			rotate_left(corner_t* arr, int l, int r)
-{
-	corner_t tmp = arr[l];
-
-	for (int i = l; i < r; i++)
-	{
-		arr[i] = arr[i + 1];
-	}
-	arr[r] = tmp;
-}
-
-void			rotate_right(corner_t* arr, int l, int r)
-{
-	corner_t tmp = arr[r];
-
-	for (int i = r; i > l; i--)
-	{
-		arr[i] = arr[i - 1];
-	}
-	arr[l] = tmp;
-}
 
 
 // void 			print_array(int* arr, int size)
@@ -202,14 +283,6 @@ void			rotate_right(corner_t* arr, int l, int r)
 // 	std::cout << std::endl;
 // }
 
-// int*			fill_table_with_value(int* table, int value, int size)
-// {
-// 	for (int i = 0; i < size; i++)
-// 	{
-// 		table[i] = value;
-// 	}
-// 	return (table);
-// }
 
 // void			write_to_file(char* table, std::string filename, unsigned int size)
 // {
@@ -220,40 +293,16 @@ void			rotate_right(corner_t* arr, int l, int r)
 // }
 
 
-bool  is_allowed_move_phase2(int move)
-{
-  if (is_allowed_quarter_turns[move % N_BASIC_MOVES] == false &&
-      move != ((move % N_BASIC_MOVES) + N_BASIC_MOVES))
-      return false;
-    return true;
-}
 
 
-std::vector<int>	create_random_shuffle(int moves)
-{
-	std::vector<int> shuffle(moves);
-	int move;
-	std::srand((unsigned) time(0));
+// int				power_three(int n)
+// {
+// 	static int powers[10] = {1, 3, 9, 27, 81, 243, 729, 2187, 6561, 19683}; // FOR SPEED
+//   	return powers[n];
+// };
 
-	for (int i = 0; i < moves; i++)
-	{
-		move = std::rand() % N_MOVES;
-		shuffle[i] = move;
-	}
-	return (shuffle);
-}
-
-std::vector<char*>		ft_strsplit(char *string, const char delimiter)
-{
-	std::vector<char*> v;
-	char* chars_array = strtok(string, " ");
-
-	while(chars_array)
-	{
-		v.push_back(chars_array);
-		chars_array = strtok(NULL, " ");
-	}
-	return(v);
-}
-
-
+// int				power_two(int n)
+// {
+// 	static int powers[15] = {1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 2048, 4096, 8192, 16384}; // FOR SPEED
+//   	return powers[n];
+// };

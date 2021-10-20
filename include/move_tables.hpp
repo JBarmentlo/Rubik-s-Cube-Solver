@@ -2,7 +2,6 @@
 #define MOVE_TABLES_H
 
 #include "cubiecube_utils.hpp"
-// #include "CubieCube.hpp"
 #include "define.hpp"
 #include <iostream>
 #include <string.h>

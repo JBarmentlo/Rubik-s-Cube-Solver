@@ -6,7 +6,7 @@ CoordCube::CoordCube(int corner_orientation_coord_1, int edge_orientation_coord_
     this->corner_orientation_coord_1 = corner_orientation_coord_1;
     this->edge_orientation_coord_1 = edge_orientation_coord_1;
     this->UD_slice_coord_1 = UD_slice_coord_1;
-}
+};
 
 
 CoordCube::CoordCube(int move, int corner_2, int edge_2, int UD_2)
@@ -15,7 +15,7 @@ CoordCube::CoordCube(int move, int corner_2, int edge_2, int UD_2)
     this->corner_permutation_coord_2 = corner_2;
     this->edge_permutation_coord_2 = edge_2;
     this->UD_slice_coord_2 = UD_2;
-}
+};
 
 
 CoordCube::CoordCube(cubiecube_t cubie)
@@ -23,13 +23,12 @@ CoordCube::CoordCube(cubiecube_t cubie)
     this->corner_permutation_coord_2 = corner_permutation_coordinate_2(&cubie);
     this->edge_permutation_coord_2 = edge_permutation_coordinate_2(&cubie);
     this->UD_slice_coord_2 = UD_slice_sorted_coordinate_2(&cubie);
-}
+};
 
 
 CoordCube::CoordCube(void)
 {
-
-}
+};
 
 
 CoordCube::CoordCube(unsigned int flat_coord_1)
@@ -37,18 +36,18 @@ CoordCube::CoordCube(unsigned int flat_coord_1)
     this->corner_orientation_coord_1 = (int)(flat_coord_1 / (N_EDGE_ORI_1 * N_UD_1));
     this->edge_orientation_coord_1 = (int)((flat_coord_1 % N_EDGE_ORI_1 * N_UD_1) / N_UD_1);
     this->UD_slice_coord_1 = (int)(flat_coord_1 % N_UD_1);
-}
+};
 
 CoordCube::~CoordCube(void)
 {
     // std::cout << "Deconstructing CoordCube\n";
-}
+};
 
 
 unsigned int     		CoordCube::flat_coord(void)
 {
     return (this->corner_orientation_coord_1 * N_EDGE_ORI_1 * N_UD_1 + this->edge_orientation_coord_1 * N_UD_1 + this->UD_slice_coord_1);
-}
+};
 
 
 void    				CoordCube::apply_move_phase_one(int move)
@@ -60,15 +59,7 @@ void    				CoordCube::apply_move_phase_one(int move)
     this->corner_orientation_coord_1 = corner_orientation_table_1[this->corner_orientation_coord_1][move];
     this->edge_orientation_coord_1 = edge_orientation_table_1[this->edge_orientation_coord_1][move];
     this->UD_slice_coord_1 = UD_slice_table_1[this->UD_slice_coord_1][move];
-}
-
-
-// bool	CoordCube::operator==(const CoordCube &cube)
-// {
-//     if (cube.corner_orientation_coord_1 == this->corner_orientation_coord_1)
-//         return true;
-//     return false;
-// }
+};
 
 
 CoordCube    			CoordCube::create_baby_from_move_phase1(int move)
@@ -83,7 +74,7 @@ CoordCube    			CoordCube::create_baby_from_move_phase1(int move)
         UD_slice_table_1[this->UD_slice_coord_1][move]
     );
     return (bb_cube);
-}
+};
 
 
 
@@ -101,7 +92,7 @@ CoordCube    			CoordCube::create_baby_from_move_phase2(int move)
     );
 
     return (bb_cube);
-}
+};
 
 
 std::vector<CoordCube>	CoordCube::get_babies_phase2(g_function g_func, heuristic_function heuristic)
@@ -125,8 +116,7 @@ std::vector<CoordCube>	CoordCube::get_babies_phase2(g_function g_func, heuristic
     bebes.resize(nb_of_moves);
     std::sort (bebes.begin(), bebes.end(), f_sorting);
     return (bebes);
-}
-
+};
 
 
 void					CoordCube::solver_init(void)
@@ -135,13 +125,13 @@ void					CoordCube::solver_init(void)
 	this->h = 0;
 	this->f = 0;
 	this->origin_move = NO_MOVE_APPLIED;
-}
+};
 
 
 bool					f_sorting(CoordCube one, CoordCube two)
 {
 	return (one.f < two.f);
-}
+};
 
 
 void					CoordCube::print_coords_phase1()
@@ -149,7 +139,7 @@ void					CoordCube::print_coords_phase1()
     std::cout << "corner_orientation coord 1: [" << this->corner_orientation_coord_1 << "]\n";
     std::cout << "edge_orientation coord 1:   [" << this->edge_orientation_coord_1 << "]\n";
     std::cout << "UD slice1 coord 1:          [" << this->UD_slice_coord_1 << "]\n";
-}
+};
 
 
 void					CoordCube::print_coords_phase2()
@@ -157,7 +147,7 @@ void					CoordCube::print_coords_phase2()
     std::cout << "corner_permutation_coord_2:  [" << this->corner_permutation_coord_2 << "]\n";
     std::cout << "edge_permutation_coord_2:    [" << this->edge_permutation_coord_2 << "]\n";
     std::cout << "UD_slice_coord_2:            [" << this->UD_slice_coord_2 << "]\n";
-}
+};
 
 
 void					CoordCube::print_all_coords()
@@ -170,7 +160,7 @@ void					CoordCube::print_all_coords()
     std::cout << "UD slice2 coord:          [" << this->UD_slice_coord_2 << "]\n";
     std::cout << "flat coord:               [" << this->flat_coord() << "]\n";
 
-}
+};
 
 
 void    				CoordCube::print_phase_2()
@@ -180,4 +170,12 @@ void    				CoordCube::print_phase_2()
     std::cout << "edge_permutation_coord_2 =   " << this->edge_permutation_coord_2 << std::endl;
     std::cout << "UD_slice_coord_2 =           " << this->UD_slice_coord_2 << std::endl;
     std::cout << "g =  " << this->g << "   h = " << this->h << std::endl;
-}
+};
+
+
+// bool	CoordCube::operator==(const CoordCube &cube)
+// {
+//     if (cube.corner_orientation_coord_1 == this->corner_orientation_coord_1)
+//         return true;
+//     return false;
+// }

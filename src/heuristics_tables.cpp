@@ -1,12 +1,11 @@
 #include "heuristics_tables.hpp"
-#include "CoordCube.hpp"
-#include "utils.hpp"
 
 #include <thread>
 #include <string>
 #include <mutex>
 #include <shared_mutex>
 #include <queue>
+
 
 void	walk(int coord, int steps, int** moves_table, int* heuristics_table, int size)
 {
@@ -40,53 +39,56 @@ int*	create_heuristics_table(int size, reading_table_function read)
 	return heuristics_table;
 }
 
-void    make_corner_ori_heuristics_table(void)
-{
-    int* corner_h_table = create_heuristics_table(N_CORNER_ORI_1, read_corner_orientation_move_table);
 
-	std::ofstream out(CORNER_ORI_HEURISTIC_NAME, std::ios_base::binary);
-	if (out.good() == true)
-	{
-		out.write((char*)corner_h_table, sizeof(int) * (N_CORNER_ORI_1));
-		std::cout << "heuristic table created in: " << CORNER_ORI_HEURISTIC_NAME << " of size : " << N_CORNER_ORI_1 << std::endl;
-	}
-	else
-		std::cout << "PATH ERROR: can't create the following file" << CORNER_ORI_HEURISTIC_NAME << std::endl;
+// void    make_corner_ori_1_heuristics_table(void)
+// {
+//     int* corner_h_table = create_heuristics_table(N_CORNER_ORI_1, read_corner_orientation_move_table_1);
+
+// 	std::ofstream out(CORNER_ORI_HEURISTIC_NAME, std::ios_base::binary);
+// 	if (out.good() == true)
+// 	{
+// 		out.write((char*)corner_h_table, sizeof(int) * (N_CORNER_ORI_1));
+// 		std::cout << "heuristic table created in: " << CORNER_ORI_HEURISTIC_NAME << " of size : " << N_CORNER_ORI_1 << std::endl;
+// 	}
+// 	else
+// 		std::cout << "PATH ERROR: can't create the following file" << CORNER_ORI_HEURISTIC_NAME << std::endl;
 	
-	free(corner_h_table);
-}
+// 	free(corner_h_table);
+// }
 
-void    make_edge_ori_heuristics_table(void)
-{
-	int* edge_h_table = create_heuristics_table(N_EDGE_ORI_1, read_edge_orientation_move_table);
 
-	std::ofstream out(EDGE_ORI_HEURISTIC_NAME, std::ios_base::binary);
-	if (out.good() == true)
-	{
-		out.write((char*)edge_h_table, sizeof(int) * (N_EDGE_ORI_1));
-		std::cout << "heuristic table created in: " << EDGE_ORI_HEURISTIC_NAME << " of size : " << N_EDGE_ORI_1_1<< std::endl;
-	}
-	else
-		std::cout << "PATH ERROR: can't create the following file" << EDGE_ORI_HEURISTIC_NAME << std::endl;
+// void    make_edge_ori_1_heuristics_table(void)
+// {
+// 	int* edge_h_table = create_heuristics_table(N_EDGE_ORI_1, read_edge_orientation_move_table_1);
+
+// 	std::ofstream out(EDGE_ORI_HEURISTIC_NAME, std::ios_base::binary);
+// 	if (out.good() == true)
+// 	{
+// 		out.write((char*)edge_h_table, sizeof(int) * (N_EDGE_ORI_1));
+// 		std::cout << "heuristic table created in: " << EDGE_ORI_HEURISTIC_NAME << " of size : " << N_EDGE_ORI_1<< std::endl;
+// 	}
+// 	else
+// 		std::cout << "PATH ERROR: can't create the following file" << EDGE_ORI_HEURISTIC_NAME << std::endl;
 	
-	free(edge_h_table);
-}
+// 	free(edge_h_table);
+// }
 
-void    make_UD_slice1_heuristics_table(void)
-{
-    int* UD_slice_h_table = create_heuristics_table(N_UD, read_UD_move_table);
 
-	std::ofstream out(UD_SLICE1_HEURISTIC_NAME, std::ios_base::binary);
-	if (out.good() == true)
-	{
-		out.write((char*)UD_slice_h_table, sizeof(int) * (N_UD));
-		std::cout << "heuristic table created in: " << UD_SLICE1_HEURISTIC_NAME << " of size : " << N_UD_1<< std::endl;
-	}
-	else
-		std::cout << "PATH ERROR: can't create the following file" << UD_SLICE1_HEURISTIC_NAME << std::endl;
+// void    make_UD_slice_1_heuristics_table(void)
+// {
+//     int* UD_slice_h_table = create_heuristics_table(N_UD_1, read_UD_move_table_1);
+
+// 	std::ofstream out(UD_SLICE1_HEURISTIC_NAME, std::ios_base::binary);
+// 	if (out.good() == true)
+// 	{
+// 		out.write((char*)UD_slice_h_table, sizeof(int) * (N_UD_1));
+// 		std::cout << "heuristic table created in: " << UD_SLICE1_HEURISTIC_NAME << " of size : " << N_UD_1<< std::endl;
+// 	}
+// 	else
+// 		std::cout << "PATH ERROR: can't create the following file" << UD_SLICE1_HEURISTIC_NAME << std::endl;
 		
-	free(UD_slice_h_table);
-}
+// 	free(UD_slice_h_table);
+// }
 
 static std::shared_mutex mutexes[N_MUTEX] = {std::shared_mutex(), std::shared_mutex(), std::shared_mutex(), std::shared_mutex(), std::shared_mutex(), std::shared_mutex(), std::shared_mutex(), std::shared_mutex(), std::shared_mutex(), std::shared_mutex(), std::shared_mutex(), std::shared_mutex(), std::shared_mutex(), std::shared_mutex(), std::shared_mutex(), std::shared_mutex(), std::shared_mutex(), std::shared_mutex(), std::shared_mutex(), std::shared_mutex(), std::shared_mutex(), std::shared_mutex(), std::shared_mutex(), std::shared_mutex(), std::shared_mutex(), std::shared_mutex(), std::shared_mutex(), std::shared_mutex(), std::shared_mutex(), std::shared_mutex(), std::shared_mutex(), std::shared_mutex()};
 
@@ -199,6 +201,7 @@ inline bool write_smaller_equal_split_table(int value, unsigned int index)
 	return false;
 }
 
+
 inline char read_split_table(unsigned int index)
 {
 	mutexes[index % N_MUTEX].lock_shared();
@@ -245,7 +248,7 @@ void my_walk(CoordCube cube, const int steps, const int limit, const int daddy_m
 	
 	for (int i = 0; i < N_MOVES; i++)
 	{
-		my_walk(cube.create_baby_from_move_stack(i), steps + 1, limit, daddy_move);
+		my_walk(cube.create_baby_from_move_phase1(i), steps + 1, limit, daddy_move);
 	}
 }
 
@@ -256,7 +259,7 @@ void start_one_thread(CoordCube cube, int first_move, int last_move, int limit)
 	print.unlock();
 	for (int i = first_move; i <= last_move; i++)
 	{
-		my_walk(cube.create_baby_from_move_stack(i), 1, limit, i);
+		my_walk(cube.create_baby_from_move_phase1(i), 1, limit, i);
 	}
 }
 
@@ -296,7 +299,7 @@ int	 my_back_walk(CoordCube cube, int steps, int limit, int daddy_move)
 	for (int i = 0; i < N_MOVES; i++)
 	{
 		if (steps == 0 or (daddy_move % 6 != i % 6))
-			h_val = std::min(h_val, my_back_walk(cube.create_baby_from_move_stack(i), steps + 1, limit, i));
+			h_val = std::min(h_val, my_back_walk(cube.create_baby_from_move_phase1(i), steps + 1, limit, i));
 	}
 	// std::cout << "write" << std::endl;
 	write_smaller_split_table(h_val, cube.flat_coord());
@@ -312,13 +315,14 @@ void start_one_thread_backwards(CoordCube cube, int first_move, int last_move, i
 
 	for (int i = first_move; i <= last_move; i++)
 	{
-		min_val = std::min(my_back_walk(cube.create_baby_from_move_stack(i), 1, limit, i), min_val);
+		min_val = std::min(my_back_walk(cube.create_baby_from_move_phase1(i), 1, limit, i), min_val);
 	}
 	min_ret_mutex.lock();
 	if (ret > min_val)
 		ret = min_val;
 	min_ret_mutex.unlock();
 }
+
 
 void start_threads_my_backwards_walk(CoordCube start, int limit)
 {
@@ -342,6 +346,7 @@ void start_threads_my_backwards_walk(CoordCube start, int limit)
 	write_smaller_split_table(min_return, start.flat_coord());
 }
 
+
 void write_split_tables_file()
 {
 	std::cout << "Writing split table to file" << std::endl;
@@ -352,6 +357,7 @@ void write_split_tables_file()
 	std::cout << "Done writing " << std::endl;
 }
 
+
 void read_split_tables_file()
 {
 	std::cout << "reading split table to file" << std::endl;
@@ -361,6 +367,7 @@ void read_split_tables_file()
 	out21.read(h_table_2, sizeof(char) * ((HSIZEONE / 2) + 1));
 	std::cout << "Done reading " << std::endl;
 }
+
 
 void backwards_fill_h_table(int limit)
 {
@@ -382,9 +389,9 @@ void backwards_fill_h_table(int limit)
 	for (unsigned int i = 0; i < HSIZEONE; i++)
 	{
 		// std::cout << i << std::endl;
-		if (i % (N_EDGE_ORI_1/ 1024 * N_CORNER_ORI_1 * N_UD) == 0)
+		if (i % (N_EDGE_ORI_1/ 1024 * N_CORNER_ORI_1 * N_UD_1) == 0)
 		{
-			std::cout << "back: " <<  i / (N_EDGE_ORI_1/ 1024 * N_CORNER_ORI_1 * N_UD) << " / 1024" << std::endl;
+			std::cout << "back: " <<  i / (N_EDGE_ORI_1/ 1024 * N_CORNER_ORI_1 * N_UD_1) << " / 1024" << std::endl;
 		}
 		if (read_no_mutex_split_table(i) == UNFILLED)
 		{
@@ -441,61 +448,63 @@ void backwards_fill_h_table(int limit)
 // 		write_half_char_table(perfect_move_table, min_move)
 // 	}
 // }
-void    make_corner_perm_heuristics_table(void)
-{
-    int* corner_perm_h_table = create_heuristics_table(N_CORNER_PERMUTATION_2, read_corner_permutation_move_table);
 
-	std::ofstream out(CORNER_PERM_HEURISTIC_NAME, std::ios_base::binary);
+
+void    make_corner_perm_2_heuristics_table(void)
+{
+    int* corner_perm_h_table = create_heuristics_table(N_CORNER_PERMUTATION_2, read_corner_permutation_move_table_2);
+
+	std::ofstream out(CORNER_PERM_2_HEURISTIC_NAME, std::ios_base::binary);
 	if (out.good() == true)
 	{
 		out.write((char*)corner_perm_h_table, sizeof(int) * (N_CORNER_PERMUTATION_2));
-		std::cout << "heuristic table created in: " << CORNER_PERM_HEURISTIC_NAME << " of size : " << N_CORNER_PERMUTATION_2 << std::endl;
+		std::cout << "heuristic table created in: " << CORNER_PERM_2_HEURISTIC_NAME << " of size : " << N_CORNER_PERMUTATION_2 << std::endl;
 	}
 	else
-		std::cout << "PATH ERROR: can't create the following file" << CORNER_PERM_HEURISTIC_NAME << std::endl;
+		std::cout << "PATH ERROR: can't create the following file" << CORNER_PERM_2_HEURISTIC_NAME << std::endl;
 
 	free(corner_perm_h_table);
 }
 
-void    make_edge_perm_heuristics_table(void)
-{
-    int* edge_perm_h_table = create_heuristics_table(N_EDGE_PERMUTATION_2, read_edge_permutation_move_table);
 
-	std::ofstream out(EDGE_PERM_HEURISTIC_NAME, std::ios_base::binary);
+void    make_edge_perm_2_heuristics_table(void)
+{
+    int* edge_perm_h_table = create_heuristics_table(N_EDGE_PERMUTATION_2, read_edge_permutation_move_table_2);
+
+	std::ofstream out(EDGE_PERM_2_HEURISTIC_NAME, std::ios_base::binary);
 	if (out.good() == true)
 	{
 		out.write((char*)edge_perm_h_table, sizeof(int) * (N_EDGE_PERMUTATION_2));
-		std::cout << "heuristic table created in: " << EDGE_PERM_HEURISTIC_NAME  << " of size : " << N_EDGE_PERMUTATION_2 << std::endl;
+		std::cout << "heuristic table created in: " << EDGE_PERM_2_HEURISTIC_NAME  << " of size : " << N_EDGE_PERMUTATION_2 << std::endl;
 	}
 	else
-		std::cout << "PATH ERROR: can't create the following file" << EDGE_PERM_HEURISTIC_NAME << std::endl;
+		std::cout << "PATH ERROR: can't create the following file" << EDGE_PERM_2_HEURISTIC_NAME << std::endl;
 
 	free(edge_perm_h_table);
 }
 
+
 void    make_UD_2_heuristics_table(void)
 {
-    int* UD_2_table = create_heuristics_table(N_UD_2, read_UD2_move_table);
+    int* UD_2_table = create_heuristics_table(N_UD_2, read_UD2_move_table_2);
 
-	std::ofstream out(UD_SLICE2_HEURISTIC_NAME, std::ios_base::binary);
+	std::ofstream out(UD_SLICE_2_HEURISTIC_NAME, std::ios_base::binary);
 	if (out.good() == true)
 	{
 		out.write((char*)UD_2_table, sizeof(int) * (N_UD_2));
-		std::cout << "heuristic table created in: " << UD_SLICE2_HEURISTIC_NAME  << " of size : " << N_UD_2 << std::endl;
+		std::cout << "heuristic table created in: " << UD_SLICE_2_HEURISTIC_NAME  << " of size : " << N_UD_2 << std::endl;
 	}
 	else
-		std::cout << "PATH ERROR: can't create the following file" << UD_SLICE2_HEURISTIC_NAME << std::endl;
+		std::cout << "PATH ERROR: can't create the following file" << UD_SLICE_2_HEURISTIC_NAME << std::endl;
 	
 	free(UD_2_table);
 }
 
-void	make_all_heuristics_tables(void)
+
+void	make_heuristics_tables_phase2(void)
 {
-	make_corner_ori_heuristics_table();
-	make_edge_ori_heuristics_table();
-	make_UD_slice1_heuristics_table();
-	make_corner_perm_heuristics_table();
-	make_edge_perm_heuristics_table(); // TODO: check for segfault!!
+	make_corner_perm_2_heuristics_table();
+	make_edge_perm_2_heuristics_table(); // TODO: check for segfault!!
 	make_UD_2_heuristics_table();
 }
 

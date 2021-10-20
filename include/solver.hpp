@@ -9,9 +9,6 @@
 #include <queue>
 
 
-// typedef bool	(*is_goal_function)(CoordCube*);
-
-
 void						phase_one_solver(CoordCube start, int steps, std::queue<int> *path);
 void						phase_two_solver(CoordCube cube, std::queue<int> *path);
 void						phase_two_solver_thread(CoordCube cube, std::queue<int> *path);
