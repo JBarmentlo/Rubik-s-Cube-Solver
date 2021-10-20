@@ -42,13 +42,13 @@ int*	create_heuristics_table(int size, reading_table_function read)
 
 void    make_corner_ori_heuristics_table(void)
 {
-    int* corner_h_table = create_heuristics_table(N_CORNER_ORI, read_corner_orientation_move_table);
+    int* corner_h_table = create_heuristics_table(N_CORNER_ORI_1, read_corner_orientation_move_table);
 
 	std::ofstream out(CORNER_ORI_HEURISTIC_NAME, std::ios_base::binary);
 	if (out.good() == true)
 	{
-		out.write((char*)corner_h_table, sizeof(int) * (N_CORNER_ORI));
-		std::cout << "heuristic table created in: " << CORNER_ORI_HEURISTIC_NAME << " of size : " << N_CORNER_ORI << std::endl;
+		out.write((char*)corner_h_table, sizeof(int) * (N_CORNER_ORI_1));
+		std::cout << "heuristic table created in: " << CORNER_ORI_HEURISTIC_NAME << " of size : " << N_CORNER_ORI_1 << std::endl;
 	}
 	else
 		std::cout << "PATH ERROR: can't create the following file" << CORNER_ORI_HEURISTIC_NAME << std::endl;
@@ -58,13 +58,13 @@ void    make_corner_ori_heuristics_table(void)
 
 void    make_edge_ori_heuristics_table(void)
 {
-	int* edge_h_table = create_heuristics_table(N_EDGE_ORI, read_edge_orientation_move_table);
+	int* edge_h_table = create_heuristics_table(N_EDGE_ORI_1, read_edge_orientation_move_table);
 
 	std::ofstream out(EDGE_ORI_HEURISTIC_NAME, std::ios_base::binary);
 	if (out.good() == true)
 	{
-		out.write((char*)edge_h_table, sizeof(int) * (N_EDGE_ORI));
-		std::cout << "heuristic table created in: " << EDGE_ORI_HEURISTIC_NAME << " of size : " << N_EDGE_ORI_1<< std::endl;
+		out.write((char*)edge_h_table, sizeof(int) * (N_EDGE_ORI_1));
+		std::cout << "heuristic table created in: " << EDGE_ORI_HEURISTIC_NAME << " of size : " << N_EDGE_ORI_1_1<< std::endl;
 	}
 	else
 		std::cout << "PATH ERROR: can't create the following file" << EDGE_ORI_HEURISTIC_NAME << std::endl;
@@ -382,9 +382,9 @@ void backwards_fill_h_table(int limit)
 	for (unsigned int i = 0; i < HSIZEONE; i++)
 	{
 		// std::cout << i << std::endl;
-		if (i % (N_EDGE_ORI_1/ 1024 * N_CORNER_ORI * N_UD) == 0)
+		if (i % (N_EDGE_ORI_1/ 1024 * N_CORNER_ORI_1 * N_UD) == 0)
 		{
-			std::cout << "back: " <<  i / (N_EDGE_ORI_1/ 1024 * N_CORNER_ORI * N_UD) << " / 1024" << std::endl;
+			std::cout << "back: " <<  i / (N_EDGE_ORI_1/ 1024 * N_CORNER_ORI_1 * N_UD) << " / 1024" << std::endl;
 		}
 		if (read_no_mutex_split_table(i) == UNFILLED)
 		{
@@ -423,7 +423,7 @@ void backwards_fill_h_table(int limit)
 	
 // 	int min = 123456;
 // 	int min_move = 123456;
-// 	unsigned char* perfect_move_table = (unsigned char*)malloc(sizeof(char) * N_EDGE_ORI_1/ 2 * N_CORNER_ORI * N_UD_1+ 1);
+// 	unsigned char* perfect_move_table = (unsigned char*)malloc(sizeof(char) * N_EDGE_ORI_1/ 2 * N_CORNER_ORI_1 * N_UD_1+ 1);
 
 // 	for (unsigned int i = 0; i < HSIZEONE; i++)
 // 	{
@@ -443,13 +443,13 @@ void backwards_fill_h_table(int limit)
 // }
 void    make_corner_perm_heuristics_table(void)
 {
-    int* corner_perm_h_table = create_heuristics_table(N_CORNER_PERMUTATION, read_corner_permutation_move_table);
+    int* corner_perm_h_table = create_heuristics_table(N_CORNER_PERMUTATION_2, read_corner_permutation_move_table);
 
 	std::ofstream out(CORNER_PERM_HEURISTIC_NAME, std::ios_base::binary);
 	if (out.good() == true)
 	{
-		out.write((char*)corner_perm_h_table, sizeof(int) * (N_CORNER_PERMUTATION));
-		std::cout << "heuristic table created in: " << CORNER_PERM_HEURISTIC_NAME << " of size : " << N_CORNER_PERMUTATION << std::endl;
+		out.write((char*)corner_perm_h_table, sizeof(int) * (N_CORNER_PERMUTATION_2));
+		std::cout << "heuristic table created in: " << CORNER_PERM_HEURISTIC_NAME << " of size : " << N_CORNER_PERMUTATION_2 << std::endl;
 	}
 	else
 		std::cout << "PATH ERROR: can't create the following file" << CORNER_PERM_HEURISTIC_NAME << std::endl;

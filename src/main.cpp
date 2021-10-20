@@ -1,7 +1,8 @@
 // #include "kociemba.hpp"
 #include "define.hpp"
-#include <stdlib.h>
 #include "utils.hpp"
+#include "move_tables.hpp"
+#include <stdlib.h>
 
 
 bool	parse_arguments(int argc, char **argv, std::vector<int> *shuffle)
@@ -49,12 +50,7 @@ int main(int argc, char **argv)
 	std::vector<int> shuffle;
 	if (parse_arguments(argc, argv, &shuffle) == false)
 		return (false);
-	for(auto move : shuffle)
-	{
-		std::cout << "[" << move << "]";
-	}
-	std::cout << "\n";
-
+	make_all_move_tables();
 	// kociemba(shuffle);
 	return (true);
 }

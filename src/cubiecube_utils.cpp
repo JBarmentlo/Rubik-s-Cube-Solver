@@ -172,23 +172,23 @@ int				corner_orientation_coordinate_1(cubiecube_t* cube)
 	return out;
 };
 
-// void			set_corner_orientation_coord_1(int coord, cubiecube_t* cube)	
-// {
-// 	int parity = 0;
-// 	int corner;
+void			set_corner_orientation_coord_1(int coord, cubiecube_t* cube)	
+{
+	int parity = 0;
+	int corner;
 
-// 	corner = DBL;
-// 	while (corner >= URF)
-// 	{
-// 		parity = parity + (coord % 3);
-// 		cube->corner_orientations[corner] = coord % 3;
-// 		coord = coord / 3;
-// 		corner = (corner - 1);
-// 	}
+	corner = DBL;
+	while (corner >= URF)
+	{
+		parity = parity + (coord % 3);
+		cube->corner_orientations[corner] = coord % 3;
+		coord = coord / 3;
+		corner = (corner - 1);
+	}
 
-// 	parity = parity % 3;
-// 	cube->corner_orientations[DRB] = 3 - parity;
-// };
+	parity = parity % 3;
+	cube->corner_orientations[DRB] = 3 - parity;
+};
 
 int				edge_orientation_coordinate_1(cubiecube_t* cube)
 {
@@ -204,41 +204,41 @@ int				edge_orientation_coordinate_1(cubiecube_t* cube)
 	return out;
 }
 
-// void			set_edge_orientation_coord_1(int coord, cubiecube_t* cube)
-// {
-// 	int parity = 0;
+void			set_edge_orientation_coord_1(int coord, cubiecube_t* cube)
+{
+	int parity = 0;
 
-// 	for (int e = LAST_EDGE - 1; e >= FIRST_EDGE; e--)
-// 	{
-// 		parity = parity + (coord % 2);
-// 		cube->edge_orientations[e] = coord % 2;
-// 		coord = coord / 2;
-// 	}
+	for (int e = LAST_EDGE - 1; e >= FIRST_EDGE; e--)
+	{
+		parity = parity + (coord % 2);
+		cube->edge_orientations[e] = coord % 2;
+		coord = coord / 2;
+	}
 
-// 	parity = parity % 2;
-// 	cube->edge_orientations[LAST_EDGE] = 2 - parity; //TODO: CHECK IF THIS IS GOOD PARTITY
-// };
+	parity = parity % 2;
+	cube->edge_orientations[LAST_EDGE] = 2 - parity; //TODO: CHECK IF THIS IS GOOD PARTITY
+};
 
-// int				corner_permutation_coordinate_old(cubiecube_t* cube)
-// {
-// 	int out(0);
-// 	int left;
+int				corner_permutation_coordinate_old(cubiecube_t* cube)
+{
+	int out(0);
+	int left;
 
-// 	for (int i = FIRST_CORNER; i <= LAST_CORNER; i++)
-// 	{
-// 		left = 0;
-// 		for (int j = 0; j < i; j++)
-// 		{
-// 			if (cube->corner_positions[j] > cube->corner_positions[i])
-// 			{
-// 				left = left + 1;
-// 			}
-// 		}
-// 		out = out + (left * factorial(i));
-// 	}
+	for (int i = FIRST_CORNER; i <= LAST_CORNER; i++)
+	{
+		left = 0;
+		for (int j = 0; j < i; j++)
+		{
+			if (cube->corner_positions[j] > cube->corner_positions[i])
+			{
+				left = left + 1;
+			}
+		}
+		out = out + (left * factorial(i));
+	}
 
-// 	return out;
-// };
+	return out;
+};
 
 int				corner_permutation_coordinate_2(cubiecube_t* cube)
 {
@@ -260,24 +260,24 @@ int				corner_permutation_coordinate_2(cubiecube_t* cube)
 	return out;
 };
 
-// void			set_corner_permutation_coordinate_2(int index, cubiecube_t* cube)
-// {
-// 	int out(0);
-// 	int perm[8];
-// 	int k;
+void			set_corner_permutation_coordinate_2(int index, cubiecube_t* cube)
+{
+	int out(0);
+	int perm[8];
+	int k;
 
-// 	memcpy(cube->corner_positions, homecube.corner_positions, sizeof(cube->corner_positions));
-// 	for (int i = FIRST_CORNER; i <= LAST_CORNER; i++)
-// 	{
-// 		k = index % (i + 1);
-// 		index = index / (i + 1);
-// 		while (k > 0)
-// 		{
-// 			rotate_right((int*)cube->corner_positions, 0, i);
-// 			k = k - 1;
-// 		}
-// 	}
-// }
+	memcpy(cube->corner_positions, homecube.corner_positions, sizeof(cube->corner_positions));
+	for (int i = FIRST_CORNER; i <= LAST_CORNER; i++)
+	{
+		k = index % (i + 1);
+		index = index / (i + 1);
+		while (k > 0)
+		{
+			rotate_right((int*)cube->corner_positions, 0, i);
+			k = k - 1;
+		}
+	}
+}
 
 int				edge_permutation_coordinate_2(cubiecube_t* cube)
 {
@@ -303,25 +303,25 @@ int				edge_permutation_coordinate_2(cubiecube_t* cube)
 	return (out);
 }
 
-// void			set_edge_permutation_coordinate_2(int index, cubiecube_t* cube)
-// {
-// 	int k;
+void			set_edge_permutation_coordinate_2(int index, cubiecube_t* cube)
+{
+	int k;
 
-// 	for (int i = FIRST_EDGE; i < 8; i++)
-// 	{
-// 		cube->edge_positions[i] = (edge_t)i;
-// 	}
-// 	for (int i = FIRST_EDGE; i < 8; i++)
-// 	{
-// 		k = index % (i + 1);
-// 		index = index / (i + 1);
-// 		while (k > 0)
-// 		{
-// 			rotate_right((int*)cube->edge_positions, 0, i);
-// 			k = k - 1;
-// 		}
-// 	}
-// }
+	for (int i = FIRST_EDGE; i < 8; i++)
+	{
+		cube->edge_positions[i] = (edge_t)i;
+	}
+	for (int i = FIRST_EDGE; i < 8; i++)
+	{
+		k = index % (i + 1);
+		index = index / (i + 1);
+		while (k > 0)
+		{
+			rotate_right((int*)cube->edge_positions, 0, i);
+			k = k - 1;
+		}
+	}
+}
 
 // int				edge_permutation_coordinate(cubiecube_t* cube)
 // {
@@ -360,38 +360,38 @@ int				UD_slice_coordinate_1(cubiecube_t* cube)
 	return (out);
 };
 
-// void			set_UD_slice_coord(int coord, cubiecube_t* cube)
-// {
-// 	int x = 4;
-// 	// int a = coord;
+void			set_UD_slice_coord_1(int coord, cubiecube_t* cube)
+{
+	int x = 4;
+	// int a = coord;
 
-// 	bool filled[EDGE_NUM] = {false, false, false, false, false, false, false, false, false, false, false, false};
-// 	int cnk;
-// 	edge_t slice_edge[4] = {FR, FL, BL, BR};
-// 	edge_t other_edge[8] = {UR, UF, UL, UB, DR, DF, DL, DB};
+	bool filled[EDGE_NUM] = {false, false, false, false, false, false, false, false, false, false, false, false};
+	int cnk;
+	edge_t slice_edge[4] = {FR, FL, BL, BR};
+	edge_t other_edge[8] = {UR, UF, UL, UB, DR, DF, DL, DB};
 
-// 	for (int j = FIRST_EDGE; j <= LAST_EDGE; j++)
-// 	{
-// 		cnk = binomial_coefficient(11 - j, x);
-// 		if (coord - cnk >= 0)
-// 		{
-// 			cube->edge_positions[j] = slice_edge[4 - x];
-// 			filled[j] = true;
-// 			coord = coord - cnk;
-// 			x = x - 1;
-// 		}
-// 	}
+	for (int j = FIRST_EDGE; j <= LAST_EDGE; j++)
+	{
+		cnk = binomial_coefficient(11 - j, x);
+		if (coord - cnk >= 0)
+		{
+			cube->edge_positions[j] = slice_edge[4 - x];
+			filled[j] = true;
+			coord = coord - cnk;
+			x = x - 1;
+		}
+	}
 
-// 	x = 0;
-// 	for (int j = FIRST_EDGE; j <= LAST_EDGE; j++)
-// 	{
-// 		if (not filled[j])
-// 		{
-// 			cube->edge_positions[j] = other_edge[x];
-// 			x = x + 1;
-// 		}
-// 	}
-// }
+	x = 0;
+	for (int j = FIRST_EDGE; j <= LAST_EDGE; j++)
+	{
+		if (not filled[j])
+		{
+			cube->edge_positions[j] = other_edge[x];
+			x = x + 1;
+		}
+	}
+}
 
 int				UD_slice_sorted_coordinate_2(cubiecube_t* cube)
 {
@@ -424,57 +424,57 @@ int				UD_slice_sorted_coordinate_2(cubiecube_t* cube)
 	return (24 * a + b);
 }
 
-// void			set_UD_slice_sorted_coordinate_2(int index, cubiecube_t* cube)
-// {
-// 	edge_t 	UD_slice[4] 	 = {FR, FL, BL, BR};
-// 	edge_t	other_edges[8] 	 = {UR, UF, UL, UB, DR, DF, DL, DB};
-// 	bool	filled[EDGE_NUM] = {false, false, false, false, false, false, false, false, false, false, false, false};
-// 	int 	b 				 = index % 24;
-// 	int 	a 				 = index / 24;
+void			set_UD_slice_sorted_coordinate_2(int index, cubiecube_t* cube)
+{
+	edge_t 	UD_slice[4] 	 = {FR, FL, BL, BR};
+	edge_t	other_edges[8] 	 = {UR, UF, UL, UB, DR, DF, DL, DB};
+	bool	filled[EDGE_NUM] = {false, false, false, false, false, false, false, false, false, false, false, false};
+	int 	b 				 = index % 24;
+	int 	a 				 = index / 24;
 	
-// 	int		j;
-// 	int		k;
-// 	int		x;
+	int		j;
+	int		k;
+	int		x;
 
-// 	j = 1;
-// 	while (j < 4)
-// 	{
-// 		k = b % (j + 1);
-// 		b = b / (j + 1); 
-// 		while (k > 0)
-// 		{
-// 			rotate_right(UD_slice, 0, j);
-// 			k = k - 1;
-// 		}
-// 		j = j + 1;
-// 	}
+	j = 1;
+	while (j < 4)
+	{
+		k = b % (j + 1);
+		b = b / (j + 1); 
+		while (k > 0)
+		{
+			rotate_right(UD_slice, 0, j);
+			k = k - 1;
+		}
+		j = j + 1;
+	}
 
-// 	x = 4;
-// 	j = 0;
-// 	while (j < EDGE_NUM)
-// 	{
-// 		if ((a - binomial_coefficient(11 - j, x)) >= 0)
-// 		{
-// 			cube->edge_positions[j] = UD_slice[4 - x];
-// 			filled[j] = true;
-// 			a = a - binomial_coefficient(11 - j, x);
-// 			x = x - 1;
-// 		}
-// 		j = j + 1;
-// 	}
+	x = 4;
+	j = 0;
+	while (j < EDGE_NUM)
+	{
+		if ((a - binomial_coefficient(11 - j, x)) >= 0)
+		{
+			cube->edge_positions[j] = UD_slice[4 - x];
+			filled[j] = true;
+			a = a - binomial_coefficient(11 - j, x);
+			x = x - 1;
+		}
+		j = j + 1;
+	}
 
-// 	x = 0;
-// 	j = 0;
-// 	while (j < EDGE_NUM)
-// 	{
-// 		if (filled[j] == false)
-// 		{
-// 			cube->edge_positions[j] = other_edges[x];
-// 			x = x + 1;
-// 		}
-// 		j = j + 1;
-// 	}
-// }
+	x = 0;
+	j = 0;
+	while (j < EDGE_NUM)
+	{
+		if (filled[j] == false)
+		{
+			cube->edge_positions[j] = other_edges[x];
+			x = x + 1;
+		}
+		j = j + 1;
+	}
+}
 
 
 
@@ -556,7 +556,7 @@ int				UD_slice_sorted_coordinate_2(cubiecube_t* cube)
 // 				// std::cout << "Placed " << j << std::endl;
 
 // 			}
-// 			// UD_slice_coordinate(&cube);
+// 			// UD_slice_coordinate_1(&cube);
 // 		}
 // 	}
 

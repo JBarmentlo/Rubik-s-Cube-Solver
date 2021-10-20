@@ -16,8 +16,8 @@ int	g_plusone(int g)
 
 // int	phase_1_heuristic(CoordCube *coord_cube)
 // {
-// 	static int h_table_c_ori[N_CORNER_ORI];
-// 	static int h_table_e_ori[N_EDGE_ORI];
+// 	static int h_table_c_ori[N_CORNER_ORI_1];
+// 	static int h_table_e_ori[N_EDGE_ORI_1];
 // 	static int h_table_UD[N_UD];
 // 	static bool first = true;
 
@@ -32,7 +32,7 @@ int	g_plusone(int g)
 // 			std::cout << "ERROR while reading heuristics tables pahse1, please check the existence of the following files:\n" << CORNER_ORI_HEURISTIC_NAME << "\n" << EDGE_ORI_HEURISTIC_NAME << "\n" << UD_SLICE1_HEURISTIC_NAME << std::endl;
 // 			return (-1); // TODO: check ce retour
 // 		}
-// 		in.read((char*)h_table_c_ori, N_CORNER_ORI * sizeof(int));
+// 		in.read((char*)h_table_c_ori, N_CORNER_ORI_1 * sizeof(int));
 // 		two.read((char*)h_table_e_ori, N_EDGE_ORI_1* sizeof(int));
 // 		thre.read((char*)h_table_UD, N_UD_1* sizeof(int));
 
@@ -85,7 +85,7 @@ int	phase_2_heuristic(CoordCube coord_cube)
 
 // int	phase_2_heuristic(CoordCube *coord_cube)
 // {
-// 	static int h_table_c_perm[N_CORNER_PERMUTATION];
+// 	static int h_table_c_perm[N_CORNER_PERMUTATION_2];
 // 	static int h_table_e_perm[N_EDGE_PERMUTATION_2];
 // 	static int h_table_UD2[N_UD_2];
 // 	static bool first = true;
@@ -101,7 +101,7 @@ int	phase_2_heuristic(CoordCube coord_cube)
 // 			std::cout << "ERROR while reading heuristics tables pahse2, please check the existence of the following files:\n" << CORNER_ORI_HEURISTIC_NAME << "\n" << EDGE_ORI_HEURISTIC_NAME << "\n" << UD_SLICE1_HEURISTIC_NAME << std::endl;
 // 			return (-1); // TODO: check ce retour
 // 		}
-// 		in.read((char*)h_table_c_perm, N_CORNER_PERMUTATION * sizeof(int));
+// 		in.read((char*)h_table_c_perm, N_CORNER_PERMUTATION_2 * sizeof(int));
 // 		two.read((char*)h_table_e_perm, N_EDGE_PERMUTATION_2 * sizeof(int));
 // 		thre.read((char*)h_table_UD2, N_UD_2 * sizeof(int));
 
