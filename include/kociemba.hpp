@@ -8,6 +8,6 @@
 #include <vector>
 #include <queue>
 
-void    kociemba(std::vector<int> shuffle);
+std::vector<int>    kociemba(std::vector<int> shuffle);
 
 #endif

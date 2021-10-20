@@ -8,7 +8,8 @@
 
 #include <queue>
 
-
+bool            			phase_one_goal(CoordCube coordcube);
+bool            			phase_two_goal(CoordCube coordcube);
 void						phase_one_solver(CoordCube start, int steps, std::queue<int> *path);
 void						phase_two_solver(CoordCube cube, std::queue<int> *path);
 void						phase_two_solver_thread(CoordCube cube, std::queue<int> *path);

@@ -5,16 +5,23 @@ std::queue<int>     get_path_to_phase_one(std::vector<int> shuffle)
 {
     CoordCube start(0);
 
-    std::cout << "\n\nBEFORE SHUFFLE:" << std::endl;
-    start.print_coords_phase1();
+	if (VERBOSE > 1)
+    	{std::cout << "\n\nBEFORE SHUFFLE:" << std::endl;
+    	start.print_coords_phase1();};
+
     for(auto move : shuffle)
     {
         start.apply_move_phase_one(move);
     }
-    std::cout << "\nAFTER SHUFFLE:" << std::endl;
-    start.print_coords_phase1();
-
+	if (VERBOSE > 1)
+		{std::cout << "\nAFTER SHUFFLE:" << std::endl;
+		start.print_coords_phase1();};
+	
     std::queue<int> path;
+
+	if (phase_one_goal(start) == true)
+		return (path);
+
     phase_one_solver(start, 0, &path);
 
     return(path);
@@ -37,23 +44,21 @@ std::queue<int>    get_path_to_phase_two(std::vector<int> shuffle, std::queue<in
     CoordCube start(cubie);
     std::queue<int> *path_to_phase_two = new std::queue<int>;
 
-    std::cout << "\nENTERRING PHASE TWO SOLVER" << std::endl;
-
     phase_two_solver(start, path_to_phase_two);
 	// phase_two_solver_thread(start, path_to_phase_two);
 	return (*path_to_phase_two);
 }
 
 
-void                kociemba(std::vector<int> shuffle)
+std::vector<int>                kociemba(std::vector<int> shuffle)
 {
     int total_path_length = 0;
+	std::vector<int> complete_path;
 
-	std::cout << "\n\nINPUT SHUFFLE:" << std::endl;
-    for(auto move : shuffle)
-    {
-        std::cout << "[" << move << "]";
-    }
+	if (VERBOSE >= 1)
+		{std::cout << "\nINPUT SHUFFLE:" << std::endl;
+		for(auto move : shuffle)
+			std::cout << moves_strings[move] << " ";};
 
     std::queue<int> path_to_phase_one = get_path_to_phase_one(shuffle);
 
@@ -64,23 +69,30 @@ void                kociemba(std::vector<int> shuffle)
     total_path_length += path_to_phase_two.size();
 
 
-    std::cout << "\nMOVES TO APPLY TO GET TO PHASE ONE" << std::endl;
+	if (VERBOSE >= 1 && path_to_phase_one.empty() == false)
+    	{std::cout << "\n\nMOVES TO APPLY TO GET TO PHASE ONE:" << std::endl;};
+	if (VERBOSE >= 1 && path_to_phase_one.empty() == true)
+    	{std::cout << "\n\nNO NEED FOR A PHASE ONE" << std::endl;};
     while(not path_to_phase_one.empty())
     {
-        // std::cout << "[" << path_to_phase_one.front() << "]";
-        std::cout << " " << moves_strings[path_to_phase_one.front()] << ",";
+		if (VERBOSE >= 1)
+        	{std::cout << moves_strings[path_to_phase_one.front()] << " ";};
+		complete_path.push_back(path_to_phase_one.front());
         path_to_phase_one.pop();
     }
 
-    std::cout << "\n\nMOVES TO APPLY TO GET TO PHASE TWO" << std::endl;
+	if (VERBOSE >= 1 && path_to_phase_two.empty() == false)
+    	{std::cout << "\n\nMOVES TO APPLY TO GET TO PHASE TWO:" << std::endl;};
+	if (VERBOSE >= 1 && path_to_phase_two.empty() == true)
+    	{std::cout << "\n\nNO NEED FOR A PHASE TWO" << std::endl;};
 	while(not path_to_phase_two.empty())
     {
-        // std::cout << "[" << path_to_phase_two.front() << "]";
-        std::cout << " " << moves_strings[path_to_phase_two.front()] << ",";
+		if (VERBOSE >= 1)
+		    {std::cout << moves_strings[path_to_phase_two.front()] << " ";};
+		complete_path.push_back(path_to_phase_two.front());
         path_to_phase_two.pop();
     }
 
-    std::cout << "\n\nTOTAL PATH LENGTH: " << total_path_length << "\n\n";
-
-
+    std::cout << "\n\nTOTAL PATH LENGTH: " << complete_path.size() << "\n\n";
+	return (complete_path);
 }

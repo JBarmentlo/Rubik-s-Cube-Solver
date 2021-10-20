@@ -5,6 +5,19 @@
 
 typedef bool	(*is_goal_function)(CoordCube);
 
+
+bool            phase_one_goal(CoordCube coordcube)
+{
+	if (coordcube.corner_orientation_coord_1 == 0 and
+	coordcube.edge_orientation_coord_1 == 0 and
+	coordcube.UD_slice_coord_1 == 0)
+	{
+		return true;
+	}
+	return false;
+}
+
+
 bool            phase_two_goal(CoordCube coordcube)
 {
 	if (coordcube.corner_permutation_coord_2 == 0 and
@@ -24,7 +37,8 @@ int		phase_2_search(CoordCube cube, int threshold, g_function g_func, heuristic_
 	int		tmp;
 
 	int f = cube.f;
-	path->push(cube.origin_move);
+	if (cube.origin_move != NO_MOVE_APPLIED)
+		path->push(cube.origin_move);
 	if(is_goal(cube) == true)
 		return (SUCCESS);
 	if(f > threshold)
@@ -48,6 +62,7 @@ int		phase_2_search(CoordCube cube, int threshold, g_function g_func, heuristic_
 	path->pop();
 	return (min);
 }
+
 
 std::mutex lock;
 void	phase_two_multithread_function(int start, int end, int &min, int &tmp, std::vector<CoordCube> bebes, int threshold, g_function g_func, heuristic_function heuristic, is_goal_function is_goal, std::queue<int> *path)
@@ -122,20 +137,12 @@ void	phase_two_solver_thread(CoordCube cube, std::queue<int> *path)
 			t1.join();
 			t2.join();
 			t3.join();
-			// phase_two_multithread_function1(0, 3, &min, &tmp, bebes, threshold, g_plusone, phase_2_heuristic, phase_two_goal, path);
-			// if (tmp == SUCCESS)
-			// 	return;
-			// phase_two_multithread_function1(3, 7, &min, &tmp, bebes, threshold, g_plusone, phase_2_heuristic, phase_two_goal, path);
-			// if (tmp == SUCCESS)
-			// 	return;
-			// phase_two_multithread_function1(7, 10, &min, &tmp, bebes, threshold, g_plusone, phase_2_heuristic, phase_two_goal, path);
-			// if (tmp == SUCCESS)
-			// 	return;
 		}
 		path->pop();
 		if(tmp == SUCCESS)
 		{
-			std::cout << "\nSUCCESS FOR PHASE TWO\n";
+			if (VERBOSE >= 1)
+				{std::cout << "\nSUCCESS FOR PHASE TWO\n";};
 			return;
 		}
 		threshold = tmp;
@@ -158,7 +165,8 @@ void	phase_two_solver(CoordCube cube, std::queue<int> *path)
 		tmp = phase_2_search(cube, threshold, g_plusone, phase_2_heuristic, phase_two_goal, path);
 		if(tmp == SUCCESS)
 		{
-			std::cout << "\nSUCCESS FOR PHASE TWO\n";
+			if (VERBOSE > 1)
+				{std::cout << "\nSUCCESS FOR PHASE TWO\n";};
 			return;
 		}
 		threshold = tmp;
@@ -179,7 +187,8 @@ void		phase_one_solver(CoordCube cube, int steps, std::queue<int> *path)
 	// std::cout << "coord: " << cube.flat_coord() <<"\th: " << phase_1_perfect_heuristic_seek(cube) <<  "                     " <<std::endl;
 	if (cube.corner_orientation_coord_1 == 0 and cube.edge_orientation_coord_1 == 0 and cube.UD_slice_coord_1 == 0)
 	{
-		std::cout << "\nSUCCESS FOR PHASE ONE" << std::endl;
+		if (VERBOSE > 1)
+			{std::cout << "\nSUCCESS FOR PHASE ONE\n";};
 		return;
 	}
 	min_move = get_move_for_cube(cube);
