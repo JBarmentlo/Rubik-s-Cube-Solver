@@ -46,6 +46,10 @@ void			set_edge_permutation_coordinate_2(int index, cubiecube_t* cube);
 int				UD_slice_sorted_coordinate_2(cubiecube_t* cube);
 void			set_UD_slice_sorted_coordinate_2(int index,cubiecube_t* cube);
 
+void			print_coords_after_phase2(cubiecube_t* cube);
+bool			is_cubiecube_goal(cubiecube_t* cube);
+
+
 
 // int 				get_inverse_move_number(int move);
 // int				edge_permutation_coordinate(cubiecube_t* cube);

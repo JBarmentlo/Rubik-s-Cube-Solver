@@ -50,21 +50,42 @@ std::queue<int>    get_path_to_phase_two(std::vector<int> shuffle, std::queue<in
 }
 
 
-std::vector<int>                kociemba(std::vector<int> shuffle)
+void	test_result(std::vector<int> input_shuffle, std::vector<int> output_shuffle)
+{
+	cubiecube_t cubie;
+
+	std::cout << "ENTERING TEST FUNCTION (all values should be equal to 0):" << std::endl;
+	set_solved_cubiecube(&cubie);
+
+	for(auto move : input_shuffle)
+		apply_move(&cubie, move);
+
+	for(auto move : output_shuffle)
+		apply_move(&cubie, move);
+	
+	if (is_cubiecube_goal(&cubie) == true)
+		std::cout << "**** ALL GOOD ****" << std::endl;
+	else
+		std::cout << "!!!!! ERROR !!!!!!" << std::endl;
+	print_coords_after_phase2(&cubie);
+}
+
+
+std::vector<int>                kociemba(std::vector<int> input_shuffle)
 {
     int total_path_length = 0;
-	std::vector<int> complete_path;
+	std::vector<int> final_solution;
 
 	if (VERBOSE >= 1)
 		{std::cout << "\nINPUT SHUFFLE:" << std::endl;
-		for(auto move : shuffle)
+		for(auto move : input_shuffle)
 			std::cout << moves_strings[move] << " ";};
 
-    std::queue<int> path_to_phase_one = get_path_to_phase_one(shuffle);
+    std::queue<int> path_to_phase_one = get_path_to_phase_one(input_shuffle);
 
     total_path_length += path_to_phase_one.size();
 
-    std::queue<int> path_to_phase_two = get_path_to_phase_two(shuffle, path_to_phase_one);
+    std::queue<int> path_to_phase_two = get_path_to_phase_two(input_shuffle, path_to_phase_one);
 
     total_path_length += path_to_phase_two.size();
 
@@ -77,7 +98,7 @@ std::vector<int>                kociemba(std::vector<int> shuffle)
     {
 		if (VERBOSE >= 1)
         	{std::cout << moves_strings[path_to_phase_one.front()] << " ";};
-		complete_path.push_back(path_to_phase_one.front());
+		final_solution.push_back(path_to_phase_one.front());
         path_to_phase_one.pop();
     }
 
@@ -89,10 +110,13 @@ std::vector<int>                kociemba(std::vector<int> shuffle)
     {
 		if (VERBOSE >= 1)
 		    {std::cout << moves_strings[path_to_phase_two.front()] << " ";};
-		complete_path.push_back(path_to_phase_two.front());
+		final_solution.push_back(path_to_phase_two.front());
         path_to_phase_two.pop();
     }
 
-    std::cout << "\n\nTOTAL PATH LENGTH: " << complete_path.size() << "\n\n";
-	return (complete_path);
+    std::cout << "\n\nTOTAL PATH LENGTH: " << final_solution.size() << "\n\n";
+	
+	test_result(input_shuffle, final_solution);
+
+	return (final_solution);
 }
