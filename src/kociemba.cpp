@@ -1,5 +1,6 @@
 #include "kociemba.hpp"
 #include "CubieCube.hpp"
+#include "deya_test.hpp"
 
 std::queue<int>     get_path_to_phase_one(std::vector<int> shuffle)
 {
@@ -41,33 +42,23 @@ std::queue<int>    get_path_to_phase_two(std::vector<int> shuffle, std::queue<in
         apply_move(&cubie, path_to_phase_one.front());
         path_to_phase_one.pop();
     }
+
     CoordCube start(cubie);
+
+	start.solver_init();
+	std::vector<CoordCube> bebes = start.get_babies_phase2(g_plusone, phase_2_heuristic);
+	for(auto bb : bebes)
+	{
+		bb.print_phase_2();
+		std::cout << "\n" << std::endl;
+	}
+
+
     std::queue<int> *path_to_phase_two = new std::queue<int>;
 
     phase_two_solver(start, path_to_phase_two);
 	// phase_two_solver_thread(start, path_to_phase_two);
 	return (*path_to_phase_two);
-}
-
-
-void	test_result(std::vector<int> input_shuffle, std::vector<int> output_shuffle)
-{
-	cubiecube_t cubie;
-
-	std::cout << "ENTERING TEST FUNCTION (all values should be equal to 0):" << std::endl;
-	set_solved_cubiecube(&cubie);
-
-	for(auto move : input_shuffle)
-		apply_move(&cubie, move);
-
-	for(auto move : output_shuffle)
-		apply_move(&cubie, move);
-	
-	if (is_cubiecube_goal(&cubie) == true)
-		std::cout << "**** ALL GOOD ****" << std::endl;
-	else
-		std::cout << "!!!!! ERROR !!!!!!" << std::endl;
-	print_coords_after_phase2(&cubie);
 }
 
 
@@ -84,11 +75,11 @@ std::vector<int>                kociemba(std::vector<int> input_shuffle)
     std::queue<int> path_to_phase_one = get_path_to_phase_one(input_shuffle);
 
     total_path_length += path_to_phase_one.size();
+	int test_phase_one_length = path_to_phase_one.size();
 
     std::queue<int> path_to_phase_two = get_path_to_phase_two(input_shuffle, path_to_phase_one);
 
     total_path_length += path_to_phase_two.size();
-
 
 	if (VERBOSE >= 1 && path_to_phase_one.empty() == false)
     	{std::cout << "\n\nMOVES TO APPLY TO GET TO PHASE ONE:" << std::endl;};
@@ -115,8 +106,9 @@ std::vector<int>                kociemba(std::vector<int> input_shuffle)
     }
 
     std::cout << "\n\nTOTAL PATH LENGTH: " << final_solution.size() << "\n\n";
-	
-	test_result(input_shuffle, final_solution);
+
+	test_result(input_shuffle, final_solution, test_phase_one_length);
+
 
 	return (final_solution);
 }

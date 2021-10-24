@@ -443,7 +443,15 @@ bool			is_cubiecube_goal(cubiecube_t* cube)
 }
 
 
-void			print_coords_after_phase2(cubiecube_t* cube)
+void			print_coords_phase1(cubiecube_t* cube)
+{
+	std::cout << "corner 1 = [" << corner_orientation_coordinate_1(cube) << "]" << std::endl;
+	std::cout << "edge 1 =   [" << edge_orientation_coordinate_1(cube) << "]" << std::endl;
+	std::cout << "UD 1 =     [" << UD_slice_coordinate_1(cube) << "]" << std::endl;
+}
+
+
+void			print_coords_phase2(cubiecube_t* cube)
 {
 	std::cout << "corner 1 = [" << corner_orientation_coordinate_1(cube) << "]" << std::endl;
 	std::cout << "edge 1 =   [" << edge_orientation_coordinate_1(cube) << "]" << std::endl;

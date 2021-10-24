@@ -24,6 +24,8 @@ bool            phase_two_goal(CoordCube coordcube)
 	coordcube.edge_permutation_coord_2 == 0 and
 	coordcube.UD_slice_coord_2 == 0)
 	{
+		std::cout << "IT SHOULD BE A SUCCESS:" << std::endl;
+		coordcube.print_coords_phase2();
 		return true;
 	}
 	return false;
@@ -80,19 +82,6 @@ void	phase_two_multithread_function(int start, int end, int &min, int &tmp, std:
 		}
 		if(tmp < min)
 			min = tmp;
-	}
-	return;
-}
-
-void	phase_two_multithread_function1(int start, int end, int *min, int *tmp, std::vector<CoordCube> bebes, int threshold, g_function g_func, heuristic_function heuristic, is_goal_function is_goal, std::queue<int> *path)
-{
-	for (int i = start; i < end; i++)
-	{
-		*tmp = phase_2_search(bebes[i], threshold, g_func, heuristic, is_goal, path);
-		if(*tmp == SUCCESS)
-			return; // SUCCESS
-		if(*tmp < *min)
-			*min = *tmp;
 	}
 	return;
 }

@@ -20,14 +20,24 @@ CoordCube::CoordCube(int move, int corner_2, int edge_2, int UD_2)
 
 CoordCube::CoordCube(cubiecube_t cubie)
 {
+	this->corner_orientation_coord_1 = 0;
+    this->edge_orientation_coord_1 = 0;
+    this->UD_slice_coord_1 = 0;
     this->corner_permutation_coord_2 = corner_permutation_coordinate_2(&cubie);
     this->edge_permutation_coord_2 = edge_permutation_coordinate_2(&cubie);
     this->UD_slice_coord_2 = UD_slice_sorted_coordinate_2(&cubie);
+
 };
 
 
 CoordCube::CoordCube(void)
 {
+	this->corner_orientation_coord_1 = 0;
+    this->edge_orientation_coord_1 = 0;
+    this->UD_slice_coord_1 = 0;
+    this->corner_permutation_coord_2 = 0;
+    this->edge_permutation_coord_2 = 0;
+    this->UD_slice_coord_2 = 0;
 };
 
 
@@ -50,6 +60,17 @@ unsigned int     		CoordCube::flat_coord(void)
 };
 
 
+void					CoordCube::set_solved(void)
+{
+	this->corner_orientation_coord_1 = 0;
+    this->edge_orientation_coord_1 = 0;
+    this->UD_slice_coord_1 = 0;
+    this->corner_permutation_coord_2 = 0;
+    this->edge_permutation_coord_2 = 0;
+    this->UD_slice_coord_2 = 0;
+}
+
+
 void    				CoordCube::apply_move_phase_one(int move)
 {
     static int** corner_orientation_table_1 = read_corner_orientation_move_table_1();
@@ -59,6 +80,18 @@ void    				CoordCube::apply_move_phase_one(int move)
     this->corner_orientation_coord_1 = corner_orientation_table_1[this->corner_orientation_coord_1][move];
     this->edge_orientation_coord_1 = edge_orientation_table_1[this->edge_orientation_coord_1][move];
     this->UD_slice_coord_1 = UD_slice_table_1[this->UD_slice_coord_1][move];
+};
+
+
+void    				CoordCube::apply_move_phase_two(int move)
+{
+    static int** corner_permutation_table2 = read_corner_permutation_move_table_2();
+    static int** edge_permutation_table2 = read_edge_permutation_move_table_2();
+    static int** UD_slice2_table2 = read_UD2_move_table_2();
+
+    this->corner_permutation_coord_2 = corner_permutation_table2[this->corner_permutation_coord_2][move];
+    this->edge_permutation_coord_2 = edge_permutation_table2[this->edge_permutation_coord_2][move];
+    this->UD_slice_coord_2 = UD_slice2_table2[this->UD_slice_coord_2][move];
 };
 
 

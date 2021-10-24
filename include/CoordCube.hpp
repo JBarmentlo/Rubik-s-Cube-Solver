@@ -42,7 +42,10 @@ class CoordCube
 
 	unsigned int     		flat_coord(void);
 
+	void					set_solved();
+
     void    				apply_move_phase_one(int move);
+    void    				apply_move_phase_two(int move);
 
 	CoordCube				create_baby_from_move_phase1(int move); // ancienne fonction "from stack"
 	CoordCube				create_baby_from_move_phase2(int move);
