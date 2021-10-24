@@ -17,13 +17,12 @@ int main(int argc, char **argv)
 		std::cout << "move = " << move << " o sea: " << moves_strings[move] << std::endl;
 	}
 
-	test_first_steps(shuffle);
-	// solution = kociemba(shuffle);
-	// std::cout << "COMPLETE PATH TO SOLUTION:" << std::endl;
-	// for(auto move : solution)
-	// {
-	// 	std::cout << moves_strings[move] << " ";
-	// }
-	// std::cout << "\n\n";
+	solution = kociemba(shuffle);
+	std::cout << "COMPLETE PATH TO SOLUTION:" << std::endl;
+	for(auto move : solution)
+	{
+		std::cout << moves_strings[move] << " ";
+	}
+	std::cout << "\n\n";
 	return (true);
 }
