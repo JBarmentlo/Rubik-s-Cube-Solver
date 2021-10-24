@@ -29,7 +29,7 @@ std::queue<int>     get_path_to_phase_one(std::vector<int> shuffle)
 }
 
 
-std::queue<int>    get_path_to_phase_two(std::vector<int> shuffle, std::queue<int> path_to_phase_one)
+std::stack<int>    get_path_to_phase_two(std::vector<int> shuffle, std::queue<int> path_to_phase_one)
 {
     cubiecube_t cubie;
     set_solved_cubiecube(&cubie);
@@ -54,7 +54,7 @@ std::queue<int>    get_path_to_phase_two(std::vector<int> shuffle, std::queue<in
 	}
 
 
-    std::queue<int> *path_to_phase_two = new std::queue<int>;
+    std::stack<int> *path_to_phase_two = new std::stack<int>;
 
     phase_two_solver(start, path_to_phase_two);
 	// phase_two_solver_thread(start, path_to_phase_two);
@@ -77,7 +77,7 @@ std::vector<int>                kociemba(std::vector<int> input_shuffle)
     total_path_length += path_to_phase_one.size();
 	int test_phase_one_length = path_to_phase_one.size();
 
-    std::queue<int> path_to_phase_two = get_path_to_phase_two(input_shuffle, path_to_phase_one);
+    std::stack<int> path_to_phase_two = get_path_to_phase_two(input_shuffle, path_to_phase_one);
 
     total_path_length += path_to_phase_two.size();
 
@@ -100,8 +100,8 @@ std::vector<int>                kociemba(std::vector<int> input_shuffle)
 	while(not path_to_phase_two.empty())
     {
 		if (VERBOSE >= 1)
-		    {std::cout << moves_strings[path_to_phase_two.front()] << " ";};
-		final_solution.push_back(path_to_phase_two.front());
+		    {std::cout << moves_strings[path_to_phase_two.top()] << " ";};
+		final_solution.push_back(path_to_phase_two.top());
         path_to_phase_two.pop();
     }
 

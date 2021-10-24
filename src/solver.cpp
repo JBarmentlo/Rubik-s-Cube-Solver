@@ -33,7 +33,7 @@ bool            phase_two_goal(CoordCube coordcube)
 
 
 
-int		phase_2_search(CoordCube cube, int threshold, g_function g_func, heuristic_function heuristic, is_goal_function is_goal, std::queue<int> *path)
+int		phase_2_search(CoordCube cube, int threshold, g_function g_func, heuristic_function heuristic, is_goal_function is_goal, std::stack<int> *path)
 {
 	int		min;
 	int		tmp;
@@ -67,7 +67,7 @@ int		phase_2_search(CoordCube cube, int threshold, g_function g_func, heuristic_
 
 
 std::mutex lock;
-void	phase_two_multithread_function(int start, int end, int &min, int &tmp, std::vector<CoordCube> bebes, int threshold, g_function g_func, heuristic_function heuristic, is_goal_function is_goal, std::queue<int> *path)
+void	phase_two_multithread_function(int start, int end, int &min, int &tmp, std::vector<CoordCube> bebes, int threshold, g_function g_func, heuristic_function heuristic, is_goal_function is_goal, std::stack<int> *path)
 {
 	std::lock_guard guard(lock);
 	if (tmp == SUCCESS)
@@ -87,7 +87,7 @@ void	phase_two_multithread_function(int start, int end, int &min, int &tmp, std:
 }
 
 
-void	phase_two_solver_thread(CoordCube cube, std::queue<int> *path)
+void	phase_two_solver_thread(CoordCube cube, std::stack<int> *path)
 {
 	int		i = 0;
 	int		threshold = THRESHOLD_INIT;
@@ -141,7 +141,7 @@ void	phase_two_solver_thread(CoordCube cube, std::queue<int> *path)
 }
 
 
-void	phase_two_solver(CoordCube cube, std::queue<int> *path)
+void	phase_two_solver(CoordCube cube, std::stack<int> *path)
 {
 	int		i = 0;
 	int		tmp = 0;

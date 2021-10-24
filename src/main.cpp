@@ -12,6 +12,11 @@ int main(int argc, char **argv)
 	if (parse_arguments(argc, argv, &shuffle) == false)
 		return (false);
 
+	for (int move: shuffle)
+	{
+		std::cout << "move = " << move << " o sea: " << moves_strings[move] << std::endl;
+	}
+
 	test_first_steps(shuffle);
 	// solution = kociemba(shuffle);
 	// std::cout << "COMPLETE PATH TO SOLUTION:" << std::endl;

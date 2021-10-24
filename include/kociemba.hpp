@@ -6,7 +6,6 @@
 #include "solver.hpp"
 
 #include <vector>
-#include <queue>
 
 std::vector<int>    kociemba(std::vector<int> shuffle);
 
