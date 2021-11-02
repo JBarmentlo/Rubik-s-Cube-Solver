@@ -10,7 +10,7 @@
 #include <Python.h>
 #include <wchar.h>
 
-void pypytonton()
+void pypytonton(std::vector<int> shuffle, std::vector<int> solution)
 {
 	FILE* fp;
 	const char* filename = "../src/visu.py";
@@ -18,11 +18,10 @@ void pypytonton()
     wchar_t *argv[3];
 
     argc = 3;
-    argv[0] = L"../src/visu.py";
-    argv[1] = L"F R U2 B' L' D'";
-    argv[2] = L"D L B U2 R R2 F'";
+	argv[0] = from_char_to_vec(filename);
+	argv[1] = from_vec_to_arg(shuffle);
+	argv[2] = from_vec_to_arg(solution);
 
-    Py_SetProgramName(argv[0]);
     Py_Initialize();
     PySys_SetArgv(argc, argv);
 
@@ -53,13 +52,14 @@ int	complete_process(int argc, char **argv)
 		if (i < solution.size() - 1)
 			{std::cout << " ";};
 	}
+	if (arguments.visu == true)
+		pypytonton(shuffle, solution);
 	return (true);
 }
 
 
 int main(int argc, char **argv)
 {
-	// pypytonton();
 	if (complete_process(argc, argv) == true)
 		return (true);
 	return (false);

@@ -179,6 +179,47 @@ bool	check_real_atoi(char *arg)
 	return (true);
 }
 
+wchar_t*			from_char_to_vec(const char* filename)
+{
+	wchar_t* arg;
+	int i;
+
+	arg = (wchar_t *)malloc(sizeof(wchar_t) * (strlen(filename) + 1));
+
+	for (i = 0; i < strlen(filename); i++)
+	{
+		arg[i] = filename[i];
+	}
+	arg[i] = '\0';
+	return arg;
+}
+
+
+wchar_t*			from_vec_to_arg(std::vector<int> vec)
+{
+	wchar_t* arg;
+
+	arg = (wchar_t *)malloc(sizeof(wchar_t) * (vec.size() * 2) + 1);
+	int i = 0;
+	for (int j = 0; j < vec.size(); j++)
+	{
+		int nb = vec[j];
+		for (char c: moves_strings[nb])
+		{
+			arg[i] = c;
+			i += 1;
+		}
+		if (j + 1 < vec.size())
+		{
+			arg[i] = ' ';
+			i += 1;
+		}
+	}
+	arg[i] = '\0';
+	return arg;
+
+}
+
 
 bool	parse_arguments(int argc, char **argv, std::vector<int> *shuffle, args_t *arguments)
 {

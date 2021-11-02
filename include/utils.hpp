@@ -34,6 +34,8 @@ bool				is_allowed_move_phase2(int move);
 std::vector<int>	create_random_shuffle(int moves);
 std::vector<char*>	ft_strsplit(char *string, const char delimiter);
 bool				parse_arguments(int argc, char **argv, std::vector<int> *shuffle, args_t *arguments);
+wchar_t*			from_char_to_vec(const char* filename);
+wchar_t*			from_vec_to_arg(std::vector<int> vec);
 
 
 // int				power_three(int n);
