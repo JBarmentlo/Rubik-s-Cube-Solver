@@ -1,7 +1,6 @@
 #include "kociemba.hpp"
 #include "utils.hpp"
 #include "define.hpp"
-#include "deya_test.hpp"
 #include "heuristics_tables.hpp"
 
 
@@ -22,6 +21,7 @@ void pypytonton(std::vector<int> shuffle, std::vector<int> solution)
 	argv[1] = from_vec_to_arg(shuffle);
 	argv[2] = from_vec_to_arg(solution);
 
+	std::cout << "\n\nLAUNCHING VISUAL:" << std::endl;
     Py_Initialize();
     PySys_SetArgv(argc, argv);
 
@@ -45,7 +45,7 @@ int	complete_process(int argc, char **argv)
 
 	solution = kociemba(shuffle, arguments);
 	if (arguments.verbose >= 1)
-		{std::cout << "COMPLETE PATH TO SOLUTION:" << std::endl;};
+		{std::cout << "COMPLETE PATH TO SOLUTION:" << std::endl;}
 	for(int i = 0; i < solution.size(); i++)
 	{
 		std::cout << moves_strings[solution[i]];

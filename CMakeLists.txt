@@ -20,7 +20,6 @@ set(SOURCES
     src/cubiecube_utils.cpp
     src/utils.cpp
 	src/heuristics_tables.cpp
-	src/deya_test.cpp
 )
 
 add_executable(Roobik ${SOURCES})

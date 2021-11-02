@@ -18,6 +18,9 @@ std::queue<int>     get_path_to_phase_one(std::vector<int> shuffle, args_t args)
 
     phase_one_solver(start, 0, &path);
 
+	// FREE the static tables:
+	start.apply_move_phase_one(0);
+
     return(path);
 }
 
@@ -38,11 +41,11 @@ std::stack<int>    get_path_to_phase_two(std::vector<int> shuffle, std::queue<in
 
     CoordCube start(cubie);
 
-    std::stack<int> *path_to_phase_two = new std::stack<int>;
+    std::stack<int> path_to_phase_two;
 
-    phase_two_solver(start, path_to_phase_two);
+    phase_two_solver(start, &path_to_phase_two);
 
-	return (*path_to_phase_two);
+	return (path_to_phase_two);
 }
 
 

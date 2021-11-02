@@ -223,6 +223,8 @@ wchar_t*			from_vec_to_arg(std::vector<int> vec)
 
 bool	parse_arguments(int argc, char **argv, std::vector<int> *shuffle, args_t *arguments)
 {
+	arguments->visu = false;
+	arguments->verbose = 0;
 	if (argc <= 1 or argc > 5)
 	{
 		std::cout << USAGE;

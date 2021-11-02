@@ -1,6 +1,6 @@
 
 import numpy as np
-import matplotlib.pyplot as plt
+import matplotlib
 import sys
 
 import numpy as np
@@ -581,6 +581,7 @@ class InteractiveCube(plt.Axes):
 		self.first_shuffle = first_shuffle
 		self.resolution_shuffle = resolution_shuffle
 		self.solved = True
+		self.input_done = False
 		self.N = N
 		self._view = view
 		self._start_rot = Quaternion.from_v_theta((1, -1, 0),
@@ -717,13 +718,16 @@ class InteractiveCube(plt.Axes):
 				print(move)
 				self._do_moves(move)
 			self.solved = True
+			self.input_done = False
 
 	def _starting_cube(self, *args): # originally _reset_cube
-		print(f"Applying input shuffle:")
-		for move in self.first_shuffle:
-			print(move)
-			self._do_moves(move)
-		self.solved = False
+		if (self.input_done == False):
+			print(f"\nApplying input shuffle:")
+			for move in self.first_shuffle:
+				print(move)
+				self._do_moves(move)
+			self.input_done = True
+			self.solved = False
 	
 
 	def _do_moves(self, move):
