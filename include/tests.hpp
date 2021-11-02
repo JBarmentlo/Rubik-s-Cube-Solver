@@ -7,6 +7,7 @@
 #include "move_tables.hpp"
 #include "CoordCube.hpp"
 
+
 #include "utils.hpp"
 typedef int (*get_coord_function)(cubiecube_t*);
 typedef void (*set_coord_function)(int, cubiecube_t*);

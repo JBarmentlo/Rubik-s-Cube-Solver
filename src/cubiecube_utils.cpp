@@ -433,6 +433,35 @@ void			set_UD_slice_sorted_coordinate_2(int index, cubiecube_t* cube)
 };
 
 
+bool			is_cubiecube_goal(cubiecube_t* cube)
+{
+	if(corner_orientation_coordinate_1(cube) == 0 and edge_orientation_coordinate_1(cube) == 0
+	and UD_slice_coordinate_1(cube) == 0 and corner_permutation_coordinate_2(cube) == 0
+	and edge_permutation_coordinate_2(cube) == 0 and UD_slice_sorted_coordinate_2(cube) == 0)
+		return (true);
+	return (false);
+}
+
+
+void			print_coords_phase1(cubiecube_t* cube)
+{
+	std::cout << "corner 1 = [" << corner_orientation_coordinate_1(cube) << "]" << std::endl;
+	std::cout << "edge 1 =   [" << edge_orientation_coordinate_1(cube) << "]" << std::endl;
+	std::cout << "UD 1 =     [" << UD_slice_coordinate_1(cube) << "]" << std::endl;
+}
+
+
+void			print_coords_phase2(cubiecube_t* cube)
+{
+	std::cout << "corner 1 = [" << corner_orientation_coordinate_1(cube) << "]" << std::endl;
+	std::cout << "edge 1 =   [" << edge_orientation_coordinate_1(cube) << "]" << std::endl;
+	std::cout << "UD 1 =     [" << UD_slice_coordinate_1(cube) << "]" << std::endl;
+	std::cout << "corner 2 = [" << corner_permutation_coordinate_2(cube) << "]" << std::endl;
+	std::cout << "edge 2 =   [" << edge_permutation_coordinate_2(cube) << "]" << std::endl;
+	std::cout << "UD 2 =     [" << UD_slice_sorted_coordinate_2(cube) << "]" << "\n\n";
+}
+
+
 
 // int 	get_inverse_move_number(int move)
 // {

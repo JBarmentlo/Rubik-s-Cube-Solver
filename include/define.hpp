@@ -5,6 +5,9 @@
 #include <iostream>
 #include <string>
 
+#define VERBOSE					2
+
+
 static std::map<int, std::string> moves_strings = {
 	{0, "F"}, {1, "R"}, {2, "U"}, {3, "B"}, {4, "L"}, {5, "D"},
 	{6, "F2"}, {7, "R2"}, {8, "U2"}, {9, "B2"}, {10, "L2"}, {11, "D2"},
@@ -15,6 +18,7 @@ static std::map<std::string, int> moves_numbers = {
 	{"F", 0}, {"R", 1}, {"U", 2}, {"B", 3}, {"L", 4}, {"D", 5},
 	{"F2", 6}, {"R2", 7}, {"U2", 8}, {"B2", 9}, {"L2", 10}, {"D2", 11},
 	{"F'", 12}, {"R'", 13}, {"U'", 14}, {"B'", 15}, {"L'", 16}, {"D'", 17}};
+
 
 
 #define FIRST_CORNER 			URF
