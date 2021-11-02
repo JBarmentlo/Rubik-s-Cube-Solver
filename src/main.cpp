@@ -61,6 +61,12 @@ int	complete_process(int argc, char **argv)
 int main(int argc, char **argv)
 {
 	if (complete_process(argc, argv) == true)
+	{
+		free_tables();
+		free_move_tables();
 		return (true);
+	}
+	free_move_tables();
+	free_tables();
 	return (false);
 }

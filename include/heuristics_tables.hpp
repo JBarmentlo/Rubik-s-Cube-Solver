@@ -21,6 +21,7 @@ void            make_UD_2_heuristics_table(void);
 
 void        	make_heuristics_tables_phase2(void);
 void 			backwards_fill_h_table(int limit);
+void			free_tables(void);
 
 
 #endif

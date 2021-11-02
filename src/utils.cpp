@@ -199,7 +199,7 @@ wchar_t*			from_vec_to_arg(std::vector<int> vec)
 {
 	wchar_t* arg;
 
-	arg = (wchar_t *)malloc(sizeof(wchar_t) * (vec.size() * 2) + 1);
+	arg = (wchar_t *)malloc(sizeof(wchar_t) * (vec.size() * 3) + 1);
 	int i = 0;
 	for (int j = 0; j < vec.size(); j++)
 	{

@@ -96,6 +96,12 @@ char* h_table_1 = (char*)malloc(sizeof(char) * (HSIZEONE / 2));
 char* h_table_2 = (char*)malloc(sizeof(char) * ((HSIZEONE / 2) + 1)); 
 std::mutex print;
 
+void free_tables(void)
+{
+	free(h_table_1);
+	free(h_table_2);
+
+}
 
 inline void write_split_table(int value, unsigned int index)
 {
