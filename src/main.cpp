@@ -39,19 +39,13 @@ int	complete_process(int argc, char **argv)
 {
 	std::vector<int> shuffle;
 	std::vector<int> solution;
+	args_t arguments;
 
-	if (parse_arguments(argc, argv, &shuffle) == false)
+	if (parse_arguments(argc, argv, &shuffle, &arguments) == false)
 		return (false);
 
-	if (VERBOSE >= 1)
-	{for (int move: shuffle)
-		{
-			std::cout << moves_strings[move] << " ";
-		}
-		std::cout << std::endl;};
-
-	solution = kociemba(shuffle);
-	if (VERBOSE >= 1)
+	solution = kociemba(shuffle, arguments);
+	if (arguments.verbose >= 1)
 		{std::cout << "COMPLETE PATH TO SOLUTION:" << std::endl;};
 	for(int i = 0; i < solution.size(); i++)
 	{

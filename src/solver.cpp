@@ -62,14 +62,9 @@ void	phase_two_solver(CoordCube cube, std::stack<int> *path)
 	cube.solver_init();
 	while (i < MAX_ITER)
 	{
-		// std::cout << "threshold = " << threshold << std::endl;
 		tmp = phase_2_search(cube, threshold, g_plusone, phase_2_heuristic, phase_two_goal, path);
 		if(tmp == SUCCESS)
-		{
-			if (VERBOSE > 1)
-				{std::cout << "\nSUCCESS FOR PHASE TWO\n";};
 			return;
-		}
 		threshold = tmp;
 		i += 1;
 	}
@@ -87,11 +82,7 @@ void		phase_one_solver(CoordCube cube, int steps, std::queue<int> *path)
 
 	// std::cout << "coord: " << cube.flat_coord() <<"\th: " << phase_1_perfect_heuristic_seek(cube) <<  "                     " <<std::endl;
 	if (cube.corner_orientation_coord_1 == 0 and cube.edge_orientation_coord_1 == 0 and cube.UD_slice_coord_1 == 0)
-	{
-		if (VERBOSE > 1)
-			{std::cout << "\nSUCCESS FOR PHASE ONE\n";};
 		return;
-	}
 	min_move = get_move_for_cube(cube);
 	// std::cout << "move: " << min_move << std::endl;
 

@@ -170,7 +170,7 @@ void	test_after_phase_one(CoordCube coordie1, cubiecube_t cubie1)
 
 
 
-void	test_first_steps(std::vector<int> input_shuffle)
+void	test_first_steps(std::vector<int> input_shuffle, args_t args)
 {
 	CoordCube coordie(0);
 	cubiecube_t cubie;
@@ -261,11 +261,7 @@ void	phase_two_solver_thread(CoordCube cube, std::stack<int> *path)
 		}
 		path->pop();
 		if(tmp == SUCCESS)
-		{
-			if (VERBOSE >= 1)
-				{std::cout << "\nSUCCESS FOR PHASE TWO\n";};
 			return;
-		}
 		threshold = tmp;
 		i += 1;
 	}

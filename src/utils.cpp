@@ -167,43 +167,69 @@ std::vector<char*>		ft_strsplit(char *string, const char delimiter)
 	return(v);
 };
 
-
-bool	parse_arguments(int argc, char **argv, std::vector<int> *shuffle)
+bool	check_real_atoi(char *arg)
 {
-	if (argc <= 1 or argc > 2)
+	int i = 0;
+	while (arg[i] != '\0')
+		{
+			if (isdigit(arg[i]) == false)
+				return (false);
+			i++;
+		}
+	return (true);
+}
+
+
+bool	parse_arguments(int argc, char **argv, std::vector<int> *shuffle, args_t *arguments)
+{
+	if (argc <= 1 or argc > 5)
 	{
 		std::cout << USAGE;
 		return (false);
 	}
-	if (argc == 2)
+	for (int i = 1; i < argc; i++)
 	{
-		int moves = atoi(argv[1]);
-
-		if (moves == 0 and argv[1][0] != '0')
+		if (strcmp("--verbose", argv[i]) == 0 and (i + 1) < argc)
 		{
-			std::vector<char*> v = ft_strsplit(argv[1], ' ');
-			for(auto word : v)
-			{
-				if (moves_numbers.find(word) == moves_numbers.end())
-				{
-					std::cout << USAGE;
-					return (false);
-				}
-				shuffle->push_back(moves_numbers[word]);
-			}
-			return (true);
-		}
-		int i = 0;
-		while (argv[1][i] != '\0')
-		{
-			if (isdigit(argv[1][i]) == false)
+			i += 1;
+			arguments->verbose = atoi(argv[i]);
+			if (check_real_atoi(argv[i]) == false or arguments->verbose < 0 or arguments->verbose > 2)
 			{
 				std::cout << USAGE;
 				return (false);
 			}
-			i++;
+			
 		}
-		*shuffle = create_random_shuffle(moves);
+		else if (strcmp("--visu", argv[i]) == 0 and (i + 1) < argc)
+		{
+			arguments->visu = true;
+		}
+		else
+		{
+			int moves = atoi(argv[i]);
+
+			if (moves == 0 and argv[i][0] != '0')
+			{
+				std::vector<char*> v = ft_strsplit(argv[i], ' ');
+				for(auto word : v)
+				{
+					if (moves_numbers.find(word) == moves_numbers.end())
+					{
+						std::cout << USAGE;
+						return (false);
+					}
+					shuffle->push_back(moves_numbers[word]);
+				}
+				return (true);
+			}
+			if (check_real_atoi(argv[i]) == false)
+			{
+				std::cout << USAGE;
+				return (false);
+			}
+			*shuffle = create_random_shuffle(moves);
+		}
+
 	}
 	return (true);
 };

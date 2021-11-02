@@ -645,9 +645,7 @@ class InteractiveCube(plt.Axes):
 
 		# write some instructions
 		self.figure.text(0.05, 0.05,
-						 "Mouse/arrow keys adjust view\n"
-						 "U/D/L/R/B/F keys turn faces\n"
-						 "(hold shift for counter-clockwise)",
+						 "Mouse/arrow keys adjust view\n",
 						 size=10)
 
 	def _initialize_widgets(self):
@@ -714,14 +712,16 @@ class InteractiveCube(plt.Axes):
 
 	def _solve_cube(self, *args): # originally _reset_view
 		if (self.solved == False):
+			print(f"\nApplying solution shuffle:")
 			for move in self.resolution_shuffle:
-				print(f"applying move {move}")
+				print(move)
 				self._do_moves(move)
 			self.solved = True
 
 	def _starting_cube(self, *args): # originally _reset_cube
+		print(f"Applying input shuffle:")
 		for move in self.first_shuffle:
-			print(f"applying move {move}")
+			print(move)
 			self._do_moves(move)
 		self.solved = False
 	
@@ -831,8 +831,6 @@ if __name__ == "__main__":
 		sys.exit()
 
 	first_shuffle, resolution_shuffle = parse_args(sys.argv)
-
-	print(f"\nIN VISU:\n{first_shuffle = }\n{resolution_shuffle = }")
 
 	c = Cube(3)
 	c.draw_interactive(first_shuffle, resolution_shuffle)
