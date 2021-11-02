@@ -8,21 +8,30 @@
 #include <stdio.h>
 #include <conio.h>
 #include <Python.h>
+#include <wchar.h>
 
 void pypytonton()
 {
-	char filename[] = "../visu/code/test.py";
 	FILE* fp;
+	const char* filename = "../src/visu.py";
+	int argc = 2;
+    wchar_t *argv[3];
+
+    argc = 3;
+    argv[0] = L"../src/visu.py";
+    argv[1] = L"F R U2 B' L' D'";
+    argv[2] = L"D L B U2 R R2 F'";
+
+    Py_SetProgramName(argv[0]);
+    Py_Initialize();
+    PySys_SetArgv(argc, argv);
 
 	Py_Initialize();
 
 	fp = _Py_fopen(filename, "r");
 	PyRun_SimpleFile(fp, filename);
-	// PyRun_SimpleString("import matplotlib");
 
 	Py_Finalize();
-	// if(!_getch()) _getch();
-
 }
 
 
