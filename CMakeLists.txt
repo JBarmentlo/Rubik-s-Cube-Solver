@@ -9,6 +9,7 @@ set(CMAKE_CXX_FLAGS "-O3 -pthread -mcmodel=large")
 # include(CTest)
 # enable_testing()
 
+
 set(SOURCES
     src/main.cpp
     src/kociemba.cpp
@@ -26,7 +27,13 @@ add_executable(Roobik ${SOURCES})
 target_include_directories(Roobik
     PRIVATE 
         ${PROJECT_SOURCE_DIR}/include
+
 )
+
+find_package(PythonLibs REQUIRED)
+include_directories(${PYTHON_INCLUDE_DIRS})
+target_link_libraries(Roobik ${PYTHON_LIBRARIES})
+
 set_property(TARGET Roobik PROPERTY CXX_STANDARD 17)
 # set(CPACK_PROJECT_NAME ${PROJECT_NAME})
 # set(CPACK_PROJECT_VERSION ${PROJECT_VERSION})

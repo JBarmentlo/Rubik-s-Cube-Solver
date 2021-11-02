@@ -45,19 +45,10 @@ std::stack<int>    get_path_to_phase_two(std::vector<int> shuffle, std::queue<in
 
     CoordCube start(cubie);
 
-	start.solver_init();
-	std::vector<CoordCube> bebes = start.get_babies_phase2(g_plusone, phase_2_heuristic);
-	for(auto bb : bebes)
-	{
-		bb.print_phase_2();
-		std::cout << "\n" << std::endl;
-	}
-
-
     std::stack<int> *path_to_phase_two = new std::stack<int>;
 
     phase_two_solver(start, path_to_phase_two);
-	// phase_two_solver_thread(start, path_to_phase_two);
+
 	return (*path_to_phase_two);
 }
 
@@ -75,7 +66,6 @@ std::vector<int>                kociemba(std::vector<int> input_shuffle)
     std::queue<int> path_to_phase_one = get_path_to_phase_one(input_shuffle);
 
     total_path_length += path_to_phase_one.size();
-	int test_phase_one_length = path_to_phase_one.size();
 
     std::stack<int> path_to_phase_two = get_path_to_phase_two(input_shuffle, path_to_phase_one);
 
@@ -105,10 +95,8 @@ std::vector<int>                kociemba(std::vector<int> input_shuffle)
         path_to_phase_two.pop();
     }
 
-    std::cout << "\n\nTOTAL PATH LENGTH: " << final_solution.size() << "\n\n";
-
-	test_result(input_shuffle, final_solution, test_phase_one_length);
-
+	if (VERBOSE >= 1)
+    	{std::cout << "\n\nTOTAL PATH LENGTH: " << final_solution.size() << "\n\n";};
 
 	return (final_solution);
 }

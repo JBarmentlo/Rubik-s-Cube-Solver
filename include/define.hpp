@@ -5,7 +5,7 @@
 #include <iostream>
 #include <string>
 
-#define VERBOSE					2
+#define VERBOSE					0
 
 
 static std::map<int, std::string> moves_strings = {

@@ -17,11 +17,7 @@ bool            phase_two_goal(CoordCube coordcube)
 	if (coordcube.corner_permutation_coord_2 == 0 and
 	coordcube.edge_permutation_coord_2 == 0 and
 	coordcube.UD_slice_coord_2 == 0)
-	{
-		std::cout << "IT SHOULD BE A SUCCESS:" << std::endl;
-		coordcube.print_coords_phase2();
 		return true;
-	}
 	return false;
 }
 
