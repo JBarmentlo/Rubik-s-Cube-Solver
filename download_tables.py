@@ -21,6 +21,7 @@ def download_tables():
 	)
 	my_bucket = resource.Bucket('roobik-tables')
 
+
 	total_size = 0
 	for s3_object in my_bucket.objects.all():
 		total_size += s3_object.size

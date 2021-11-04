@@ -14,8 +14,9 @@ RUN apt-get install -y curl wget zsh cmake
 RUN sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" -y
 RUN apt-get install direnv; echo 'eval "$(direnv hook zsh)"' >> ~/.zshrc
 RUN echo "export HISTFILE=/workspaces/Rubik-s-Cube-Solver/.zsh_history" >> ~/.zshrc
-# COPY requirements.txt requirements.txt
-# RUN pip install -r requirements.txt
+COPY requirements.txt requirements.txt
+COPY include/conio.h include/conio.h
+RUN pip install -r requirements.txt
 # RUN apt-get install valgrind -y
 # RUN apt-get install python -y
 ENTRYPOINT /bin/zsh
