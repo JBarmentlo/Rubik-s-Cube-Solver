@@ -205,6 +205,20 @@ void    				CoordCube::print_phase_2()
     std::cout << "g =  " << this->g << "   h = " << this->h << std::endl;
 };
 
+    int corner_permutation_coord_2;
+    int edge_permutation_coord_2;
+    int UD_slice_coord_2;
+    
+
+unsigned int     		CoordCube::flat_coord_2_2(void)
+{
+	return((unsigned int)corner_permutation_coord_2 * (unsigned int)UD_slice_coord_2 + (unsigned int)UD_slice_coord_2);
+};
+
+unsigned int     		CoordCube::flat_coord_2_1(void)
+{
+	return((unsigned int)edge_permutation_coord_2 * (unsigned int)UD_slice_coord_2 + (unsigned int)UD_slice_coord_2);
+};
 
 // bool	CoordCube::operator==(const CoordCube &cube)
 // {

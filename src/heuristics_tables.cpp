@@ -507,4 +507,3 @@ void	make_heuristics_tables_phase2(void)
 	make_edge_perm_2_heuristics_table(); // TODO: check for segfault!!
 	make_UD_2_heuristics_table();
 }
-

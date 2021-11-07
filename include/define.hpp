@@ -56,6 +56,10 @@ static bool is_allowed_quarter_turns[6] = {true, false, false, true, false}; // 
 #define N_MUTEX 	32
 #define UNFILLED 	15
 #define HSIZEONE	N_EDGE_ORI_1 * N_CORNER_ORI_1 * N_UD_1
+#define HSIZETWO_1	N_EDGE_PERMUTATION_2 * N_UD_2
+#define HSIZETWO_2	N_CORNER_PERMUTATION_2 * N_UD_2
+
+
 
 typedef enum {
     URF, UFL, ULB, UBR, DFR, DLF, DBL, DRB
@@ -102,6 +106,9 @@ inline edge_t operator-- (edge_t &d, int) {
 #define EDGE_PERMUTATION_2_NAME 	"../tables/moves/edge_perm_2_move"
 #define CORNER_PERMUTATION_NAME 	"../tables/moves/corner_perm_2_move"
 #define PHASE_ONE_HEURISTIC_NAME 	"../tables/heuristics/phase_1_h_table"
+#define PHASE_TWO_HEURISTIC_NAME_1 	"../tables/heuristics/phase_2_h_table_1"
+#define PHASE_TWO_HEURISTIC_NAME_2 	"../tables/heuristics/phase_2_h_table_2"
+
 
 #define SPLIT_ONE_NAME				"../tables/heuristics/onehalf12"
 #define SPLIT_TWO_NAME				"../tables/heuristics/twohalf12"

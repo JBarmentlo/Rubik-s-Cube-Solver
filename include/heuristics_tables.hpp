@@ -23,4 +23,6 @@ void        	make_heuristics_tables_phase2(void);
 void 			backwards_fill_h_table(int limit);
 
 
+void 			testo(void);
+
 #endif

@@ -41,6 +41,8 @@ class CoordCube
 
 
 	unsigned int     		flat_coord(void);
+	unsigned int     		flat_coord_2_1(void);
+	unsigned int     		flat_coord_2_2(void);
 
 	void					set_solved();
 
