@@ -129,12 +129,12 @@ int*			fill_table_with_value(int* table, int value, int size)
 	return (table);
 };
 
-
 bool  is_allowed_move_phase2(int move)
 {
-  if (is_allowed_quarter_turns[move % N_BASIC_MOVES] == false &&
-      move != ((move % N_BASIC_MOVES) + N_BASIC_MOVES))
-      return false;
+	if (is_allowed_quarter_turns[move % N_BASIC_MOVES] == true)
+		return true;
+	if (move < 6 or move > 11)
+		return false;
     return true;
 };
 

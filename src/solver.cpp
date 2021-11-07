@@ -42,6 +42,7 @@ int		phase_2_search(CoordCube cube, int threshold, g_function g_func, heuristic_
 			tmp = phase_2_search(bebe, threshold, g_func, heuristic, is_goal, path);
 			if(tmp == SUCCESS)
 			{
+				// std::cout << bebe.origin_move << std::endl;
 				path->push(bebe.origin_move);
 				return (SUCCESS);
 			}
