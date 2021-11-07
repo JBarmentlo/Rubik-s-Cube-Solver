@@ -7,6 +7,6 @@
 
 #include <vector>
 
-std::vector<int>    kociemba(std::vector<int> shuffle);
+std::vector<int>    kociemba(std::vector<int> shuffle, args_t args);
 
 #endif

@@ -1,6 +1,6 @@
 
 import numpy as np
-import matplotlib.pyplot as plt
+import matplotlib
 import sys
 
 import numpy as np
@@ -580,6 +580,8 @@ class InteractiveCube(plt.Axes):
 		
 		self.first_shuffle = first_shuffle
 		self.resolution_shuffle = resolution_shuffle
+		self.solved = True
+		self.input_done = False
 		self.N = N
 		self._view = view
 		self._start_rot = Quaternion.from_v_theta((1, -1, 0),
@@ -637,10 +639,6 @@ class InteractiveCube(plt.Axes):
 									   self._mouse_release)
 		self.figure.canvas.mpl_connect('motion_notify_event',
 									   self._mouse_motion)
-		# self.figure.canvas.mpl_connect('key_press_event',
-		# 							   self._key_press)
-		self.figure.canvas.mpl_connect('key_press_event',
-									   self.shuffles)
 		self.figure.canvas.mpl_connect('key_release_event',
 									   self._key_release)
 
@@ -648,19 +646,18 @@ class InteractiveCube(plt.Axes):
 
 		# write some instructions
 		self.figure.text(0.05, 0.05,
-						 "Mouse/arrow keys adjust view\n"
-						 "U/D/L/R/B/F keys turn faces\n"
-						 "(hold shift for counter-clockwise)",
+						 "Mouse/arrow keys adjust view\n",
 						 size=10)
 
 	def _initialize_widgets(self):
 		self._ax_reset = self.figure.add_axes([0.75, 0.05, 0.2, 0.075])
-		self._btn_reset = widgets.Button(self._ax_reset, 'Reset View')
-		self._btn_reset.on_clicked(self._reset_view)
+		self._btn_reset = widgets.Button(self._ax_reset, 'Solve cube')
+		self._btn_reset.on_clicked(self._solve_cube)
 
 		self._ax_solve = self.figure.add_axes([0.55, 0.05, 0.2, 0.075])
-		self._btn_solve = widgets.Button(self._ax_solve, 'Reset Cube')
-		self._btn_solve.on_clicked(self._reset_cube)
+		self._btn_solve = widgets.Button(self._ax_solve, 'Input shuffle')
+		self._btn_solve.on_clicked(self._starting_cube)
+  
 
 	def _project(self, pts):
 		return project_points(pts, self._current_rot, self._view, [0, 1, 0])
@@ -714,17 +711,23 @@ class InteractiveCube(plt.Axes):
 									  layer=layer)
 				self._draw_cube()
 
-	def _reset_view(self, *args):
-		self.set_xlim(self._start_xlim)
-		self.set_ylim(self._start_ylim)
-		self._current_rot = self._start_rot
-		self._draw_cube()
+	def _solve_cube(self, *args): # originally _reset_view
+		if (self.solved == False):
+			print(f"\nApplying solution shuffle:")
+			for move in self.resolution_shuffle:
+				print(move)
+				self._do_moves(move)
+			self.solved = True
+			self.input_done = False
 
-	def _reset_cube(self, *args):
-		move_list = self.cube._move_list[:]
-		for (face, n, layer) in move_list[::-1]:
-			self.rotate_face(face, -n, layer, steps=3)
-		self.cube._move_list = []
+	def _starting_cube(self, *args): # originally _reset_cube
+		if (self.input_done == False):
+			print(f"\nApplying input shuffle:")
+			for move in self.first_shuffle:
+				print(move)
+				self._do_moves(move)
+			self.input_done = True
+			self.solved = False
 	
 
 	def _do_moves(self, move):
@@ -736,60 +739,7 @@ class InteractiveCube(plt.Axes):
 			direction = 1
 		move = move[0]
 		self.rotate_face(move, direction)
-		plt.pause(0.3)
-
-
-
-	def shuffles(self, event):
-		"""Handler for key press events"""
-		if event.key == "1":
-			print("FIRST SHUFFLE")
-			for move in self.first_shuffle:
-				self._do_moves(move)
-		if event.key == "2":
-			print("RESOLUTION SHUFFLE")
-			for move in self.resolution_shuffle:
-				self._do_moves(move)
-
-
-		if event.key == 'shift':
-			self._shift = True
-		elif event.key.isdigit():
-			self._digit_flags[int(event.key)] = 1
-		elif event.key == 'right':
-			if self._shift:
-				ax_LR = self._ax_LR_alt
-			else:
-				ax_LR = self._ax_LR
-			self.rotate(Quaternion.from_v_theta(ax_LR,
-												5 * self._step_LR))
-		elif event.key == 'left':
-			if self._shift:
-				ax_LR = self._ax_LR_alt
-			else:
-				ax_LR = self._ax_LR
-			self.rotate(Quaternion.from_v_theta(ax_LR,
-												-5 * self._step_LR))
-		elif event.key == 'up':
-			self.rotate(Quaternion.from_v_theta(self._ax_UD,
-												5 * self._step_UD))
-		elif event.key == 'down':
-			self.rotate(Quaternion.from_v_theta(self._ax_UD,
-												-5 * self._step_UD))
-		elif event.key.upper() in 'LRUDBF':
-			print(event.key.upper())
-			if self._shift:
-				direction = -1
-			else:
-				direction = 1
-
-			if np.any(self._digit_flags[:self.N]):
-				for d in np.arange(self.N)[self._digit_flags[:self.N]]:
-					self.rotate_face(event.key.upper(), direction, layer=d)
-			else:
-				self.rotate_face(event.key.upper(), direction)
-				
-		self._draw_cube()
+		plt.pause(0.01)
 
 
 	def _key_press(self, event):
@@ -818,19 +768,6 @@ class InteractiveCube(plt.Axes):
 		elif event.key == 'down':
 			self.rotate(Quaternion.from_v_theta(self._ax_UD,
 												-5 * self._step_UD))
-		elif event.key.upper() in 'LRUDBF':
-			print(event.key.upper())
-			if self._shift:
-				direction = -1
-			else:
-				direction = 1
-
-			if np.any(self._digit_flags[:self.N]):
-				for d in np.arange(self.N)[self._digit_flags[:self.N]]:
-					self.rotate_face(event.key.upper(), direction, layer=d)
-			else:
-				self.rotate_face(event.key.upper(), direction)
-				
 		self._draw_cube()
 
 	def _key_release(self, event):
@@ -886,69 +823,18 @@ class InteractiveCube(plt.Axes):
 				self.figure.canvas.draw()
 
 
-def adjacent_edge_flip(cube):
-	"""
-	Do a standard edge-flipping algorithm.  Used for testing.
-	"""
-	ls = range(cube.N)[1:-1]
-	cube.move("R", 0, -1)
-	for l in ls:
-		cube.move("U", l, 1)
-	cube.move("R", 0, 2)
-	for l in ls:
-		cube.move("U", l, 2)
-	cube.move("R", 0, -1)
-	cube.move("U", 0, -1)
-	cube.move("R", 0, 1)
-	for l in ls:
-		cube.move("U", l, 2)
-	cube.move("R", 0, 2)
-	for l in ls:
-		cube.move("U", l, -1)
-	cube.move("R", 0, 1)
-	cube.move("U", 0, 1)
-	return None
-
-def swap_off_diagonal(cube, f, l1, l2):
-	"""
-	A big-cube move that swaps three cubies (I think) but looks like two.
-	"""
-	cube.move(f, l1, 1)
-	cube.move(f, l2, 1)
-	cube.move("U", 0, -1)
-	cube.move(f, l2, -1)
-	cube.move("U", 0, 1)
-	cube.move(f, l1, -1)
-	cube.move("U", 0, -1)
-	cube.move(f, l2, 1)
-	cube.move("U", 0, 1)
-	cube.move(f, l2, -1)
-	return None
-
-def checkerboard(cube):
-	"""
-	Dumbness.
-	"""
-	ls = range(cube.N)[::2]
-	for f in ["U", "F", "R"]:
-		for l in ls:
-			cube.move(f, l, 2)
-	if cube.N % 2 == 0:
-		for l in ls:
-			cube.move("F", l, 2)
-	return None
+def parse_args(argv):
+	first_shuffle = argv[1].split()
+	resolution_shuffle = argv[2].split()
+	return (first_shuffle, resolution_shuffle)
 
 if __name__ == "__main__":
 
 	if len(sys.argv) != 3:
 		print("ERROR in parsing for visual")
 		sys.exit()
-  
-	first_shuffle = sys.argv[1]
 
-	resolution_shuffle = sys.argv[2]
- 
-	print(f"\nIN VISU:\n{first_shuffle = }\n{resolution_shuffle = }")
+	first_shuffle, resolution_shuffle = parse_args(sys.argv)
 
 	c = Cube(3)
 	c.draw_interactive(first_shuffle, resolution_shuffle)

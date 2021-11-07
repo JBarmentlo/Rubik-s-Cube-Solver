@@ -5,7 +5,7 @@
 #include <iostream>
 #include <string>
 
-#define VERBOSE					2
+#define VERBOSE					0
 
 
 static std::map<int, std::string> moves_strings = {
@@ -122,7 +122,7 @@ inline edge_t operator-- (edge_t &d, int) {
 
 
 
-#define USAGE						"Usage:\n./Roobik <shuffle_string>\nOr\n./Roobik <number_of_shuffles>\n\n1- <shuffle_string> : letters separated by a space that correspond to an accepted move\nExample: ./Roobik \"F U R2 D' L2\"\n\n2- <number_of_shuffles> : an integer that correspons to how many random shuffles you want to start your rubiks cube solver with\nExample: ./Roobik 3\n"							
+#define USAGE						"Usage:\n./Roobik [options: --verbose <verbose> --visu] <shuffle_string>\nOr\n./Roobik [options: --verbose <verbose> --visu] <number_of_shuffles>\n\n1- <shuffle_string> : letters separated by a space that correspond to an accepted move\nExample: ./Roobik \"F U R2 D' L2\"\n\n2- <number_of_shuffles> : an integer that correspons to how many random shuffles you want to start your rubiks cube solver with\nExample: ./Roobik 3\n\nOPTIONS:\n--verbose <verbose> : set the level of verbosity, <verbose> is an integer between 0 and 2\n--visu: if added as an option, it will launch the visual with the programm\n"							
 
 #endif
 

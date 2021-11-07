@@ -41,5 +41,6 @@ int**		read_UD2_move_table_2();
 
 // int** 		read_raw_move_table_phase_2(int coord_max, std::string filename);
 
+void		free_move_tables(void);
 
 #endif

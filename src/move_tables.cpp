@@ -40,6 +40,10 @@ void 		make_raw_move_table(get_coord_function get_coord, set_coord_function set_
 		std::cout << "PATH ERROR: cannot create the following file: " << filename << std::endl;
 }
 
+static int* ptrtable[12];
+static int** ptrtable2[12];
+
+static int indexo = 0;
 
 int** 		read_raw_move_table(int coord_max, std::string filename)
 {
@@ -60,7 +64,19 @@ int** 		read_raw_move_table(int coord_max, std::string filename)
 	{
 		pretty_table[i] = &table[i * N_MOVES];
 	}
+	ptrtable[indexo] = table;
+	ptrtable2[indexo] = pretty_table;
+	indexo = indexo + 1;
 	return pretty_table;
+}
+
+void free_move_tables(void)
+{
+	for (int i = 0; i < indexo; i++)
+	{
+		free(ptrtable[i]);
+		free(ptrtable2[i]);
+	}
 }
 
 int**		read_corner_orientation_move_table_1()
