@@ -823,3 +823,90 @@ class InteractiveCube(plt.Axes):
 				self.figure.canvas.draw()
 
 
+def parse_args(argv):
+	first_shuffle = argv[1].split()
+	resolution_shuffle = argv[2].split()
+	return (first_shuffle, resolution_shuffle)
+
+
+import socket
+import time
+import json
+import os
+import logging
+
+logging.root.setLevel(logging.DEBUG)
+ServerLogger = logging.getLogger("Server")
+ServerLogger.setLevel(logging.DEBUG)
+
+class Server():
+	'''
+		Start a server with server.server_loop()
+	'''
+	def __init__(self):
+		ServerLogger.debug(f"\n\nStarted Server Instance")
+
+
+	def server_loop(self):
+		'''
+			Main server loop. Listens to port, launches sims, answers port numbers of sims.
+		'''
+		with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+			try:
+				ServerLogger.debug(f"Socket: {s} ")
+				s.settimeout(10)
+				s.bind(("localhost", 9091))
+				s.listen()
+				ServerLogger.debug(f"Socket {s} bound, listening")
+				while True:
+					try:
+						time.sleep(1)
+						conn, addr = s.accept()
+						with conn:
+							ServerLogger.debug(f"Connected by {addr}")
+							print(f"Connected by {addr}")
+							data = conn.recv(1024)
+							data = data.decode("utf-8")
+							reply = {}
+							try:
+								data = json.loads(data)
+								ServerLogger.debug(f"Msg received: {data}")
+								print(f"Msg received: {data}")
+								reply = self.handle_request(data)
+								ServerLogger.debug(f"Reply: {reply}")
+							except Exception as e:
+								ServerLogger.error(f"{e}")
+								print(f"error in main loop msg handle msg: {data} with error: {e}")
+								pass
+							conn.sendall(bytes(json.dumps(reply), encoding="utf-8"))
+					except socket.timeout:
+						pass
+			except KeyboardInterrupt:
+				s.close()
+				conn.close()
+				print("socket closed")
+				ServerLogger.debug(f"Socket: {s} ")
+				time.sleep(1)
+				exit()
+
+
+	def handle_request(self, data):
+		c = Cube(3)
+		c.draw_interactive(data["first_shuffle"], data["resolution_shuffle"])
+		plt.show()
+		return {"Launched_visu" : "Sucess"}
+		
+def start_server():
+	logging.basicConfig(filename="mylog.log")
+	logging.root.setLevel(logging.DEBUG)
+	s = Server()
+	s.server_loop()
+
+
+
+
+if __name__ == "__main__":
+	start_server()
+
+	first_shuffle, resolution_shuffle
+

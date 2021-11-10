@@ -13,7 +13,7 @@
 void pypytonton(std::vector<int> shuffle, std::vector<int> solution)
 {
 	FILE* fp;
-	const char* filename = "../src/visu.py";
+	const char* filename = "../src/visu_client.py";
 	int argc = 2;
     wchar_t *argv[3];
 
