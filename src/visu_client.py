@@ -3,9 +3,10 @@ import json
 import os
 import logging
 import sys
-HOST = "localhost"  # The server's hostname or IP address
-PORT = 9091        # The port used by the server
+HOST = "127.0.0.1"  # The server's hostname or IP address
+PORT = 9090       # The port used by the server
 
+print("LOL")
 class  Client():
 	def __init__(self):
 		self.sim_port = None

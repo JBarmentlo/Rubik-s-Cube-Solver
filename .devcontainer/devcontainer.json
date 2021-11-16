@@ -18,6 +18,8 @@
 	"runArgs": [
 		"--network",
 		"host"
+		// "-p",
+		// "9090:9090"
 	]
 
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.

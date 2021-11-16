@@ -855,7 +855,7 @@ class Server():
 			try:
 				ServerLogger.debug(f"Socket: {s} ")
 				s.settimeout(10)
-				s.bind(("localhost", 9091))
+				s.bind(("localhost", 9090))
 				s.listen()
 				ServerLogger.debug(f"Socket {s} bound, listening")
 				while True:

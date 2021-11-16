@@ -54,6 +54,7 @@ int	complete_process(int argc, char **argv)
 			{std::cout << " ";};
 	}
 	if (arguments.visu == true)
+		std::cout << "\nLength of solution: " <<  solution.size() << std::endl;
 		pypytonton(shuffle, solution);
 	return (true);
 }
