@@ -22,6 +22,7 @@ def download_tables():
 	my_bucket = resource.Bucket('roobik-tables')
 
 
+
 	total_size = 0
 	for s3_object in my_bucket.objects.all():
 		total_size += s3_object.size
@@ -35,7 +36,10 @@ def download_tables():
 			print(f"Dowloading {s3_object.key:<50} of size:  {(s3_object.size / 1000):6.2f} Kb")
 
 		filename = path.join(os.environ["WORKDIR"], s3_object.key)
+		print(f"{filename = }, {s3_object.key = }\n")
 		with tqdm(total=s3_object.size) as pbar:
+			if not os.path.exists(os.path.dirname(filename)):
+				os.makedirs(os.path.dirname(filename))
 			my_bucket.download_file(s3_object.key, filename, Callback=lambda bytes_transferred: pbar.update(bytes_transferred))
 		print("\n")
 
